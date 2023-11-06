@@ -3,31 +3,13 @@ import { FaPencilAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaPlus } from "react-icons/fa";
+import exercisesService from "../../services/exercises";
 
 type ExerciseItem = {
   id: string;
-  name: string;
+  title: string;
   complexity: string;
   updatedAt: number;
-};
-
-const sortComplexities = (rowA: ExerciseItem, rowB: ExerciseItem) => {
-  const a = rowA.complexity;
-  const b = rowB.complexity;
-
-  if (a === b) {
-    return 0;
-  }
-
-  if (a === "Easy") {
-    return -1;
-  }
-
-  if (a === "Medium") {
-    return b === "Easy" ? 1 : -1;
-  }
-
-  return 1;
 };
 
 const displayComplexity = (exercise: ExerciseItem) => {
@@ -88,7 +70,7 @@ const displayLastUpdate = (exercise: ExerciseItem) => {
 
 const displayTitle = (exercise: ExerciseItem) => {
   // TODO CHANGE TO THEME COLORS
-  return <span className="text-blue-600 font-semibold">{exercise.name}</span>;
+  return <span className="text-blue-600 font-semibold">{exercise.title}</span>;
 };
 
 const columns = [
@@ -99,22 +81,21 @@ const columns = [
     width: "5%",
   },
   {
-    name: "Title",
-    selector: (row: ExerciseItem) => row.name,
+    name: "title",
+    selector: (row: ExerciseItem) => row.title,
     sortable: true,
     cell: displayTitle,
     width: "50%",
   },
   {
-    name: "Complexity",
+    name: "complexity",
     selector: (row: ExerciseItem) => row.complexity,
     sortable: true,
     cell: displayComplexity,
     width: "15%",
-    sortFunction: sortComplexities,
   },
   {
-    name: "Last Update",
+    name: "last update",
     selector: (row: ExerciseItem) => row.updatedAt,
     sortable: true,
     cell: displayLastUpdate,
@@ -134,52 +115,35 @@ const columns = [
   },
 ];
 
-const data: ExerciseItem[] = [
-  {
-    id: "1",
-    name: "Bench Press",
-    complexity: "Easy",
-    updatedAt: Date.now(),
-  },
-  {
-    id: "2",
-    name: "Squats",
-    complexity: "Medium",
-    updatedAt: Date.now(),
-  },
-  {
-    id: "3",
-    name: "Deadlift",
-    complexity: "Hard",
-    updatedAt: Date.now(),
-  },
-];
-
 export default function ExerciseList() {
-  const [exercises, setExercises] = useState<ExerciseItem[]>(data);
+  const [exercises, setExercises] = useState<ExerciseItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [totalExercises, setTotalExercises] = useState(0);
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
   const [sort, setSort] = useState<{
     column: string | undefined;
-    direction: string;
+    direction: "asc" | "desc";
   } | null>(null);
   const [filter, setFilter] = useState("");
 
   useEffect(() => {
     setIsLoading(true);
 
-    console.log("sort", sort);
-    console.log("page", page);
-    console.log("perPage", perPage);
-    console.log("filter", filter);
-
-    setTimeout(() => {
-      setExercises(data);
-      setIsLoading(false);
-      setTotalExercises(data.length);
-    }, 1000);
+    exercisesService
+      .listExercises(
+        page,
+        perPage,
+        filter,
+        sort?.column || "",
+        sort?.direction || ""
+      )
+      .then((data) => {
+        const exercises = data.data;
+        setExercises(exercises);
+        setIsLoading(false);
+        setTotalExercises(exercises.length);
+      });
   }, [filter, page, perPage, sort]);
 
   return (
