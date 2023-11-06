@@ -1,4 +1,5 @@
 import DataTable from "react-data-table-component";
+import { FaPencilAlt } from "react-icons/fa";
 
 type ExerciseItem = {
   id: string;
@@ -89,10 +90,10 @@ const displayTitle = (exercise: ExerciseItem) => {
 
 const columns = [
   {
-    name: "ID",
+    name: "#",
     selector: (row: ExerciseItem) => row.id,
     sortable: true,
-    width: "10%",
+    width: "5%",
   },
   {
     name: "Title",
@@ -114,7 +115,19 @@ const columns = [
     selector: (row: ExerciseItem) => row.updatedAt,
     sortable: true,
     cell: displayLastUpdate,
-    width: "25%",
+    width: "20%",
+  },
+  {
+    name: "Actions",
+    cell: () => (
+      <div className="w-full flex justify-center">
+        <div className="cursor-pointer">
+          <FaPencilAlt />
+        </div>
+      </div>
+    ),
+    width: "10%",
+    ignoreRowClick: true,
   },
 ];
 
