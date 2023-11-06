@@ -1,5 +1,6 @@
 import DataTable from "react-data-table-component";
 import { FaPencilAlt } from "react-icons/fa";
+import { useEffect, useState } from "react";
 
 type ExerciseItem = {
   id: string;
@@ -153,5 +154,34 @@ const data: ExerciseItem[] = [
 ];
 
 export default function ExerciseList() {
-  return <DataTable title="Exercises" columns={columns} data={data} />;
+  const [exercises, setExercises] = useState<ExerciseItem[]>(data);
+  const [isLoading, setIsLoading] = useState(false);
+  const [totalExercises, setTotalExercises] = useState(0);
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(10);
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    setTimeout(() => {
+      setExercises(data);
+      setIsLoading(false);
+      setTotalExercises(data.length);
+    }, 1000);
+  }, [page, perPage]);
+
+  return (
+    <DataTable
+      title="Exercises"
+      columns={columns}
+      data={exercises}
+      progressPending={isLoading}
+      persistTableHead
+      pagination
+      paginationServer
+      paginationTotalRows={totalExercises}
+      onChangeRowsPerPage={setPerPage}
+      onChangePage={setPage}
+    />
+  );
 }
