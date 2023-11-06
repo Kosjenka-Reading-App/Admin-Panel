@@ -1,6 +1,8 @@
 import DataTable from "react-data-table-component";
 import { FaPencilAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
+import { AiOutlineSearch } from "react-icons/ai";
+import { FaPlus } from "react-icons/fa";
 
 type ExerciseItem = {
   id: string;
@@ -159,29 +161,84 @@ export default function ExerciseList() {
   const [totalExercises, setTotalExercises] = useState(0);
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
+  const [sort, setSort] = useState<{
+    column: string | undefined;
+    direction: string;
+  } | null>(null);
+  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     setIsLoading(true);
+
+    console.log("sort", sort);
+    console.log("page", page);
+    console.log("perPage", perPage);
+    console.log("filter", filter);
 
     setTimeout(() => {
       setExercises(data);
       setIsLoading(false);
       setTotalExercises(data.length);
     }, 1000);
-  }, [page, perPage]);
+  }, [filter, page, perPage, sort]);
 
   return (
-    <DataTable
-      title="Exercises"
-      columns={columns}
-      data={exercises}
-      progressPending={isLoading}
-      persistTableHead
-      pagination
-      paginationServer
-      paginationTotalRows={totalExercises}
-      onChangeRowsPerPage={setPerPage}
-      onChangePage={setPage}
-    />
+    <div>
+      <div className="bg-gray-50 py-3 px-4">
+        <h1 className="font-bold text-2xl">
+          Exercises{" "}
+          <span className="bg-gray-200 px-2 py-1 text-xs rounded-xl text-blue-600 font-normal">
+            {totalExercises}
+          </span>
+        </h1>
+      </div>
+
+      <div className="flex items-center justify-between px-4 py-3">
+        <form
+          className="flex"
+          onSubmit={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const formData = new FormData(e.target as HTMLFormElement);
+            const query = formData.get("query")?.toString() || "";
+            setFilter(query);
+          }}
+        >
+          <input
+            type="text"
+            name="query"
+            placeholder="Search"
+            className="border border-gray-300 rounded-l px-2 py-1 w-96 focus:outline-none focus:ring focus:border-blue-600"
+          />
+          <button
+            type="submit"
+            className="bg-blue-600 text-white px-3 py-2 rounded-r rounded-l-none font-semibold hover:bg-blue-700"
+          >
+            <AiOutlineSearch />
+          </button>
+        </form>
+        <button
+          className="bg-blue-600 flex text-white px-3 py-2 rounded font-medium items-center justify-center text-sm hover:bg-blue-700"
+          onClick={() => alert("Create new exercise")}
+        >
+          <FaPlus /> <span className="ml-2">New exercise </span>
+        </button>
+      </div>
+
+      <DataTable
+        columns={columns}
+        data={exercises}
+        progressPending={isLoading}
+        persistTableHead
+        pagination
+        paginationServer
+        paginationTotalRows={totalExercises}
+        onSort={(column, direction) =>
+          setSort({ column: column.name?.toString(), direction })
+        }
+        onChangeRowsPerPage={setPerPage}
+        onChangePage={setPage}
+      />
+    </div>
   );
 }

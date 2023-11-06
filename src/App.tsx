@@ -3,7 +3,7 @@ import ExerciseList from "./components/tables/ExerciseList";
 
 function App() {
   return (
-    <main className="w-full h-full text-center">
+    <main className="w-full h-full">
       <ExerciseList />
     </main>
   );
