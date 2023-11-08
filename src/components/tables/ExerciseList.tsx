@@ -148,7 +148,7 @@ export default function ExerciseList() {
 
   return (
     <div>
-      <div className="bg-gray-50 py-3 px-4">
+      <div className="bg-custom-light-grey py-3 px-4">
         <h1 className="font-bold text-2xl">
           Exercises{" "}
           <span className="bg-gray-200 px-2 py-1 text-xs rounded-xl text-blue-600 font-normal">
@@ -172,17 +172,17 @@ export default function ExerciseList() {
             type="text"
             name="query"
             placeholder="Search"
-            className="border border-gray-300 rounded-l px-2 py-1 w-96 focus:outline-none focus:ring focus:border-blue-600"
+            className="border border-gray-300 rounded-l px-2 py-1 w-96 focus:outline-none focus:ring focus:border-custom-light-blue"
           />
           <button
             type="submit"
-            className="bg-blue-600 text-white px-3 py-2 rounded-r rounded-l-none font-semibold hover:bg-blue-700"
+            className="bg-custom-dark-blue text-white px-3 py-2 rounded-r rounded-l-none font-semibold transition hover:bg-custom-hover-blue"
           >
             <AiOutlineSearch />
           </button>
         </form>
         <button
-          className="bg-blue-600 flex text-white px-3 py-2 rounded font-medium items-center justify-center text-sm hover:bg-blue-700"
+          className="bg-custom-dark-blue flex text-white px-3 py-2 rounded font-medium items-center justify-center text-sm hover:bg-custom-hover-blue transition"
           onClick={() => alert("Create new exercise")}
         >
           <FaPlus /> <span className="ml-2">New exercise </span>

@@ -7,7 +7,7 @@
 }
 
 .rdt_TableHeadRow {
-  @apply bg-gray-50 py-2  !important;
+  @apply bg-custom-light-grey py-2  !important;
   min-height: 0 !important;
 }
 
@@ -17,5 +17,5 @@
 }
 
 .rdt_TableCol {
-  @apply font-medium text-gray-400  uppercase  py-0;
+  @apply font-medium text-custom-grey  uppercase  py-0;
 }
