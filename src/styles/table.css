@@ -12,11 +12,7 @@
 }
 
 /* Actions text centered */
-.rdt_TableCol:nth-child(5) div {
-  @apply flex justify-center;
-}
-
-.rdt_TableCol:nth-child(5) div div {
+.rdt_TableCol:last-child div {
   @apply flex justify-center;
 }
 
