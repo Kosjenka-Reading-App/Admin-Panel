@@ -7,13 +7,16 @@ const listExercises = (
   sortField: string,
   sortDir: "asc" | "desc" | ""
 ) => {
-  const query = {
+  const query: Record<string, string | number> = {
     skip: (page - 1) * perPage,
     limit: perPage,
-    order_by: sortField,
-    order_dir: sortDir,
     title_like: searchQuery,
   };
+
+  if (sortField) {
+    query["order_dir"] = sortField;
+    query["title_like"] = sortDir;
+  }
 
   return get("exercises", query);
 };
