@@ -16,6 +16,10 @@
   @apply flex justify-center;
 }
 
+.rdt_TableCol:nth-child(5) div div {
+  @apply flex justify-center;
+}
+
 .rdt_TableCol {
   @apply font-medium text-custom-grey  uppercase  py-0;
 }
