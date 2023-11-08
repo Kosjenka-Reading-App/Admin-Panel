@@ -69,8 +69,11 @@ const displayLastUpdate = (exercise: ExerciseItem) => {
 };
 
 const displayTitle = (exercise: ExerciseItem) => {
-  // TODO CHANGE TO THEME COLORS
-  return <span className="text-blue-600 font-semibold">{exercise.title}</span>;
+  return (
+    <span className="text-custom-dark-blue font-semibold">
+      {exercise.title}
+    </span>
+  );
 };
 
 const columns = [
