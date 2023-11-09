@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'; // Import the Link component
 
 const Sidebar = () => {
     return (
-        <div className="w-16 h-screen flex flex-col justify-between py-4 bg-custom-dard-blue">
+        <div className="w-16 h-screen flex flex-col justify-between py-4 bg-custom-dark-blue">
             <div>
                 {/* Square with rounded edges containing the "K" */}
                 <div className="flex justify-center mt-4 mb-8">
