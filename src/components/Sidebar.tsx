@@ -9,7 +9,7 @@ const Sidebar = () => {
                 {/* Square with rounded edges containing the "K" */}
                 <div className="flex justify-center mt-4 mb-8">
                     <div className="bg-custom-blue rounded-lg w-12 h-12 flex items-center justify-center">
-                        <span className="text-custom-blue text-3xl font-bold">K</span>
+                        <span className="text-white text-3xl font-bold">K</span>
                     </div>
                 </div>
                 
