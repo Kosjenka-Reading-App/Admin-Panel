@@ -6,72 +6,35 @@ const AdminForm: React.FC = () => {
   const [password, setPassword] = useState('');
   const [isSuperAdmin, setIsSuperAdmin] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Implement your submit logic here
     console.log({ email, password, isSuperAdmin });
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-2xl mx-auto bg-white shadow-lg rounded-lg p-8">
-        <h1 className="text-xl md:text-2xl font-bold text-gray-700 mb-8 ml-4">Create Admin</h1>
-        <div className="flex flex-col items-center">
-          <form onSubmit={handleSubmit} className="w-full max-w-md">
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-                Email address
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="email"
-                type="email"
-                placeholder="Email Address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
+    <div className="bg-white min-h-screen flex flex-col">
+      <div className="w-full py-4 px-6 bg-custom-light-grey border-b border-gray-200">
+        <h1 className="text-custom-dark-blue text-xl font-bold">Create Admin</h1>
+      </div>
+      <div className="flex-grow flex items-center justify-center p-8">
+        <div className="bg-custom-light-grey p-12 rounded-lg shadow-xl w-full max-w-2xl">
+          <form onSubmit={handleSubmit} className="space-y-8">
+            <div>
+              <label htmlFor="email" className="text-lg font-semibold text-gray-700 block">Email address</label>
+              <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} className="mt-1 px-4 py-3 bg-white border border-slate-300 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 block w-full rounded-md text-lg" placeholder="example@email.com" required />
             </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-                Password
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                id="password"
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
+            <div>
+              <label htmlFor="password" className="text-lg font-semibold text-gray-700 block">Password</label>
+              <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} className="mt-1 px-4 py-3 bg-white border border-slate-300 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 block w-full rounded-md text-lg" placeholder="********" required />
             </div>
-            <div className="mb-6">
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  className="form-checkbox h-4 w-4 text-blue-600"
-                  checked={isSuperAdmin}
-                  onChange={(e) => setIsSuperAdmin(e.target.checked)}
-                />
-                <span className="ml-2 text-gray-700 text-sm">
-                  Super admin privileges
-                </span>
-              </label>
+            <div className="flex items-center">
+              <input id="super-admin" type="checkbox" checked={isSuperAdmin} onChange={(e) => setIsSuperAdmin(e.target.checked)} className="h-5 w-5 text-blue-600 border-gray-300 focus:ring-blue-500 rounded" />
+              <label htmlFor="super-admin" className="ml-2 text-lg font-semibold text-gray-900">Super admin privileges</label>
             </div>
-            <div className="flex items-center justify-center space-x-4">
-              <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="submit"
-              >
-                Save
-              </button>
-              <button
-                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="button"
-              >
-                Cancel
-              </button>
+            <div className="flex items-center justify-between mt-8">
+              <button type="submit" className="px-6 py-3 bg-custom-dark-blue text-white text-lg rounded hover:bg-blue-800">Save</button>
+              <button type="button" className="px-6 py-3 bg-custom-grey text-gray-800 text-lg rounded hover:bg-gray-400">Cancel</button>
             </div>
           </form>
         </div>

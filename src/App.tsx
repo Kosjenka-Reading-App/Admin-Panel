@@ -1,5 +1,5 @@
 import "./App.css";
-import ExerciseList from "./components/tables/ExerciseList";
+import ExerciseList from "./components/AdminForm";
 
 function App() {
   return (
