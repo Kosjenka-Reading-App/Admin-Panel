@@ -3,6 +3,7 @@ module.exports = {
   theme: {
     extend: {
         colors: {
+            'navbar-color': '#002D7E',
             'custom-light-blue': '#DEF2FF',
             'custom-blue' : '#0099FF',
             'custom-dark-blue' : '#003EAE',
