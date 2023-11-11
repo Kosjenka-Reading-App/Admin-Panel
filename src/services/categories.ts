@@ -7,13 +7,16 @@ const list = (
   sortField: string,
   sortDir: "asc" | "desc" | ""
 ) => {
-  const query = {
+  const query: Record<string, string | number> = {
     skip: (page - 1) * perPage,
     limit: perPage,
-    order_by: sortField,
-    order_dir: sortDir,
     name_like: searchQuery,
   };
+
+  if (sortField) {
+    query["order_dir"] = sortDir;
+    query["order_by"] = sortField;
+  }
 
   return get("categories", query);
 };
