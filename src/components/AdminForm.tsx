@@ -1,15 +1,36 @@
-// AdminForm.tsx
 import React, { useState } from 'react';
+import axios from 'axios';
+
+const API_BASE_URL = 'https://dev-kosj-api.fly.dev';
 
 const AdminForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSuperAdmin, setIsSuperAdmin] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Implement your submit logic here
-    console.log({ email, password, isSuperAdmin });
+    try {
+      // Assuming you have a function to get the token
+      const tokenResponse = await axios.post(`${API_BASE_URL}/login`, {
+        email: 'superadmin@gmail.com',
+        password: 'superadmin'
+      });
+      const token = tokenResponse.data.access_token;
+
+      const response = await axios.post(
+        `${API_BASE_URL}/accounts/`, 
+        { email, password, isSuperAdmin },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      // If the response is successful, handle it here
+      console.log('Admin created:', response.data);
+      // You might want to clear the form or show a success message
+    } catch (error) {
+      // Handle errors here
+      console.error('Error creating admin:', error);
+    }
   };
 
   return (
@@ -22,11 +43,11 @@ const AdminForm: React.FC = () => {
           <form onSubmit={handleSubmit} className="space-y-8">
             <div>
               <label htmlFor="email" className="text-lg font-semibold text-gray-700 block">Email address</label>
-              <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} className="mt-1 px-4 py-3 bg-white border border-slate-300 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 block w-full rounded-md text-lg" placeholder="example@email.com" required />
+              <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} className="text-custom-black mt-1 px-4 py-3 bg-white border border-slate-300 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 block w-full rounded-md text-lg" placeholder="example@email.com" required />
             </div>
             <div>
               <label htmlFor="password" className="text-lg font-semibold text-gray-700 block">Password</label>
-              <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} className="mt-1 px-4 py-3 bg-white border border-slate-300 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 block w-full rounded-md text-lg" placeholder="********" required />
+              <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} className="text-custom-black mt-1 px-4 py-3 bg-white border border-slate-300 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 block w-full rounded-md text-lg" placeholder="********" required />
             </div>
             <div className="flex items-center">
               <input id="super-admin" type="checkbox" checked={isSuperAdmin} onChange={(e) => setIsSuperAdmin(e.target.checked)} className="h-5 w-5 text-blue-600 border-gray-300 focus:ring-blue-500 rounded" />
