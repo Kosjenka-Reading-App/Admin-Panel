@@ -9,16 +9,19 @@ type ExerciseItem = {
   id: string;
   title: string;
   complexity: string;
-  updatedAt: number;
+  date: number;
 };
 
 const displayComplexity = (exercise: ExerciseItem) => {
-  switch (exercise.complexity) {
+  // Capitalize first letter
+  const complexity =
+    exercise.complexity.charAt(0).toUpperCase() + exercise.complexity.slice(1);
+  switch (complexity) {
     case "Easy":
       return (
         <div className="flex items-center justify-center bg-green-200 text-green-600 font-semibold rounded px-2 py-1">
           <div className="bg-green-600 rounded-full h-2 w-2 mr-2"></div>
-          {exercise.complexity}
+          {complexity}
         </div>
       );
 
@@ -26,7 +29,7 @@ const displayComplexity = (exercise: ExerciseItem) => {
       return (
         <span className="flex items-center justify-center bg-yellow-200 text-yellow-600 font-semibold rounded px-2 py-1">
           <div className="bg-yellow-600 rounded-full h-2 w-2 mr-2"></div>
-          {exercise.complexity}
+          {complexity}
         </span>
       );
 
@@ -34,7 +37,7 @@ const displayComplexity = (exercise: ExerciseItem) => {
       return (
         <span className="flex items-center justify-center bg-red-200 text-red-600 font-semibold rounded px-2 py-1">
           <div className="bg-red-600 rounded-full h-2 w-2 mr-2"></div>
-          {exercise.complexity}
+          {complexity}
         </span>
       );
 
@@ -44,7 +47,8 @@ const displayComplexity = (exercise: ExerciseItem) => {
 };
 
 const displayLastUpdate = (exercise: ExerciseItem) => {
-  const date = new Date(exercise.updatedAt);
+  console.log(exercise.date);
+  const date = new Date(exercise.date);
   const day = String(date.getDate()).padStart(2, "0");
   const monthNames = [
     "Jan",
@@ -99,7 +103,7 @@ const columns = [
   },
   {
     name: "last update",
-    selector: (row: ExerciseItem) => row.updatedAt,
+    selector: (row: ExerciseItem) => row.date,
     sortable: true,
     cell: displayLastUpdate,
     width: "20%",
