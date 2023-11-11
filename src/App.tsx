@@ -1,20 +1,16 @@
-//import { useState } from 'react'
-//import './App.css'
 import Login from "./components/Login"
 
 
 
 function App() {
-  //const [count, setCount] = useState(0)
+  
 
   return (
-    <>
-      <div>
-        <Login />
-      </div>
+    <main className="w-full h-full">
+     <Login />
 
-    </>
+    </main>
   )
 }
 
-export default App
+export default App;
