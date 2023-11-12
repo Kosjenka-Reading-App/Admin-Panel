@@ -7,6 +7,8 @@ import {
 import ExercisePage from "./pages/ExercisePage";
 import AdminPage from "./pages/AdminsPage";
 import CategoriesPage from "./pages/CategoriesPage";
+import Login from "./components/Login";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -14,9 +16,21 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Navigate to="/admins" />} />
-          <Route path="/admins" element={<AdminPage />} />
-          <Route path="/categories" element={<CategoriesPage />} />
-          <Route path="/exercises" element={<ExercisePage />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/admins"
+            element={<ProtectedRoute element={<AdminPage />} />}
+          />
+
+          <Route
+            path="/categories"
+            element={<ProtectedRoute element={<CategoriesPage />} />}
+          />
+
+          <Route
+            path="/exercises"
+            element={<ProtectedRoute element={<ExercisePage />} />}
+          />
         </Routes>
       </Router>
     </main>
