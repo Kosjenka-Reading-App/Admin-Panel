@@ -1,10 +1,13 @@
 import "./App.css";
-import ExerciseList from "./components/tables/ExerciseList";
+import CreateExercise from "./components/CreateExercise";
+
 
 function App() {
   return (
     <main className="w-full h-full">
-      <ExerciseList />
+      <div>
+      <CreateExercise />
+      </div>
     </main>
   );
 }
