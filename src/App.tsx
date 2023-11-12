@@ -9,7 +9,7 @@ import AdminPage from "./pages/AdminsPage";
 import CategoriesPage from "./pages/CategoriesPage";
 import Login from "./components/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
-import AdminForm from "./components/AdminForm";
+import CreateAdminPage from "./pages/CreateAdminPage";
 
 function App() {
   return (
@@ -25,7 +25,7 @@ function App() {
 
           <Route
             path="/admins/create"
-            element={<ProtectedRoute element={<AdminForm />} />}
+            element={<ProtectedRoute element={<CreateAdminPage />} />}
           />
 
           <Route

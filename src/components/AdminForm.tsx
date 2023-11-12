@@ -1,40 +1,25 @@
 import React, { useState } from "react";
-import axios from "axios";
-import config from "../config";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-export function get(path: string, params: Record<string, unknown>) {
-  return axios.get(config.API_BASE_ROUTE + path, { params });
-}
+import adminService from "../services/admins";
 
 const AdminForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSuperAdmin, setIsSuperAdmin] = useState(false);
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      // Assuming you have a function to get the token
-      const tokenResponse = await axios.post(`${config.API_BASE_ROUTE}/login`, {
-        email: "superadmin@gmail.com",
-        password: "superadmin",
+    adminService
+      .create(email, password, isSuperAdmin)
+      .then(() => {
+        navigate("/admins");
+      })
+      .catch((err) => {
+        console.log(err);
       });
-      const token = tokenResponse.data.access_token;
-
-      const response = await axios.post(
-        `${config.API_BASE_ROUTE}/accounts/`,
-        { email, password, isSuperAdmin },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-
-      // If the response is successful, handle it here
-      console.log("Admin created:", response.data);
-      // You might want to clear the form or show a success message
-    } catch (error) {
-      // Handle errors here
-      console.error("Error creating admin:", error);
-    }
   };
 
   return (
