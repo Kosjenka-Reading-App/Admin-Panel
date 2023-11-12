@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaPlus } from "react-icons/fa";
 import adminsService from "../../services/admins";
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 type AdminItem = {
@@ -87,7 +86,6 @@ export default function AdminList() {
     direction: "asc" | "desc";
   } | null>(null);
   const [filter, setFilter] = useState("");
-  const navigate = useNavigate(); // Instance of useNavigate
 
   useEffect(() => {
     setIsLoading(true);
