@@ -7,6 +7,7 @@ import {
 import ExercisePage from "./pages/ExercisePage";
 import AdminPage from "./pages/AdminsPage";
 import CategoriesPage from "./pages/CategoriesPage";
+import AdminForm from "./components/AdminForm";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/admins" element={<AdminPage />} />
           <Route path="/categories" element={<CategoriesPage />} />
           <Route path="/exercises" element={<ExercisePage />} />
+          <Route path="/CreateAdmin" element={<AdminForm />} />
         </Routes>
       </Router>
     </main>

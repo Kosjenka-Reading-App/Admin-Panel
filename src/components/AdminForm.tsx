@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import config from "../config";
 
-const API_BASE_URL = 'https://dev-kosj-api.fly.dev';
+export function get(path: string, params: Record<string, unknown>) {
+  return axios.get(config.API_BASE_ROUTE + path, { params });
+}
 
 const AdminForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -12,14 +15,14 @@ const AdminForm: React.FC = () => {
     e.preventDefault();
     try {
       // Assuming you have a function to get the token
-      const tokenResponse = await axios.post(`${API_BASE_URL}/login`, {
+      const tokenResponse = await axios.post(`${config.API_BASE_ROUTE}/login`, {
         email: 'superadmin@gmail.com',
         password: 'superadmin'
       });
       const token = tokenResponse.data.access_token;
 
       const response = await axios.post(
-        `${API_BASE_URL}/accounts/`, 
+        `${config.API_BASE_ROUTE}/accounts/`, 
         { email, password, isSuperAdmin },
         { headers: { Authorization: `Bearer ${token}` } }
       );

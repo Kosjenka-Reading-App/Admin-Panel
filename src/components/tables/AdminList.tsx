@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaPlus } from "react-icons/fa";
 import adminsService from "../../services/admins";
+import { useNavigate } from "react-router-dom";
 
 type AdminItem = {
   id_account: number;
@@ -85,6 +86,7 @@ export default function AdminList() {
     direction: "asc" | "desc";
   } | null>(null);
   const [filter, setFilter] = useState("");
+  const navigate = useNavigate(); // Instance of useNavigate
 
   useEffect(() => {
     setIsLoading(true);
@@ -136,9 +138,9 @@ export default function AdminList() {
         </form>
         <button
           className="bg-custom-dark-blue flex text-white px-3 py-2 rounded font-medium items-center justify-center text-sm hover:bg-custom-hover-blue transition"
-          onClick={() => alert("Create new admin")}
+          onClick={() => navigate('/CreateAdmin')} // Navigate to the AdminForm route
         >
-          <FaPlus /> <span className="ml-2">New admin </span>
+          <FaPlus /> <span className="ml-2">New admin</span>
         </button>
       </div>
 
