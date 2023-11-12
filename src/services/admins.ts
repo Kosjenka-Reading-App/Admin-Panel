@@ -1,4 +1,4 @@
-import { get } from "./axios";
+import { get, jsonPost } from "./axios";
 
 const parseSortBy = (sortField: string): string => {
   switch (sortField) {
@@ -31,6 +31,15 @@ const list = (
   return get("accounts", query);
 };
 
+const create = (email: string, password: string, isSuperAdmin: boolean) => {
+  return jsonPost("accounts", {
+    email,
+    password,
+    account_category: isSuperAdmin ? "superadmin" : "admin",
+  });
+};
+
 export default {
   list,
+  create,
 };
