@@ -1,12 +1,9 @@
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+module.exports = {
+  content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
         colors: {
+            'navbar-color': '#002D7E',
             'custom-light-blue': '#DEF2FF',
             'custom-blue' : '#0099FF',
             'custom-dark-blue' : '#003EAE',
@@ -20,9 +17,9 @@ export default {
             'custom-light-yellow' :'FEF7D1',
             'custom-red': '#FF0000',
             'custom-light-red' : '#FFD0D0',
-            'custom-black' : '#000000'
+            'custom-black' : '#000000',
         },
-      }
+      },
     },
   plugins: [],
 }

@@ -1,4 +1,16 @@
-import { get } from "./axios";
+import { get, jsonPost } from "./axios";
+
+const parseSortBy = (sortField: string): string => {
+  switch (sortField) {
+    case "title":
+      return "title";
+    case "complexity":
+      return "complexity";
+    case "last update":
+      return "date";
+  }
+  return "";
+};
 
 const listExercises = (
   page: number,
@@ -7,17 +19,35 @@ const listExercises = (
   sortField: string,
   sortDir: "asc" | "desc" | ""
 ) => {
-  const query = {
+  const query: Record<string, string | number> = {
     skip: (page - 1) * perPage,
     limit: perPage,
-    order_by: sortField,
-    order_dir: sortDir,
     title_like: searchQuery,
   };
+
+  if (sortField) {
+    query["order_dir"] = sortDir;
+    query["order_by"] = parseSortBy(sortField);
+  }
 
   return get("exercises", query);
 };
 
+const create = async (title: string, text: string, complexity: string) => {
+  return jsonPost("exercises/", {
+    title,
+    text,
+    complexity: complexity.toLowerCase(),
+  })
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((error) => {
+      return Promise.reject(error);
+    });
+};
+
 export default {
   listExercises,
+  create,
 };
