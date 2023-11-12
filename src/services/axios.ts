@@ -25,7 +25,7 @@ api.interceptors.response.use(
     const originalRequest = error.config;
 
     // If the error status is 403, it means the token has expired and we need to refresh it
-    if (error.response.status === 403) {
+    if (error.response.status === 403 && originalRequest.url !== "/refresh") {
       try {
         const refreshToken = Cookies.get("refreshToken");
 
@@ -34,8 +34,8 @@ api.interceptors.response.use(
         });
 
         const {
-          new_accessToken: freshAccessToken,
-          new_refreshToken: freshRefreshToken,
+          access_token: freshAccessToken,
+          refresh_token: freshRefreshToken,
         } = response.data;
 
         Cookies.set("accessToken", freshAccessToken);
@@ -43,10 +43,7 @@ api.interceptors.response.use(
 
         // Retry the original request with the new token
         originalRequest.headers.Authorization = `Bearer ${freshAccessToken}`;
-        console.log(
-          "Retrying Original Request with New Token:",
-          originalRequest
-        );
+
         return axios(originalRequest);
       } catch (error) {
         return Promise.reject(error);

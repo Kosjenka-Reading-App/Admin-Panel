@@ -1,4 +1,4 @@
-/* @tailwind base;
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -9,13 +9,13 @@
 .rdt_TableHeadRow {
   @apply bg-custom-light-grey py-2  !important;
   min-height: 0 !important;
-} */
+}
 
 /* Actions text centered */
-/* .rdt_TableCol:nth-child(5) div {
+.rdt_TableCol:last-child div {
   @apply flex justify-center;
 }
 
 .rdt_TableCol {
   @apply font-medium text-custom-grey  uppercase  py-0;
-} */
+}
