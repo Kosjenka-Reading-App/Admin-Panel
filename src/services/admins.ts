@@ -2,17 +2,15 @@ import { get } from "./axios";
 
 const parseSortBy = (sortField: string): string => {
   switch (sortField) {
-    case "title":
-      return "title";
-    case "complexity":
-      return "complexity";
-    case "last update":
-      return "date";
+    case "email":
+      return "email";
+    case "type":
+      return "account_category";
   }
   return "";
 };
 
-const listExercises = (
+const list = (
   page: number,
   perPage: number,
   searchQuery: string,
@@ -22,7 +20,7 @@ const listExercises = (
   const query: Record<string, string | number> = {
     skip: (page - 1) * perPage,
     limit: perPage,
-    title_like: searchQuery,
+    email_like: searchQuery,
   };
 
   if (sortField) {
@@ -30,9 +28,9 @@ const listExercises = (
     query["order_by"] = parseSortBy(sortField);
   }
 
-  return get("exercises", query);
+  return get("accounts", query);
 };
 
 export default {
-  listExercises,
+  list,
 };

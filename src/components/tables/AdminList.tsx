@@ -3,110 +3,62 @@ import { FaPencilAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaPlus } from "react-icons/fa";
-import exercisesService from "../../services/exercises";
+import adminsService from "../../services/admins";
 
-type ExerciseItem = {
-  id: string;
-  title: string;
-  complexity: string;
-  date: number;
+type AdminItem = {
+  id_account: number;
+  email: string;
+  account_category: string;
 };
 
-const displayComplexity = (exercise: ExerciseItem) => {
-  // Capitalize first letter
-  const complexity =
-    exercise.complexity.charAt(0).toUpperCase() + exercise.complexity.slice(1);
-  switch (complexity) {
-    case "Easy":
+const displayAdminType = (admin: AdminItem) => {
+  switch (admin.account_category) {
+    case "admin":
       return (
         <div className="flex items-center justify-center bg-green-200 text-green-600 font-semibold rounded px-2 py-1">
           <div className="bg-green-600 rounded-full h-2 w-2 mr-2"></div>
-          {complexity}
+          Admin
         </div>
       );
-
-    case "Medium":
-      return (
-        <span className="flex items-center justify-center bg-yellow-200 text-yellow-600 font-semibold rounded px-2 py-1">
-          <div className="bg-yellow-600 rounded-full h-2 w-2 mr-2"></div>
-          {complexity}
-        </span>
-      );
-
-    case "Hard":
+    case "superadmin":
       return (
         <span className="flex items-center justify-center bg-red-200 text-red-600 font-semibold rounded px-2 py-1">
           <div className="bg-red-600 rounded-full h-2 w-2 mr-2"></div>
-          {complexity}
+          Super Admin
         </span>
       );
 
     default:
-      return <span>{exercise.complexity}</span>;
+      return <span>{admin.account_category}</span>;
   }
 };
 
-const displayLastUpdate = (exercise: ExerciseItem) => {
-  console.log(exercise.date);
-  const date = new Date(exercise.date);
-  const day = String(date.getDate()).padStart(2, "0");
-  const monthNames = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-  const month = monthNames[date.getMonth()];
-  const year = date.getFullYear();
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
-
-  return `${day} ${month} ${year}, ${hours}:${minutes}`;
-};
-
-const displayTitle = (exercise: ExerciseItem) => {
+const displayEmail = (admin: AdminItem) => {
   return (
-    <span className="text-custom-dark-blue font-semibold">
-      {exercise.title}
-    </span>
+    <span className="text-custom-dark-blue font-semibold">{admin.email}</span>
   );
 };
 
 const columns = [
   {
     name: "#",
-    selector: (row: ExerciseItem) => row.id,
-    sortable: true,
+    selector: (row: AdminItem) => row.id_account,
+    sortable: false,
     width: "5%",
   },
   {
-    name: "title",
-    selector: (row: ExerciseItem) => row.title,
+    name: "email",
+    selector: (row: AdminItem) => row.email,
     sortable: true,
-    cell: displayTitle,
-    width: "50%",
+    cell: displayEmail,
+    width: "70%",
   },
   {
-    name: "complexity",
-    selector: (row: ExerciseItem) => row.complexity,
+    name: "type",
+    selector: (row: AdminItem) => row.account_category,
     sortable: true,
-    cell: displayComplexity,
+    cell: displayAdminType,
     width: "15%",
-  },
-  {
-    name: "last update",
-    selector: (row: ExerciseItem) => row.date,
-    sortable: true,
-    cell: displayLastUpdate,
-    width: "20%",
   },
   {
     name: "Actions",
@@ -122,10 +74,10 @@ const columns = [
   },
 ];
 
-export default function ExerciseList() {
-  const [exercises, setExercises] = useState<ExerciseItem[]>([]);
+export default function AdminList() {
+  const [admins, setAdmins] = useState<AdminItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [totalExercises, setTotalExercises] = useState(0);
+  const [totalAdmins, setTotalAdmins] = useState(0);
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
   const [sort, setSort] = useState<{
@@ -137,19 +89,13 @@ export default function ExerciseList() {
   useEffect(() => {
     setIsLoading(true);
 
-    exercisesService
-      .listExercises(
-        page,
-        perPage,
-        filter,
-        sort?.column || "",
-        sort?.direction || ""
-      )
+    adminsService
+      .list(page, perPage, filter, sort?.column || "", sort?.direction || "")
       .then((data) => {
-        const exercises = data.data;
-        setExercises(exercises);
+        const admins = data.data;
+        setAdmins(admins);
         setIsLoading(false);
-        setTotalExercises(exercises.length);
+        setTotalAdmins(admins.length); // TODO: get total from API
       });
   }, [filter, page, perPage, sort]);
 
@@ -157,9 +103,9 @@ export default function ExerciseList() {
     <div>
       <div className="bg-custom-light-grey py-3 px-4">
         <h1 className="font-bold text-2xl">
-          Exercises{" "}
+          Admins{" "}
           <span className="bg-gray-200 px-2 py-1 text-xs rounded-xl text-blue-600 font-normal">
-            {totalExercises}
+            {totalAdmins}
           </span>
         </h1>
       </div>
@@ -190,20 +136,20 @@ export default function ExerciseList() {
         </form>
         <button
           className="bg-custom-dark-blue flex text-white px-3 py-2 rounded font-medium items-center justify-center text-sm hover:bg-custom-hover-blue transition"
-          onClick={() => alert("Create new exercise")}
+          onClick={() => alert("Create new admin")}
         >
-          <FaPlus /> <span className="ml-2">New exercise </span>
+          <FaPlus /> <span className="ml-2">New admin </span>
         </button>
       </div>
 
       <DataTable
         columns={columns}
-        data={exercises}
+        data={admins}
         progressPending={isLoading}
         persistTableHead
         pagination
         paginationServer
-        paginationTotalRows={totalExercises}
+        paginationTotalRows={totalAdmins}
         onSort={(column, direction) =>
           setSort({ column: column.name?.toString(), direction })
         }
