@@ -16,9 +16,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/admins" />} />
           <Route path="/admins" element={<AdminPage />} />
+          <Route path="/admins/create" element={<AdminForm />} />
           <Route path="/categories" element={<CategoriesPage />} />
           <Route path="/exercises" element={<ExercisePage />} />
-          <Route path="/CreateAdmin" element={<AdminForm />} />
         </Routes>
       </Router>
     </main>
