@@ -10,6 +10,7 @@ import CategoriesPage from "./pages/CategoriesPage";
 import Login from "./components/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import CreateAdminPage from "./pages/CreateAdminPage";
+import CreateExercisePage from "./pages/CreateExercisePage";
 
 function App() {
   return (
@@ -36,6 +37,11 @@ function App() {
           <Route
             path="/exercises"
             element={<ProtectedRoute element={<ExercisePage />} />}
+          />
+
+          <Route
+            path="/exercises/create"
+            element={<ProtectedRoute element={<CreateExercisePage />} />}
           />
         </Routes>
       </Router>

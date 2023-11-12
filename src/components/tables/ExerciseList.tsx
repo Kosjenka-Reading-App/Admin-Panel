@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaPlus } from "react-icons/fa";
 import exercisesService from "../../services/exercises";
-
+import { Link } from "react-router-dom";
 
 type ExerciseItem = {
   id: string;
@@ -12,9 +12,6 @@ type ExerciseItem = {
   complexity: string;
   date: number;
 };
-
-
-
 
 const displayComplexity = (exercise: ExerciseItem) => {
   // Capitalize first letter
@@ -127,12 +124,6 @@ const columns = [
 ];
 
 export default function ExerciseList() {
-
-
-
-
-
-
   const [exercises, setExercises] = useState<ExerciseItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [totalExercises, setTotalExercises] = useState(0);
@@ -143,7 +134,6 @@ export default function ExerciseList() {
     direction: "asc" | "desc";
   } | null>(null);
   const [filter, setFilter] = useState("");
-
 
   useEffect(() => {
     setIsLoading(true);
@@ -199,12 +189,12 @@ export default function ExerciseList() {
             <AiOutlineSearch />
           </button>
         </form>
-        <button
+        <Link
           className="bg-custom-dark-blue flex text-white px-3 py-2 rounded font-medium items-center justify-center text-sm hover:bg-custom-hover-blue transition"
-          onClick={() => alert("Create new exercise")}
+          to="/exercises/create"
         >
           <FaPlus /> <span className="ml-2">New exercise </span>
-        </button>
+        </Link>
       </div>
 
       <DataTable

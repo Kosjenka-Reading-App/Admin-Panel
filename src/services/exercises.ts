@@ -1,4 +1,4 @@
-import { get } from "./axios";
+import { get, jsonPost } from "./axios";
 
 const parseSortBy = (sortField: string): string => {
   switch (sortField) {
@@ -33,6 +33,21 @@ const listExercises = (
   return get("exercises", query);
 };
 
+const create = async (title: string, text: string, complexity: string) => {
+  return jsonPost("exercises/", {
+    title,
+    text,
+    complexity: complexity.toLowerCase(),
+  })
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((error) => {
+      return Promise.reject(error);
+    });
+};
+
 export default {
   listExercises,
+  create,
 };
