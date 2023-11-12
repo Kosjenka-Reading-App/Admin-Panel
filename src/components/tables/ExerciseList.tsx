@@ -5,12 +5,16 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { FaPlus } from "react-icons/fa";
 import exercisesService from "../../services/exercises";
 
+
 type ExerciseItem = {
   id: string;
   title: string;
   complexity: string;
   date: number;
 };
+
+
+
 
 const displayComplexity = (exercise: ExerciseItem) => {
   // Capitalize first letter
@@ -123,6 +127,12 @@ const columns = [
 ];
 
 export default function ExerciseList() {
+
+
+
+
+
+
   const [exercises, setExercises] = useState<ExerciseItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [totalExercises, setTotalExercises] = useState(0);
@@ -133,6 +143,7 @@ export default function ExerciseList() {
     direction: "asc" | "desc";
   } | null>(null);
   const [filter, setFilter] = useState("");
+
 
   useEffect(() => {
     setIsLoading(true);

@@ -5,6 +5,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { FaPlus } from "react-icons/fa";
 import adminsService from "../../services/admins";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 type AdminItem = {
   id_account: number;
@@ -136,12 +137,12 @@ export default function AdminList() {
             <AiOutlineSearch />
           </button>
         </form>
-        <button
+        <Link
+          to="/admins/create"
           className="bg-custom-dark-blue flex text-white px-3 py-2 rounded font-medium items-center justify-center text-sm hover:bg-custom-hover-blue transition"
-          onClick={() => navigate('/CreateAdmin')} // Navigate to the AdminForm route
         >
           <FaPlus /> <span className="ml-2">New admin</span>
-        </button>
+        </Link>
       </div>
 
       <DataTable
