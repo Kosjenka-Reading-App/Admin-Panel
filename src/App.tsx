@@ -8,52 +8,28 @@ import ExercisePage from "./pages/ExercisePage";
 import AdminPage from "./pages/AdminsPage";
 import CategoriesPage from "./pages/CategoriesPage";
 import Login from "./components/Login";
-import useAuth from "./hooks/useAuth";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
-  const { isLoggedIn, loading } = useAuth();
-
   return (
     <main className="w-full h-full">
       <Router>
         <Routes>
           <Route path="/" element={<Navigate to="/admins" />} />
-          <Route
-            path="/login"
-            element={!loading && isLoggedIn ? <Navigate to="/" /> : <Login />}
-          />
+          <Route path="/login" element={<Login />} />
           <Route
             path="/admins"
-            element={
-              <ProtectedRoute
-                element={<AdminPage />}
-                loading={loading}
-                isLoggedIn={isLoggedIn}
-              />
-            }
+            element={<ProtectedRoute element={<AdminPage />} />}
           />
 
           <Route
             path="/categories"
-            element={
-              <ProtectedRoute
-                element={<CategoriesPage />}
-                loading={loading}
-                isLoggedIn={isLoggedIn}
-              />
-            }
+            element={<ProtectedRoute element={<CategoriesPage />} />}
           />
 
           <Route
             path="/exercises"
-            element={
-              <ProtectedRoute
-                element={<ExercisePage />}
-                loading={loading}
-                isLoggedIn={isLoggedIn}
-              />
-            }
+            element={<ProtectedRoute element={<ExercisePage />} />}
           />
         </Routes>
       </Router>

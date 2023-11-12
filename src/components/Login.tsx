@@ -1,8 +1,13 @@
 import logo from "../assets/logo.png";
 import React, { useState } from "react";
 import { login } from "../services/auth";
+import useAuth from "../hooks/useAuth";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const { isLoggedIn, loading: loadingAuth } = useAuth();
+  const navigate = useNavigate();
+
   const [isHidden, setIsHidden] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -11,9 +16,17 @@ const Login = () => {
     e.preventDefault();
 
     login(email, password)
-      .then(() => console.log("Logged in"))
+      .then(() => navigate("/"))
       .catch(() => setIsHidden(false));
   };
+
+  if (loadingAuth) {
+    return <></>;
+  }
+
+  if (isLoggedIn) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div className="w-full h-screen flex bg-gradient-to-b from-blue-400 via-blue-600 to-blue-800">

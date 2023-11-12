@@ -1,15 +1,14 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 export default function ProtectedRoute({
   element,
-  isLoggedIn,
-  loading,
 }: {
   element: React.ReactNode;
-  isLoggedIn: boolean;
-  loading: boolean;
 }) {
+  const { isLoggedIn, loading } = useAuth();
+
   if (loading) return <></>;
 
   return isLoggedIn ? element : <Navigate to="/login" />;
