@@ -1,35 +1,53 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import ExercisePage from "./pages/ExercisePage";
+import AdminPage from "./pages/AdminsPage";
+import CategoriesPage from "./pages/CategoriesPage";
+import Login from "./components/Login";
+import ProtectedRoute from "./components/ProtectedRoute";
+import CreateAdminPage from "./pages/CreateAdminPage";
+import CreateExercisePage from "./pages/CreateExercisePage";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React in Production</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="text-red-600">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <main className="w-full h-full">
+      <Router>
+        <Routes>
+          <Route path="/" element={<Navigate to="/admins" />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/admins"
+            element={<ProtectedRoute element={<AdminPage />} />}
+          />
+
+          <Route
+            path="/admins/create"
+            element={<ProtectedRoute element={<CreateAdminPage />} />}
+          />
+
+          <Route
+            path="/categories"
+            element={<ProtectedRoute element={<CategoriesPage />} />}
+          />
+
+          <Route
+            path="/exercises"
+            element={<ProtectedRoute element={<ExercisePage />} />}
+          />
+
+          <Route
+            path="/exercises/create"
+            element={<ProtectedRoute element={<CreateExercisePage />} />}
+          />
+        </Routes>
+      </Router>
+    </main>
+  );
+
 }
 
-export default App
+export default App;
