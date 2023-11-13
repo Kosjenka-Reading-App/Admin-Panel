@@ -3,6 +3,7 @@ import { LuUsers } from "react-icons/lu";
 import { Link } from "react-router-dom"; // Import the Link component
 import SidebarLink from "./SidebarLink";
 import { BsBoxFill } from "react-icons/bs";
+import logOut from "../../services/logout";
 
 const Sidebar = ({ activeRoute }: { activeRoute: string }) => {
   return (
@@ -38,6 +39,7 @@ const Sidebar = ({ activeRoute }: { activeRoute: string }) => {
           to="/login"
           className="bg-custom-dark-blue p-0 rounded-lg flex items-center justify-center w-12 h-12 hover:bg-custom-hover-blue transition"
           title="Logout"
+          onClick={logOut}
         >
           <FiLogOut size={30} className="text-white" />
         </Link>
