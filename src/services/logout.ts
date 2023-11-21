@@ -1,10 +1,10 @@
-import Cookies from "js-cookie";
-const logOut = () => {
+// import Cookies from "js-cookie";
+// const logOut = () => {
 
-    Cookies.remove('accessToken');
-    Cookies.remove('refreshToken');
+//     Cookies.remove('accessToken');
+//     Cookies.remove('refreshToken');
 
 
-}
+// }
 
-export default logOut;
+// export default logOut;
