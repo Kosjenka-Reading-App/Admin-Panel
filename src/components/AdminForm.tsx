@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Alert from "./Alert";
+
 
 import adminService from "../services/admins";
 
@@ -39,11 +41,7 @@ const AdminForm: React.FC = () => {
       <div className="flex-grow flex items-center justify-center p-8">
         <div className="bg-custom-light-grey p-12 rounded-lg shadow-xl w-full max-w-2xl">
           {/* Show error message when there is one */}
-          {errorMessage && (
-            <div className="mb-4 text-center p-2 text-red-600 bg-red-100 rounded">
-              {errorMessage}
-            </div>
-          )}
+          {errorMessage && <Alert message={errorMessage} />}
           <form onSubmit={handleSubmit} className="space-y-8">
             <div>
               <label htmlFor="email" className="text-lg font-semibold text-gray-700 block">
