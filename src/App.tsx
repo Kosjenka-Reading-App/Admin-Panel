@@ -11,6 +11,8 @@ import Login from "./components/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import CreateAdminPage from "./pages/CreateAdminPage";
 import CreateExercisePage from "./pages/CreateExercisePage";
+import ResetPasswordRequest from "./components/ResetPasswordRequest";
+import ResetPasswordConfirm from "./components/ResetPasswordConfirm";
 
 function App() {
   return (
@@ -43,6 +45,17 @@ function App() {
             path="/exercises/create"
             element={<ProtectedRoute element={<CreateExercisePage />} />}
           />
+
+          <Route
+            path="/password/reset"
+            element={<ResetPasswordRequest />}
+          />
+
+          <Route
+            path="/password/confirm"
+            element={<ResetPasswordConfirm />}
+          />
+          
         </Routes>
       </Router>
     </main>
