@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaPlus } from "react-icons/fa";
 import exercisesService from "../../services/exercises";
+import { Link } from "react-router-dom";
 
 type ExerciseItem = {
   id: string;
@@ -188,12 +189,12 @@ export default function ExerciseList() {
             <AiOutlineSearch />
           </button>
         </form>
-        <button
+        <Link
           className="bg-custom-dark-blue flex text-white px-3 py-2 rounded font-medium items-center justify-center text-sm hover:bg-custom-hover-blue transition"
-          onClick={() => alert("Create new exercise")}
+          to="/exercises/create"
         >
           <FaPlus /> <span className="ml-2">New exercise </span>
-        </button>
+        </Link>
       </div>
 
       <DataTable

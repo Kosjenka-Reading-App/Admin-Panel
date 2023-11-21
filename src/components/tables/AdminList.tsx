@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaPlus } from "react-icons/fa";
 import adminsService from "../../services/admins";
+import { Link } from "react-router-dom";
 
 type AdminItem = {
   id_account: number;
@@ -134,12 +135,12 @@ export default function AdminList() {
             <AiOutlineSearch />
           </button>
         </form>
-        <button
+        <Link
+          to="/admins/create"
           className="bg-custom-dark-blue flex text-white px-3 py-2 rounded font-medium items-center justify-center text-sm hover:bg-custom-hover-blue transition"
-          onClick={() => alert("Create new admin")}
         >
-          <FaPlus /> <span className="ml-2">New admin </span>
-        </button>
+          <FaPlus /> <span className="ml-2">New admin</span>
+        </Link>
       </div>
 
       <DataTable
