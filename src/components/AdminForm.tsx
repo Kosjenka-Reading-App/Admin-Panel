@@ -7,20 +7,19 @@ const AdminForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSuperAdmin, setIsSuperAdmin] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(""); // State to hold the error message
+  const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setErrorMessage(""); // Clear any existing error messages
+    setErrorMessage("");
     adminService
       .create(email, password, isSuperAdmin)
       .then(() => {
         navigate("/admins");
       })
       .catch((err) => {
-        // Check the error and set an appropriate message
         if (err.response && err.response.status === 409) {
           setErrorMessage("An account with this email already exists.");
         } else {
@@ -55,7 +54,7 @@ const AdminForm: React.FC = () => {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="mt-1 px-4 py-3 bg-white border border-slate-300 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 block w-full rounded-md text-lg"
+                className="text-custom-black mt-1 px-4 py-3 bg-white border border-slate-300 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 block w-full rounded-md text-lg"
                 placeholder="example@email.com"
                 required
               />
@@ -69,7 +68,7 @@ const AdminForm: React.FC = () => {
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="mt-1 px-4 py-3 bg-white border border-slate-300 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 block w-full rounded-md text-lg"
+                className="text-custom-black mt-1 px-4 py-3 bg-white border border-slate-300 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 block w-full rounded-md text-lg"
                 placeholder="********"
                 required
               />
