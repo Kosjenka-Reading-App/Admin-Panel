@@ -11,7 +11,7 @@ const RequestResetPassword = () => {
     // TODO: Call your API endpoint to request a password reset
     console.log('Request password reset for:', email);
     // Simulating a success response from the API
-    navigate('/reset-password-confirm'); // Redirect to the password confirm page
+    navigate('/password/confirm'); // Redirect to the password confirm page
   };
 
   return (
