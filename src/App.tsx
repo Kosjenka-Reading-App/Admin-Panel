@@ -11,6 +11,7 @@ import Login from "./components/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import CreateAdminPage from "./pages/CreateAdminPage";
 import CreateExercisePage from "./pages/CreateExercisePage";
+import CreateCategory from "./components/CreateCategory";
 
 function App() {
   return (
@@ -43,6 +44,12 @@ function App() {
             path="/exercises/create"
             element={<ProtectedRoute element={<CreateExercisePage />} />}
           />
+
+            <Route
+            path="/category/create"
+            element={<ProtectedRoute element={<CreateCategory />} />}
+          />
+
         </Routes>
       </Router>
     </main>
