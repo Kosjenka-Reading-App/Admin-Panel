@@ -5,6 +5,7 @@ import {
   ADMIN_PERMISSIONS_VALUE,
   AdminPermission,
 } from "../constants/permissions";
+import { ROUTES } from "../constants/navbar";
 
 export default function ProtectedRoute({
   element,
@@ -22,10 +23,12 @@ export default function ProtectedRoute({
   const required = ADMIN_PERMISSIONS_VALUE[permissionLevel];
   const actual = ADMIN_PERMISSIONS_VALUE[type!];
 
-  console.log("TESTING", required, actual);
-
   if (required > actual) {
-    return <Navigate to="/404" />;
+    const validRoute = ROUTES.find(
+      (route) => required > ADMIN_PERMISSIONS_VALUE[route.permission]
+    );
+
+    return <Navigate to={validRoute?.path || "/404"} />;
   }
 
   return element;
