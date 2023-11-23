@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
 import { get } from "../services/axios";
 import { useLocation } from "react-router-dom";
+import { AdminPermission } from "../constants/permissions";
 
 export default function useAuth() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [type, setType] = useState<AdminPermission | null>(null);
   const location = useLocation();
-
-  // TODO - This is a hacky way to check if the user is logged in.
-  // Update when we have a /me endpoint
 
   useEffect(() => {
     setLoading(true);
-    get("/accounts", {})
-      .then(() => {
+    get("/me")
+      .then((body) => {
         setIsLoggedIn(true);
         setLoading(false);
+        setType(body.data.account_category);
       })
       .catch(() => {
         setLoading(false);
@@ -23,5 +23,5 @@ export default function useAuth() {
       });
   }, [location.pathname]);
 
-  return { loading, isLoggedIn };
+  return { loading, isLoggedIn, type };
 }
