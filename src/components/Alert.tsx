@@ -1,10 +1,9 @@
-import React from "react";
-
 interface AlertProps {
   message: string;
 }
 
-const Alert: React.FC<AlertProps> = ({ message }) => {
+// Alert component without React.FC, with return type annotated as JSX.Element
+const Alert = ({ message }: AlertProps): JSX.Element => {
   return (
     <div className="mb-4 text-center p-2 text-red-600 bg-red-100 rounded">
       {message}

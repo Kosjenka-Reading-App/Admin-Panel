@@ -40,7 +40,6 @@ const AdminForm: React.FC = () => {
       </div>
       <div className="flex-grow flex items-center justify-center p-8">
         <div className="bg-custom-light-grey p-12 rounded-lg shadow-xl w-full max-w-2xl">
-          {/* Show error message when there is one */}
           {errorMessage && <Alert message={errorMessage} />}
           <form onSubmit={handleSubmit} className="space-y-8">
             <div>
