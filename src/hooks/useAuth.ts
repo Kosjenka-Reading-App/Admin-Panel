@@ -3,6 +3,12 @@ import { get } from "../services/axios";
 import { useLocation } from "react-router-dom";
 import { AdminPermission } from "../constants/permissions";
 
+export type AuthData = {
+  loading: boolean;
+  isLoggedIn: boolean;
+  type: AdminPermission | null;
+};
+
 export default function useAuth() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -23,5 +29,5 @@ export default function useAuth() {
       });
   }, [location.pathname]);
 
-  return { loading, isLoggedIn, type };
+  return { loading, isLoggedIn, type } as AuthData;
 }

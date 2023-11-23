@@ -3,8 +3,23 @@ import { LuUsers } from "react-icons/lu";
 import { Link } from "react-router-dom"; // Import the Link component
 import SidebarLink from "./SidebarLink";
 import { BsBoxFill } from "react-icons/bs";
+import { AuthData } from "../../hooks/useAuth";
+import { ROUTES } from "../../constants/navbar";
+import { ADMIN_PERMISSIONS_VALUE } from "../../constants/permissions";
 
-const Sidebar = ({ activeRoute }: { activeRoute: string }) => {
+const Sidebar = ({
+  activeRoute,
+  auth,
+}: {
+  activeRoute: string;
+  auth: AuthData;
+}) => {
+  const allowedRoutes = ROUTES.filter(
+    (route) =>
+      ADMIN_PERMISSIONS_VALUE[route.permission] <=
+      ADMIN_PERMISSIONS_VALUE[auth.type!]
+  );
+
   return (
     <div className="w-16 h-screen flex flex-col justify-between py-4 bg-navbar-color">
       <div>
@@ -13,24 +28,14 @@ const Sidebar = ({ activeRoute }: { activeRoute: string }) => {
             <span className="text-custom-blue text-3xl font-bold">K</span>
           </div>
         </div>
-
-        <SidebarLink
-          active={activeRoute === "admins"}
-          to="/admins"
-          icon={LuUsers}
-        />
-
-        <SidebarLink
-          active={activeRoute === "exercises"}
-          to="/exercises"
-          icon={FiFileText}
-        />
-
-        <SidebarLink
-          active={activeRoute === "categories"}
-          to="/categories"
-          icon={BsBoxFill}
-        />
+        {allowedRoutes.map((route) => (
+          <SidebarLink
+            key={route.path}
+            active={activeRoute === route.path.split("/")[1]}
+            to={route.path}
+            icon={route.icon}
+          />
+        ))}
       </div>
 
       <div className="flex justify-center pb-4">
