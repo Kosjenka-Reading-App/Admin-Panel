@@ -25,7 +25,7 @@ export default function ProtectedRoute({
 
   if (required > actual) {
     const validRoute = ROUTES.find(
-      (route) => required > ADMIN_PERMISSIONS_VALUE[route.permission]
+      (route) => ADMIN_PERMISSIONS_VALUE[route.permission] <= actual
     );
 
     return <Navigate to={validRoute?.path || "/404"} />;

@@ -1,8 +1,6 @@
-import { FiLogOut, FiFileText } from "react-icons/fi";
-import { LuUsers } from "react-icons/lu";
+import { FiLogOut } from "react-icons/fi";
 import { Link } from "react-router-dom"; // Import the Link component
 import SidebarLink from "./SidebarLink";
-import { BsBoxFill } from "react-icons/bs";
 import { AuthData } from "../../hooks/useAuth";
 import { ROUTES } from "../../constants/navbar";
 import { ADMIN_PERMISSIONS_VALUE } from "../../constants/permissions";
