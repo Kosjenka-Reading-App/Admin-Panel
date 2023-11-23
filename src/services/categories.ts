@@ -18,16 +18,15 @@ const list = (
     query["order_by"] = sortField;
   }
 
-  return get("/categories", query);
+  return get("categories", query);
 };
 
 const create = (name: string) => {
   const body = { name };
-  return jsonPost("/categories", body);
+  return jsonPost("categories", body);
 };
 
 export default {
   list,
   create,
-  // ... any other service functions ...
 };

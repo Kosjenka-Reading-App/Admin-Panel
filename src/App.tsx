@@ -46,7 +46,7 @@ function App() {
           />
 
             <Route
-            path="/category/create"
+            path="/categories/create"
             element={<ProtectedRoute element={<CreateCategory />} />}
           />
 

@@ -13,7 +13,7 @@ const CreateCategory: React.FC = () => {
     categoriesService
       .create(name)
       .then(() => {
-        navigate("/categories");
+        navigate("categories");
       })
       .catch((err) => {
         console.log(err);

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaPlus } from "react-icons/fa";
 import categoriesService from "../../services/categories";
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 type CategoryItem = string;
 
@@ -47,8 +47,6 @@ export default function CategoriesList() {
     direction: "asc" | "desc";
   } | null>(null);
   const [filter, setFilter] = useState("");
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     setIsLoading(true);
@@ -98,12 +96,12 @@ export default function CategoriesList() {
             <AiOutlineSearch />
           </button>
         </form>
-        <button
-           className="bg-custom-dark-blue flex text-white px-3 py-2 rounded font-medium items-center justify-center text-sm hover:bg-custom-hover-blue transition"
-            onClick={() => navigate("/category/create")}
-            >
-             <FaPlus /> <span className="ml-2">New category </span>
-          </button>
+        <Link
+          to="create"
+          className="bg-custom-dark-blue flex text-white px-3 py-2 rounded font-medium items-center justify-center text-sm hover:bg-custom-hover-blue transition"
+        >
+          <FaPlus /> <span className="ml-2">New category</span>
+        </Link>
       </div>
 
       <DataTable
