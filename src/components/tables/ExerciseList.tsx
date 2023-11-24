@@ -49,7 +49,6 @@ const displayComplexity = (exercise: ExerciseItem) => {
 };
 
 const displayLastUpdate = (exercise: ExerciseItem) => {
-  console.log(exercise.date);
   const date = new Date(exercise.date);
   const day = String(date.getDate()).padStart(2, "0");
   const monthNames = [
@@ -83,12 +82,50 @@ const displayTitle = (exercise: ExerciseItem) => {
 };
 
 export default function ExerciseList() {
+  const [page, setPage] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
   const [idToDelete, setIdToDelete] = useState("");
-  const onDelete = useCallback((id: string) => {
+  const [nameToDelete, setNameToDelete] = useState("");
+
+  const [exercises, setExercises] = useState<ExerciseItem[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [totalExercises, setTotalExercises] = useState(0);
+  const [perPage, setPerPage] = useState(10);
+  const [sort, setSort] = useState<{
+    column: string | undefined;
+    direction: "asc" | "desc";
+  } | null>(null);
+  const [filter, setFilter] = useState("");
+
+  const search = useCallback(() => {
+    setIsLoading(true);
+
+    exercisesService
+      .listExercises(
+        page,
+        perPage,
+        filter,
+        sort?.column || "",
+        sort?.direction || ""
+      )
+      .then((data) => {
+        const exercises = data.data;
+        setExercises(exercises);
+        setIsLoading(false);
+        setTotalExercises(exercises.length);
+      });
+  }, [page, perPage, filter, sort]);
+
+  const onDelete = useCallback((id: string, name: string) => {
     setModalOpen(true);
     setIdToDelete(id);
+    setNameToDelete(name);
   }, []);
+
+  const onConfirmDelete = useCallback(() => {
+    exercisesService.deleteExercise(idToDelete).then(search);
+    setModalOpen(false);
+  }, [idToDelete, search]);
 
   const columns = useMemo(
     () => [
@@ -125,7 +162,7 @@ export default function ExerciseList() {
           <div className="w-full flex justify-center">
             <div
               className="cursor-pointer p-1 text-xl"
-              onClick={() => onDelete(row.id)}
+              onClick={() => onDelete(row.id, row.title)}
             >
               <AiFillDelete />
             </div>
@@ -135,47 +172,22 @@ export default function ExerciseList() {
         ignoreRowClick: true,
       },
     ],
-    []
+    [onDelete]
   );
 
-  const [exercises, setExercises] = useState<ExerciseItem[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [totalExercises, setTotalExercises] = useState(0);
-  const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(10);
-  const [sort, setSort] = useState<{
-    column: string | undefined;
-    direction: "asc" | "desc";
-  } | null>(null);
-  const [filter, setFilter] = useState("");
-
   useEffect(() => {
-    setIsLoading(true);
-
-    exercisesService
-      .listExercises(
-        page,
-        perPage,
-        filter,
-        sort?.column || "",
-        sort?.direction || ""
-      )
-      .then((data) => {
-        const exercises = data.data;
-        setExercises(exercises);
-        setIsLoading(false);
-        setTotalExercises(exercises.length);
-      });
-  }, [filter, page, perPage, sort]);
+    search();
+  }, [search]);
 
   return (
     <>
       <ConfirmModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
-        onConfirm={() => console.log("confirm")}
+        onConfirm={() => onConfirmDelete()}
         title="Delete exercise"
-        text="Are you sure you want to delete this exercise? You will not be able to recover this exercise if you proceed with this operation!"
+        text={`Are you sure you want to delete "${nameToDelete}"? You will not be able to recover this exercise if you proceed with this operation!`}
+        confirmText="Delete"
       />
       <div>
         <div className="bg-custom-light-grey py-3 px-4">
