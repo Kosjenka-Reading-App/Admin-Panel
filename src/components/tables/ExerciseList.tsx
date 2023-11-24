@@ -1,10 +1,11 @@
 import DataTable from "react-data-table-component";
-import { FaPencilAlt } from "react-icons/fa";
-import { useEffect, useState } from "react";
+import { AiFillDelete } from "react-icons/ai";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaPlus } from "react-icons/fa";
 import exercisesService from "../../services/exercises";
 import { Link } from "react-router-dom";
+import ConfirmModal from "../ConfirmModal";
 
 type ExerciseItem = {
   id: string;
@@ -81,49 +82,62 @@ const displayTitle = (exercise: ExerciseItem) => {
   );
 };
 
-const columns = [
-  {
-    name: "#",
-    selector: (row: ExerciseItem) => row.id,
-    sortable: true,
-    width: "5%",
-  },
-  {
-    name: "title",
-    selector: (row: ExerciseItem) => row.title,
-    sortable: true,
-    cell: displayTitle,
-    width: "50%",
-  },
-  {
-    name: "complexity",
-    selector: (row: ExerciseItem) => row.complexity,
-    sortable: true,
-    cell: displayComplexity,
-    width: "15%",
-  },
-  {
-    name: "last update",
-    selector: (row: ExerciseItem) => row.date,
-    sortable: true,
-    cell: displayLastUpdate,
-    width: "20%",
-  },
-  {
-    name: "Actions",
-    cell: () => (
-      <div className="w-full flex justify-center">
-        <div className="cursor-pointer">
-          <FaPencilAlt />
-        </div>
-      </div>
-    ),
-    width: "10%",
-    ignoreRowClick: true,
-  },
-];
-
 export default function ExerciseList() {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [idToDelete, setIdToDelete] = useState("");
+  const onDelete = useCallback((id: string) => {
+    setModalOpen(true);
+    setIdToDelete(id);
+  }, []);
+
+  const columns = useMemo(
+    () => [
+      {
+        name: "#",
+        selector: (row: ExerciseItem) => row.id,
+        sortable: true,
+        width: "5%",
+      },
+      {
+        name: "title",
+        selector: (row: ExerciseItem) => row.title,
+        sortable: true,
+        cell: displayTitle,
+        width: "50%",
+      },
+      {
+        name: "complexity",
+        selector: (row: ExerciseItem) => row.complexity,
+        sortable: true,
+        cell: displayComplexity,
+        width: "15%",
+      },
+      {
+        name: "last update",
+        selector: (row: ExerciseItem) => row.date,
+        sortable: true,
+        cell: displayLastUpdate,
+        width: "20%",
+      },
+      {
+        name: "Actions",
+        cell: (row: ExerciseItem) => (
+          <div className="w-full flex justify-center">
+            <div
+              className="cursor-pointer p-1 text-xl"
+              onClick={() => onDelete(row.id)}
+            >
+              <AiFillDelete />
+            </div>
+          </div>
+        ),
+        width: "10%",
+        ignoreRowClick: true,
+      },
+    ],
+    []
+  );
+
   const [exercises, setExercises] = useState<ExerciseItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [totalExercises, setTotalExercises] = useState(0);
@@ -155,62 +169,71 @@ export default function ExerciseList() {
   }, [filter, page, perPage, sort]);
 
   return (
-    <div>
-      <div className="bg-custom-light-grey py-3 px-4">
-        <h1 className="font-bold text-2xl">
-          Exercises{" "}
-          <span className="bg-gray-200 px-2 py-1 text-xs rounded-xl text-blue-600 font-normal">
-            {totalExercises}
-          </span>
-        </h1>
-      </div>
-
-      <div className="flex items-center justify-between px-4 py-3">
-        <form
-          className="flex"
-          onSubmit={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            const formData = new FormData(e.target as HTMLFormElement);
-            const query = formData.get("query")?.toString() || "";
-            setFilter(query);
-          }}
-        >
-          <input
-            type="text"
-            name="query"
-            placeholder="Search"
-            className="border border-gray-300 rounded-l px-2 py-1 w-96 focus:outline-none focus:ring focus:border-custom-light-blue"
-          />
-          <button
-            type="submit"
-            className="bg-custom-dark-blue text-white px-3 py-2 rounded-r rounded-l-none font-semibold transition hover:bg-custom-hover-blue"
-          >
-            <AiOutlineSearch />
-          </button>
-        </form>
-        <Link
-          className="bg-custom-dark-blue flex text-white px-3 py-2 rounded font-medium items-center justify-center text-sm hover:bg-custom-hover-blue transition"
-          to="/exercises/create"
-        >
-          <FaPlus /> <span className="ml-2">New exercise </span>
-        </Link>
-      </div>
-
-      <DataTable
-        columns={columns}
-        data={exercises}
-        progressPending={isLoading}
-        persistTableHead
-        pagination
-        paginationServer
-        paginationTotalRows={totalExercises}
-        onSort={(column, direction) =>
-          setSort({ column: column.name?.toString(), direction })
-        }
-        onChangeRowsPerPage={setPerPage}
-        onChangePage={setPage}
+    <>
+      <ConfirmModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onConfirm={() => console.log("confirm")}
+        title="Delete exercise"
+        text="Are you sure you want to delete this exercise? You will not be able to recover this exercise if you proceed with this operation!"
       />
-    </div>
+      <div>
+        <div className="bg-custom-light-grey py-3 px-4">
+          <h1 className="font-bold text-2xl">
+            Exercises{" "}
+            <span className="bg-gray-200 px-2 py-1 text-xs rounded-xl text-blue-600 font-normal">
+              {totalExercises}
+            </span>
+          </h1>
+        </div>
+
+        <div className="flex items-center justify-between px-4 py-3">
+          <form
+            className="flex"
+            onSubmit={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              const formData = new FormData(e.target as HTMLFormElement);
+              const query = formData.get("query")?.toString() || "";
+              setFilter(query);
+            }}
+          >
+            <input
+              type="text"
+              name="query"
+              placeholder="Search"
+              className="border border-gray-300 rounded-l px-2 py-1 w-96 focus:outline-none focus:ring focus:border-custom-light-blue"
+            />
+            <button
+              type="submit"
+              className="bg-custom-dark-blue text-white px-3 py-2 rounded-r rounded-l-none font-semibold transition hover:bg-custom-hover-blue"
+            >
+              <AiOutlineSearch />
+            </button>
+          </form>
+          <Link
+            className="bg-custom-dark-blue flex text-white px-3 py-2 rounded font-medium items-center justify-center text-sm hover:bg-custom-hover-blue transition"
+            to="/exercises/create"
+          >
+            <FaPlus /> <span className="ml-2">New exercise </span>
+          </Link>
+        </div>
+
+        <DataTable
+          columns={columns}
+          data={exercises}
+          progressPending={isLoading}
+          persistTableHead
+          pagination
+          paginationServer
+          paginationTotalRows={totalExercises}
+          onSort={(column, direction) =>
+            setSort({ column: column.name?.toString(), direction })
+          }
+          onChangeRowsPerPage={setPerPage}
+          onChangePage={setPage}
+        />
+      </div>
+    </>
   );
 }
