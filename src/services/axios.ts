@@ -56,7 +56,7 @@ api.interceptors.response.use(
   }
 );
 
-export function get(path: string, params: Record<string, unknown>) {
+export function get(path: string, params?: Record<string, unknown>) {
   return api.get(path, { params });
 }
 
