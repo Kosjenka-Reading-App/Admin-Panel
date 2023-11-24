@@ -1,17 +1,24 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import logo from "../assets/logo.png";
+import Alert from './Alert'; 
 
 const RequestResetPassword = () => {
-  const navigate = useNavigate();
   const [email, setEmail] = useState('');
+  const [alertMessage, setAlertMessage] = useState(''); // State to store alert messages
+  const [showAlert, setShowAlert] = useState(false); // State to control the display of the alert
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // TODO: Call your API endpoint to request a password reset
     console.log('Request password reset for:', email);
-    // Simulating a success response from the API
-    navigate('/password/confirm'); // Redirect to the password confirm page
+    
+    // Simulate a success response from the API
+    // If the email exists in the system, an email will be sent
+    setAlertMessage('If the email address exists in our system, we have sent a password reset link to your email address.');
+    setShowAlert(true); // Show the alert message
+
+    // Clear the email field to reset the form
+    setEmail('');
   };
 
   return (
@@ -25,6 +32,8 @@ const RequestResetPassword = () => {
             <h2 className="text-2xl text-custom-blue font-bold text-center mb-8">
               Recover Account
             </h2>
+            {/* Render Alert component if showAlert is true */}
+            {showAlert && <Alert message={alertMessage} />}
             <div>
               <label htmlFor="email" className="block mb-2 text-sm font-medium text-custom-grey">
                 Email Address

@@ -12,6 +12,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import CreateAdminPage from "./pages/CreateAdminPage";
 import CreateExercisePage from "./pages/CreateExercisePage";
 import { ADMIN_PERMISSIONS } from "./constants/permissions";
+import ResetPasswordRequest from "./components/ResetPasswordRequest";
+import ResetPasswordConfirm from "./components/ResetPasswordConfirm";
 
 function App() {
   return (

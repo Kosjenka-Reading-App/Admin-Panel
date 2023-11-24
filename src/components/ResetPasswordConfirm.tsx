@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from "../assets/logo.png";
+import Alert from './Alert';
 
 const ConfirmResetPassword = () => {
   const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState(''); // State to store error messages
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      console.error("Passwords do not match!");
+      // Set an error message if passwords do not match
+      setErrorMessage("Passwords do not match!");
       return;
     }
+    // Clear the error message on successful match
+    setErrorMessage('');
     // TODO: Call your API endpoint to confirm the new password
     console.log('New password set:', password);
-    // Simulating a success response from the API
+    // Simulate a successful response from the API
     navigate('/login'); // Redirect to the login page
   };
 
@@ -30,6 +35,8 @@ const ConfirmResetPassword = () => {
             <h2 className="text-2xl text-custom-blue font-bold text-center mb-8">
               Reset Account Password
             </h2>
+            {/* Render Alert component if there is an error message */}
+            {errorMessage && <Alert message={errorMessage} />}
             <div>
               <label htmlFor="password" className="block mb-2 text-sm font-medium text-custom-grey">
                 New Password
