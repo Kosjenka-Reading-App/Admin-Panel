@@ -2,21 +2,25 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import categoriesService from "../services/categories";
+import Alert from "./Alert"; 
 
 const CreateCategory: React.FC = () => {
   const [name, setName] = useState("");
+  const [alertMessage, setAlertMessage] = useState(""); 
+  const [showAlert, setShowAlert] = useState(false); 
   const navigate = useNavigate();
-
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     categoriesService
       .create(name)
       .then(() => {
-        navigate("categories");
+        navigate("/categories");
       })
       .catch((err) => {
-        console.log(err);
+        const message = err.response?.data?.message || "An error occurred while creating the category.";
+        setAlertMessage(message); 
+        setShowAlert(true); 
       });
   };
 
@@ -29,6 +33,8 @@ const CreateCategory: React.FC = () => {
       </div>
       <div className="flex-grow flex items-center justify-center p-8">
         <div className="bg-custom-light-grey p-12 rounded-lg shadow-xl w-full max-w-2xl">
+          {/* Conditionally render the Alert component based on showAlert state */}
+          {showAlert && <Alert message={alertMessage} />}
           <form onSubmit={handleSubmit} className="space-y-8">
             <div>
               <label
@@ -55,6 +61,7 @@ const CreateCategory: React.FC = () => {
                 Save
               </button>
               <button
+                type="button"
                 onClick={() => navigate("/categories")}
                 className="px-6 py-3 bg-custom-grey text-gray-800 text-lg rounded hover:bg-gray-400"
               >

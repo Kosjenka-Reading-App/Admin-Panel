@@ -12,6 +12,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import CreateAdminPage from "./pages/CreateAdminPage";
 import CreateExercisePage from "./pages/CreateExercisePage";
 import CreateCategory from "./components/CreateCategory";
+import { ADMIN_PERMISSIONS } from "./constants/permissions";
 
 function App() {
   return (
@@ -72,7 +73,10 @@ function App() {
 
             <Route
             path="/categories/create"
-            element={<ProtectedRoute element={<CreateCategory />} />}
+            element={<ProtectedRoute element={<CreateCategory />} 
+            permissionLevel={ADMIN_PERMISSIONS.ADMIN}
+            />
+          }
           />
 
         </Routes>
