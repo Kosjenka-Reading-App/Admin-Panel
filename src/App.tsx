@@ -11,6 +11,7 @@ import Login from "./components/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import CreateAdminPage from "./pages/CreateAdminPage";
 import CreateExercisePage from "./pages/CreateExercisePage";
+import { ADMIN_PERMISSIONS } from "./constants/permissions";
 
 function App() {
   return (
@@ -21,33 +22,61 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route
             path="/admins"
-            element={<ProtectedRoute element={<AdminPage />} />}
+            element={
+              <ProtectedRoute
+                element={<AdminPage />}
+                permissionLevel={ADMIN_PERMISSIONS.SUPERADMIN}
+              />
+            }
           />
 
           <Route
             path="/admins/create"
-            element={<ProtectedRoute element={<CreateAdminPage />} />}
+            element={
+              <ProtectedRoute
+                element={<CreateAdminPage />}
+                permissionLevel={ADMIN_PERMISSIONS.SUPERADMIN}
+              />
+            }
           />
 
           <Route
             path="/categories"
-            element={<ProtectedRoute element={<CategoriesPage />} />}
+            element={
+              <ProtectedRoute
+                element={<CategoriesPage />}
+                permissionLevel={ADMIN_PERMISSIONS.ADMIN}
+              />
+            }
           />
 
           <Route
             path="/exercises"
-            element={<ProtectedRoute element={<ExercisePage />} />}
+            element={
+              <ProtectedRoute
+                element={<ExercisePage />}
+                permissionLevel={ADMIN_PERMISSIONS.ADMIN}
+              />
+            }
           />
 
           <Route
             path="/exercises/create"
-            element={<ProtectedRoute element={<CreateExercisePage />} />}
+            element={
+              <ProtectedRoute
+                element={<CreateExercisePage />}
+                permissionLevel={ADMIN_PERMISSIONS.ADMIN}
+              />
+            }
           />
+
+          <Route path="/404" element={<h1>404</h1>} />
+
+          <Route path="*" element={<Navigate to="/404" />} />
         </Routes>
       </Router>
     </main>
   );
-
 }
 
 export default App;
