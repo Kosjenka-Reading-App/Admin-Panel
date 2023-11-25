@@ -1,7 +1,7 @@
 import { jsonPost } from "./axios";
 import Cookies from "js-cookie";
 
-const login = async (email: string, password: string) => {
+const login = (email: string, password: string) => {
   return jsonPost("/login", { email, password })
     .then((response) => {
       const accessToken = response?.data?.access_token;
@@ -17,6 +17,14 @@ const login = async (email: string, password: string) => {
 const logOut = () => {
   Cookies.remove('accessToken');
   Cookies.remove('refreshToken');
-}
+};
 
-export { login, logOut};
+const forgotPassword = (email: string) => {
+  return jsonPost("/password/forgot", { email });
+};
+
+const resetPassword = (password: string, token: string) => {
+  return jsonPost("/password/reset", { password, token });
+};
+
+export { login, logOut, forgotPassword, resetPassword };

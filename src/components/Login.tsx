@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { login } from "../services/auth";
 import useAuth from "../hooks/useAuth";
 import { Navigate, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const { isLoggedIn, loading: loadingAuth } = useAuth();
@@ -80,9 +81,11 @@ const Login = () => {
               type="submit"
               className="w-full py-2 my-4 bg-custom-blue hover:bg-blue-400 rounded-lg"
             >
-              Login
-            </button>
-            <p className="text-left text-sm text-blue-500">Forgot Password?</p>
+             Login
+              </button>
+             <Link to="/password/reset" className="text-left text-sm text-blue-500">
+                Forgot Password?
+            </Link>
           </form>
         </div>
       </div>

@@ -13,6 +13,8 @@ import CreateAdminPage from "./pages/CreateAdminPage";
 import CreateExercisePage from "./pages/CreateExercisePage";
 import CreateCategory from "./components/CreateCategory";
 import { ADMIN_PERMISSIONS } from "./constants/permissions";
+import ResetPasswordRequest from "./components/ResetPasswordRequest";
+import ResetPasswordConfirm from "./components/ResetPasswordConfirm";
 
 function App() {
   return (
@@ -52,6 +54,16 @@ function App() {
           />
 
           <Route
+            path="/categories/create"
+            element={
+              <ProtectedRoute
+                element={<CreateCategory />}
+                permissionLevel={ADMIN_PERMISSIONS.ADMIN}
+              />
+            }
+          />
+
+          <Route
             path="/exercises"
             element={
               <ProtectedRoute
@@ -71,17 +83,12 @@ function App() {
             }
           />
 
-          <Route
-            path="/categories/create"
-            element={<ProtectedRoute element={<CreateCategory />}
-              permissionLevel={ADMIN_PERMISSIONS.ADMIN}
-            />
-            }
-          />
+          <Route path="/password/reset" element={<ResetPasswordRequest />} />
+
+          <Route path="/password/confirm" element={<ResetPasswordConfirm />} />
 
           <Route path="/404" element={<h1>404 Not Found</h1>} />
           <Route path="*" element={<Navigate to="/404" />} />
-
         </Routes>
       </Router>
     </main>
