@@ -2,8 +2,10 @@ import { get, jsonPost } from "./axios";
 
 const list = (
   page: number,
-  pageSize: number,
-  search: string
+  perPage: number,
+  searchQuery: string,
+  sortField: string,
+  sortDir: "asc" | "desc" | ""
 ) => {
   const query: Record<string, string | number> = {
     page: page,
