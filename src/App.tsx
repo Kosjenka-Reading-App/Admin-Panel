@@ -79,6 +79,9 @@ function App() {
           }
           />
 
+          <Route path="/404" element={<h1>404 Not Found</h1>} />
+          <Route path="*" element={<Navigate to="/404" />} />
+
         </Routes>
       </Router>
     </main>

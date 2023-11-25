@@ -1,21 +1,19 @@
 // CreateCategory.tsx
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {Link } from "react-router-dom";
 import categoriesService from "../services/categories";
 import Alert from "./Alert"; 
 
-const CreateCategory: React.FC = () => {
+const CreateCategory = () => {  // Changed from React.FC to regular function declaration
   const [name, setName] = useState("");
   const [alertMessage, setAlertMessage] = useState(""); 
   const [showAlert, setShowAlert] = useState(false); 
-  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     categoriesService
       .create(name)
       .then(() => {
-        navigate("/categories");
       })
       .catch((err) => {
         const message = err.response?.data?.message || "An error occurred while creating the category.";
@@ -33,7 +31,6 @@ const CreateCategory: React.FC = () => {
       </div>
       <div className="flex-grow flex items-center justify-center p-8">
         <div className="bg-custom-light-grey p-12 rounded-lg shadow-xl w-full max-w-2xl">
-          {/* Conditionally render the Alert component based on showAlert state */}
           {showAlert && <Alert message={alertMessage} />}
           <form onSubmit={handleSubmit} className="space-y-8">
             <div>
@@ -60,13 +57,12 @@ const CreateCategory: React.FC = () => {
               >
                 Save
               </button>
-              <button
-                type="button"
-                onClick={() => navigate("/categories")}
+              <Link
+                to="/categories"
                 className="px-6 py-3 bg-custom-grey text-gray-800 text-lg rounded hover:bg-gray-400"
               >
                 Cancel
-              </button>
+              </Link>
             </div>
           </form>
         </div>
