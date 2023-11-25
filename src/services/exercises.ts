@@ -1,4 +1,4 @@
-import { get, jsonPost } from "./axios";
+import { deleteRequest, get, jsonPost } from "./axios";
 
 const parseSortBy = (sortField: string): string => {
   switch (sortField) {
@@ -20,34 +20,40 @@ const listExercises = (
   sortDir: "asc" | "desc" | ""
 ) => {
   const query: Record<string, string | number> = {
-    skip: (page - 1) * perPage,
-    limit: perPage,
+    skip: page,
+    size: perPage,
     title_like: searchQuery,
   };
 
   if (sortField) {
-    query["order_dir"] = sortDir;
+    query["order"] = sortDir;
     query["order_by"] = parseSortBy(sortField);
   }
 
-  return get("exercises", query);
+  return get("exercises", query)
+    .then((response) => {
+      return Promise.resolve({
+        data: response.data.items,
+        total: response.data.total,
+      });
+    })
+    .catch((error) => Promise.reject(error));
 };
 
 const create = async (title: string, text: string, complexity: string) => {
-  return jsonPost("exercises/", {
+  return jsonPost("exercises", {
     title,
     text,
     complexity: complexity.toLowerCase(),
-  })
-    .then((response) => {
-      console.log(response.data);
-    })
-    .catch((error) => {
-      return Promise.reject(error);
-    });
+  });
+};
+
+const deleteExercise = async (id: string) => {
+  return deleteRequest(`exercises/${id}`);
 };
 
 export default {
   listExercises,
   create,
+  deleteExercise,
 };

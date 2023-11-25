@@ -18,17 +18,24 @@ const list = (
   sortDir: "asc" | "desc" | ""
 ) => {
   const query: Record<string, string | number> = {
-    skip: (page - 1) * perPage,
-    limit: perPage,
+    page: page,
+    size: perPage,
     email_like: searchQuery,
   };
 
   if (sortField) {
-    query["order_dir"] = sortDir;
+    query["order"] = sortDir;
     query["order_by"] = parseSortBy(sortField);
   }
 
-  return get("accounts", query);
+  return get("accounts", query)
+    .then((response) => {
+      return Promise.resolve({
+        data: response.data.items,
+        total: response.data.total,
+      });
+    })
+    .catch((error) => Promise.reject(error));
 };
 
 const create = (email: string, password: string, isSuperAdmin: boolean) => {

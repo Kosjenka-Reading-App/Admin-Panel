@@ -54,10 +54,9 @@ export default function CategoriesList() {
     categoriesService
       .list(page, perPage, filter, sort?.column || "", sort?.direction || "")
       .then((data) => {
-        const categories = data.data;
-        setCategories(categories);
+        setCategories(data.data);
         setIsLoading(false);
-        setTotalCategories(categories.length);
+        setTotalCategories(data.total);
       });
   }, [filter, page, perPage, sort]);
 

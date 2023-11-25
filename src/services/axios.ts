@@ -62,3 +62,7 @@ export function jsonPost(path: string, data?: Record<string, unknown>) {
     headers: { "Content-Type": "application/json" },
   });
 }
+
+export function deleteRequest(path: string) {
+  return api.delete(path);
+}
