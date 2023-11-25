@@ -4,6 +4,7 @@ import SidebarLink from "./SidebarLink";
 import { AuthData } from "../../hooks/useAuth";
 import { ROUTES } from "../../constants/navbar";
 import { ADMIN_PERMISSIONS_VALUE } from "../../constants/permissions";
+import { logOut } from "../../services/auth";
 
 const Sidebar = ({
   activeRoute,
@@ -41,6 +42,7 @@ const Sidebar = ({
           to="/login"
           className="bg-custom-dark-blue p-0 rounded-lg flex items-center justify-center w-12 h-12 hover:bg-custom-hover-blue transition"
           title="Logout"
+          onClick={logOut}
         >
           <FiLogOut size={30} className="text-white" />
         </Link>
