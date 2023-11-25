@@ -1,24 +1,25 @@
-// CreateCategory.tsx
 import React, { useState } from "react";
-import {Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import categoriesService from "../services/categories";
-import Alert from "./Alert"; 
+import Alert from "./Alert";
 
-const CreateCategory = () => {  // Changed from React.FC to regular function declaration
+const CreateCategory = () => {
   const [name, setName] = useState("");
-  const [alertMessage, setAlertMessage] = useState(""); 
-  const [showAlert, setShowAlert] = useState(false); 
+  const [alertMessage, setAlertMessage] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     categoriesService
       .create(name)
       .then(() => {
+        navigate("/categories");
       })
       .catch((err) => {
         const message = err.response?.data?.message || "An error occurred while creating the category.";
-        setAlertMessage(message); 
-        setShowAlert(true); 
+        setAlertMessage(message);
+        setShowAlert(true);
       });
   };
 

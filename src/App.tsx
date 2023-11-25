@@ -71,12 +71,12 @@ function App() {
             }
           />
 
-            <Route
+          <Route
             path="/categories/create"
-            element={<ProtectedRoute element={<CreateCategory />} 
-            permissionLevel={ADMIN_PERMISSIONS.ADMIN}
+            element={<ProtectedRoute element={<CreateCategory />}
+              permissionLevel={ADMIN_PERMISSIONS.ADMIN}
             />
-          }
+            }
           />
 
           <Route path="/404" element={<h1>404 Not Found</h1>} />
