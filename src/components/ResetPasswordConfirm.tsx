@@ -1,27 +1,35 @@
+// ResetPasswordConfirm component
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import logo from "../assets/logo.png";
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import axios from 'axios';
 import Alert from './Alert';
+import logo from "../assets/logo.png";
+
+const VITE_BACKEND_URL = 'https://dev-kosj-api.fly.dev'; // Your backend URL
 
 const ConfirmResetPassword = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState(''); // State to store error messages
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      // Set an error message if passwords do not match
       setErrorMessage("Passwords do not match!");
       return;
     }
-    // Clear the error message on successful match
-    setErrorMessage('');
-    // TODO: Call your API endpoint to confirm the new password
-    console.log('New password set:', password);
-    // Simulate a successful response from the API
-    navigate('/login'); // Redirect to the login page
+    try {
+      const token = searchParams.get('token'); // Or use useParams for dynamic route parameter
+      await axios.post(`${VITE_BACKEND_URL}/password/reset`, {
+        password,
+        token
+      });
+      navigate('/login'); // Redirect to the login page
+    } catch (error) {
+      setErrorMessage('Failed to reset the password. Please try again or contact support.');
+    }
   };
 
   return (

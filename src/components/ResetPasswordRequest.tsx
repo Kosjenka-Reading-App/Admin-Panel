@@ -1,23 +1,26 @@
+// ResetPasswordRequest component
 import React, { useState } from 'react';
+import axios from 'axios';
+import Alert from './Alert';
 import logo from "../assets/logo.png";
-import Alert from './Alert'; 
+
+const VITE_BACKEND_URL = 'https://dev-kosj-api.fly.dev'; // Your backend URL
 
 const RequestResetPassword = () => {
   const [email, setEmail] = useState('');
-  const [alertMessage, setAlertMessage] = useState(''); // State to store alert messages
-  const [showAlert, setShowAlert] = useState(false); // State to control the display of the alert
+  const [alertMessage, setAlertMessage] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // TODO: Call your API endpoint to request a password reset
-    console.log('Request password reset for:', email);
-    
-    // Simulate a success response from the API
-    // If the email exists in the system, an email will be sent
-    setAlertMessage('If the email address exists in our system, we have sent a password reset link to your email address.');
-    setShowAlert(true); // Show the alert message
-
-    // Clear the email field to reset the form
+    try {
+      await axios.post(`${VITE_BACKEND_URL}/password/forgot`, { email });
+      setAlertMessage('If the email address exists in our system, we have sent a password reset link to your email address.');
+      setShowAlert(true);
+    } catch (error) {
+      setAlertMessage('An error occurred while trying to reset the password. Please try again.');
+      setShowAlert(true);
+    }
     setEmail('');
   };
 
