@@ -1,4 +1,4 @@
-import { get } from "./axios";
+import { get, jsonPost } from "./axios";
 
 const list = (
   page: number,
@@ -32,6 +32,11 @@ const list = (
     });
 };
 
+const create = (name: string) => {
+  return jsonPost(`categories/${name}`);
+};
+
 export default {
   list,
+  create,
 };

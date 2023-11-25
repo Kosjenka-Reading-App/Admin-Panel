@@ -1,5 +1,3 @@
-//
-
 import axios from "axios";
 import config from "../config";
 
@@ -43,7 +41,6 @@ api.interceptors.response.use(
         Cookies.set("accessToken", freshAccessToken);
         Cookies.set("refreshToken", freshRefreshToken);
 
-        // Retry the original request with the new token
         originalRequest.headers.Authorization = `Bearer ${freshAccessToken}`;
 
         return axios(originalRequest);
@@ -60,8 +57,8 @@ export function get(path: string, params?: Record<string, unknown>) {
   return api.get(path, { params });
 }
 
-export function jsonPost(path: string, data: Record<string, unknown>) {
-  return api.post(path, JSON.stringify(data), {
+export function jsonPost(path: string, data?: Record<string, unknown>) {
+  return api.post(path, data ? JSON.stringify(data) : null, {
     headers: { "Content-Type": "application/json" },
   });
 }
