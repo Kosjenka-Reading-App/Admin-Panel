@@ -14,4 +14,9 @@ const login = async (email: string, password: string) => {
     });
 };
 
-export { login };
+const logOut = () => {
+  Cookies.remove('accessToken');
+  Cookies.remove('refreshToken');
+}
+
+export { login, logOut};
