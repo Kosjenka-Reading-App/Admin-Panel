@@ -93,10 +93,9 @@ export default function AdminList() {
     adminsService
       .list(page, perPage, filter, sort?.column || "", sort?.direction || "")
       .then((data) => {
-        const admins = data.data;
-        setAdmins(admins);
+        setAdmins(data.data);
         setIsLoading(false);
-        setTotalAdmins(admins.length); // TODO: get total from API
+        setTotalAdmins(data.total);
       });
   }, [filter, page, perPage, sort]);
 
