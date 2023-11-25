@@ -109,10 +109,9 @@ export default function ExerciseList() {
         sort?.direction || ""
       )
       .then((data) => {
-        const exercises = data.data;
-        setExercises(exercises);
+        setExercises(data.data);
         setIsLoading(false);
-        setTotalExercises(exercises.length);
+        setTotalExercises(data.total);
       });
   }, [page, perPage, filter, sort]);
 

@@ -20,23 +20,11 @@ const logOut = () => {
 };
 
 const forgotPassword = (email: string) => {
-  return jsonPost("/password/forgot", { email })
-    .then(response => {
-      return response.data;
-    })
-    .catch((error) => {
-      return Promise.reject(error);
-    });
+  return jsonPost("/password/forgot", { email });
 };
 
 const resetPassword = (password: string, token: string) => {
-  return jsonPost("/password/reset", { password, token })
-    .then(response => {
-      return response.data;
-    })
-    .catch((error) => {
-      return Promise.reject(error);
-    });
+  return jsonPost("/password/reset", { password, token });
 };
 
 export { login, logOut, forgotPassword, resetPassword };
