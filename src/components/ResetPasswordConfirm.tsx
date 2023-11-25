@@ -13,7 +13,6 @@ const ConfirmResetPassword = () => {
 
   useEffect(() => {
     const token = searchParams.get('token');
-    console.log(token);
     if (!token) {
       navigate('/');
     }
@@ -46,7 +45,6 @@ const ConfirmResetPassword = () => {
             <h2 className="text-2xl text-custom-blue font-bold text-center mb-8">
               Reset Account Password
             </h2>
-            {/* Render Alert component if there is an error message */}
             {errorMessage && <Alert message={errorMessage} />}
             <div>
               <label htmlFor="password" className="block mb-2 text-sm font-medium text-custom-grey">

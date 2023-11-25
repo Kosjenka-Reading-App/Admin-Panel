@@ -33,7 +33,6 @@ const RequestResetPassword = () => {
             <h2 className="text-2xl text-custom-blue font-bold text-center mb-8">
               Recover Account
             </h2>
-            {/* Render Alert component if showAlert is true */}
             {showAlert && <Alert message={alertMessage} />}
             <div>
               <label htmlFor="email" className="block mb-2 text-sm font-medium text-custom-grey">
