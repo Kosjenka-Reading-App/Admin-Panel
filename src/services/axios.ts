@@ -56,7 +56,7 @@ api.interceptors.response.use(
   }
 );
 
-export function get(path: string, params: Record<string, unknown>) {
+export function get(path: string, params?: Record<string, unknown>) {
   return api.get(path, { params });
 }
 
@@ -64,4 +64,8 @@ export function jsonPost(path: string, data: Record<string, unknown>) {
   return api.post(path, JSON.stringify(data), {
     headers: { "Content-Type": "application/json" },
   });
+}
+
+export function deleteRequest(path: string) {
+  return api.delete(path);
 }
