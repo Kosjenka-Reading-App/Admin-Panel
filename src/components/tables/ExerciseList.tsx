@@ -131,7 +131,7 @@ export default function ExerciseList() {
       {
         name: "#",
         selector: (row: ExerciseItem) => row.id,
-        sortable: true,
+        sortable: false,
         width: "5%",
       },
       {
