@@ -12,6 +12,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import CreateAdminPage from "./pages/CreateAdminPage";
 import CreateExercisePage from "./pages/CreateExercisePage";
 import { ADMIN_PERMISSIONS } from "./constants/permissions";
+import EditExercisePage from "./pages/EditExercisePage";
 
 function App() {
   return (
@@ -69,10 +70,15 @@ function App() {
               />
             }
           />
+           <Route
+            path="/exercises/:id/edit"
+            element={<ProtectedRoute element={<EditExercisePage />} permissionLevel={ADMIN_PERMISSIONS.ADMIN} />}
+          />
 
           <Route path="/404" element={<h1>404</h1>} />
 
           <Route path="*" element={<Navigate to="/404" />} />
+         
         </Routes>
       </Router>
     </main>

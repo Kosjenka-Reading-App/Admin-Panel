@@ -9,18 +9,18 @@ type ExerciseFormProps = {
 const Dropdown = ({ complexity, setComplexity }: ExerciseFormProps) => {
 
     const options = [
-        { value: 'Easy', label: 'EASY', color: 'custom-green' },
-        { value: 'Medium', label: 'MEDIUM', color: 'custom-yellow' },
-        { value: 'Hard', label: 'HARD', color: 'custom-red' },
+        { value: 'easy', label: 'EASY', color: 'custom-green' },
+        { value: 'medium', label: 'MEDIUM', color: 'custom-yellow' },
+        { value: 'hard', label: 'HARD', color: 'custom-red' },
     ];
 
     const getColorBasedOnValueText = (value: string) => {
         switch (value) {
-            case 'Easy':
+            case 'easy':
                 return '#10CA00';
-            case 'Medium':
+            case 'medium':
                 return '#FFD700';
-            case 'Hard':
+            case 'hard':
                 return '#FF0000';
 
         }
