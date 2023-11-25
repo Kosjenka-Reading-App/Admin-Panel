@@ -22,8 +22,7 @@ const list = (
 };
 
 const create = (name: string) => {
-  const body = { name };
-  return jsonPost("categories", body);
+  return jsonPost(`categories/${name}`, { name });
 };
 
 export default {
