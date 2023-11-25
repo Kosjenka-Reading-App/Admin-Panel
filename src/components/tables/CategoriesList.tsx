@@ -110,6 +110,7 @@ export default function CategoriesList() {
         pagination
         paginationServer
         paginationTotalRows={totalCategories}
+        sortServer
         onSort={(column, direction) =>
           setSort({ column: column.name?.toString(), direction })
         }

@@ -237,6 +237,7 @@ export default function ExerciseList() {
           persistTableHead
           pagination
           paginationServer
+          sortServer
           paginationTotalRows={totalExercises}
           onSort={(column, direction) =>
             setSort({ column: column.name?.toString(), direction })

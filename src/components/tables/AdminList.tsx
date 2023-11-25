@@ -149,6 +149,7 @@ export default function AdminList() {
         persistTableHead
         pagination
         paginationServer
+        sortServer
         paginationTotalRows={totalAdmins}
         onSort={(column, direction) =>
           setSort({ column: column.name?.toString(), direction })
