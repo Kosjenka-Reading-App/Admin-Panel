@@ -20,7 +20,7 @@ const listExercises = (
   sortDir: "asc" | "desc" | ""
 ) => {
   const query: Record<string, string | number> = {
-    skip: page,
+    page: page,
     size: perPage,
     title_like: searchQuery,
   };

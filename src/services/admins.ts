@@ -1,4 +1,4 @@
-import { get, jsonPost } from "./axios";
+import { deleteRequest, get, jsonPost } from "./axios";
 
 const parseSortBy = (sortField: string): string => {
   switch (sortField) {
@@ -46,7 +46,12 @@ const create = (email: string, password: string, isSuperAdmin: boolean) => {
   });
 };
 
+const deleteAdmin = (id: number) => {
+  return deleteRequest(`accounts/${id}`);
+};
+
 export default {
   list,
   create,
+  deleteAdmin,
 };

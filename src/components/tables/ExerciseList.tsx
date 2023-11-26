@@ -134,7 +134,7 @@ export default function ExerciseList() {
       {
         name: "#",
         selector: (row: ExerciseItem) => row.id,
-        sortable: true,
+        sortable: false,
         width: "5%",
       },
       {
@@ -247,6 +247,7 @@ export default function ExerciseList() {
           persistTableHead
           pagination
           paginationServer
+          sortServer
           paginationTotalRows={totalExercises}
           onSort={(column, direction) =>
             setSort({ column: column.name?.toString(), direction })
