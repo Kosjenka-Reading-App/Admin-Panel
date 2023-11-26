@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaPlus } from "react-icons/fa";
 import categoriesService from "../../services/categories";
+import { Link } from 'react-router-dom';
 
 type CategoryItem = string;
 
@@ -53,10 +54,9 @@ export default function CategoriesList() {
     categoriesService
       .list(page, perPage, filter, sort?.column || "", sort?.direction || "")
       .then((data) => {
-        const categories = data.data;
-        setCategories(categories);
+        setCategories(data.data);
         setIsLoading(false);
-        setTotalCategories(categories.length);
+        setTotalCategories(data.total);
       });
   }, [filter, page, perPage, sort]);
 
@@ -95,12 +95,12 @@ export default function CategoriesList() {
             <AiOutlineSearch />
           </button>
         </form>
-        <button
+        <Link
+          to="create"
           className="bg-custom-dark-blue flex text-white px-3 py-2 rounded font-medium items-center justify-center text-sm hover:bg-custom-hover-blue transition"
-          onClick={() => alert("Create new category")}
         >
-          <FaPlus /> <span className="ml-2">New category </span>
-        </button>
+          <FaPlus /> <span className="ml-2">New category</span>
+        </Link>
       </div>
 
       <DataTable
@@ -111,6 +111,7 @@ export default function CategoriesList() {
         pagination
         paginationServer
         paginationTotalRows={totalCategories}
+        sortServer
         onSort={(column, direction) =>
           setSort({ column: column.name?.toString(), direction })
         }

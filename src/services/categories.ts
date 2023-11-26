@@ -1,4 +1,4 @@
-import { get } from "./axios";
+import { get, jsonPost } from "./axios";
 
 const list = (
   page: number,
@@ -8,19 +8,35 @@ const list = (
   sortDir: "asc" | "desc" | ""
 ) => {
   const query: Record<string, string | number> = {
-    skip: (page - 1) * perPage,
-    limit: perPage,
+    page: page,
+    size: perPage,
     name_like: searchQuery,
   };
 
   if (sortField) {
-    query["order_dir"] = sortDir;
+    query["order"] = sortDir;
     query["order_by"] = sortField;
   }
 
-  return get("categories", query);
+  return get("categories", query)
+    .then((response) => {
+      return Promise.resolve({
+        data: response.data.items.map(
+          (item: { category: string }) => item.category
+        ),
+        total: response.data.total,
+      });
+    })
+    .catch((error) => {
+      return Promise.reject(error);
+    });
+};
+
+const create = (name: string) => {
+  return jsonPost(`categories/${name}`);
 };
 
 export default {
   list,
+  create,
 };
