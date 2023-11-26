@@ -42,7 +42,7 @@ const create = (email: string, password: string, isSuperAdmin: boolean) => {
   return jsonPost("accounts", {
     email,
     password,
-    account_category: isSuperAdmin ? "superadmin" : "admin",
+    is_superadmin: isSuperAdmin,
   });
 };
 
