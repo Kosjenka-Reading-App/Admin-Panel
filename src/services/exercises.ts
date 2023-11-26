@@ -1,5 +1,4 @@
-
-import { deleteRequest,get, jsonPost,jsonPatch } from "./axios";
+import { deleteRequest, get, jsonPost, jsonPatch } from "./axios";
 
 const parseSortBy = (sortField: string): string => {
   switch (sortField) {
@@ -60,12 +59,6 @@ const edit = async (id:string,title: string, text: string, complexity: string) =
     text,
     complexity: complexity.toLowerCase(),
   })
-    .then((response) => {
-      console.log(response.data);
-    })
-    .catch((error) => {
-      return Promise.reject(error);
-    });
 };
 
 const getByID = async (id:string) => {

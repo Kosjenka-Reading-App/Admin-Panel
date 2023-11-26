@@ -60,7 +60,6 @@ function App() {
               />
             }
           />
-
           <Route
             path="/exercises/create"
             element={
@@ -70,7 +69,7 @@ function App() {
               />
             }
           />
-           <Route
+          <Route
             path="/exercises/:id/edit"
             element={<ProtectedRoute element={<EditExercisePage />} permissionLevel={ADMIN_PERMISSIONS.ADMIN} />}
           />
@@ -78,7 +77,7 @@ function App() {
           <Route path="/404" element={<h1>404</h1>} />
 
           <Route path="*" element={<Navigate to="/404" />} />
-         
+
         </Routes>
       </Router>
     </main>

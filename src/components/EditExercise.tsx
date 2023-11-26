@@ -1,59 +1,73 @@
-
 import ExerciseForm from "./ExerciseForm";
-import { useState , useEffect} from "react";
+import { useState, useEffect } from "react";
 import exerciseService from "../services/exercises";
 import { useNavigate, useParams } from "react-router-dom";
 
 const EditExercise = () => {
-     
-  const { id } = useParams<{ id?: string }>();
-  
-  console.log(id)
+
+  const { id } = useParams<{ id: string }>();
   const [title, setTitle] = useState("");
   const [complexity, setComplexity] = useState("");
   const [textExercise, setTextExercise] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Effect to fetch exercise data when the component mounts
   useEffect(() => {
-    exerciseService
-      .getByID(id!)
+    setIsLoading(true);
+    id && exerciseService
+      .getByID(id)
       .then((response) => {
-        console.log(response.data.complexity)
         setTitle(response.data.title)
         setComplexity(response.data.complexity)
         setTextExercise(response.data.text)
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error)
+        navigate("/exercises");
+      }).finally(() => {
+        setIsLoading(false)
       });
   }, [id]);
-  
-
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-
-    exerciseService
-      .edit(id!,title, textExercise, complexity)
+    id && exerciseService
+      .edit(id, title, textExercise, complexity)
       .then(() => {
         navigate("/exercises");
       })
       .catch((error) => {
         console.log(error);
       });
-
-  
   };
+
+  if (isLoading) {
+    return (
+      <div className="w-full h-screen">
+        <div className="bg-custom-light-grey py-3 px-4 mb-5">
+          <h1 className="font-bold text-2xl">Edit Exercise</h1>
+        </div>
+        <div className="justify-center">
+          <h1 className="font-bold text-2xl text-center">Loading...</h1>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="w-full h-screen">
-    <div className="bg-custom-light-grey py-3 px-4 mb-5">
-      <h1 className="font-bold text-2xl">Edit Exercise</h1>
+      <div className="bg-custom-light-grey py-3 px-4 mb-5">
+        <h1 className="font-bold text-2xl">Edit Exercise</h1>
+      </div>
+      <ExerciseForm
+        onSubmit={handleSubmit}
+        setTitle={setTitle}
+        setComplexity={setComplexity}
+        setTestExercise={setTextExercise}
+        title={title}
+        complexity={complexity}
+        textExercise={textExercise} />
     </div>
-    <ExerciseForm onSubmit={handleSubmit} setTitle={setTitle} setComplexity={setComplexity} setTestExercise={setTextExercise} title={title} complexity={complexity} textExercise={textExercise} />
-  </div>
   )
 }
 
