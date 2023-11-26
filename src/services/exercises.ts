@@ -1,4 +1,4 @@
-import { deleteRequest, get, jsonPost } from "./axios";
+import { deleteRequest, get, jsonPost, jsonPatch } from "./axios";
 
 const parseSortBy = (sortField: string): string => {
   switch (sortField) {
@@ -52,8 +52,23 @@ const deleteExercise = async (id: string) => {
   return deleteRequest(`exercises/${id}`);
 };
 
+
+const edit = async (id:string,title: string, text: string, complexity: string) => {
+  return jsonPatch(`exercises/${id}`, {
+    title,
+    text,
+    complexity: complexity.toLowerCase(),
+  })
+};
+
+const getByID = async (id:string) => {
+  return get(`exercises/${id}`)
+};
+
 export default {
   listExercises,
   create,
   deleteExercise,
+  edit,
+  getByID,
 };

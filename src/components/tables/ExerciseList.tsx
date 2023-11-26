@@ -1,10 +1,11 @@
 import DataTable from "react-data-table-component";
 import { AiFillDelete } from "react-icons/ai";
+import { MdEdit } from "react-icons/md";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaPlus } from "react-icons/fa";
 import exercisesService from "../../services/exercises";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ConfirmModal from "../ConfirmModal";
 
 type ExerciseItem = {
@@ -82,6 +83,8 @@ const displayTitle = (exercise: ExerciseItem) => {
 };
 
 export default function ExerciseList() {
+
+  const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
   const [idToDelete, setIdToDelete] = useState("");
@@ -161,10 +164,17 @@ export default function ExerciseList() {
           <div className="w-full flex justify-center">
             <div
               className="cursor-pointer p-1 text-xl"
+              onClick={() => navigate(`/exercises/${row.id}/edit`)}
+            >
+              <MdEdit />
+            </div>
+            <div
+              className="cursor-pointer p-1 text-xl"
               onClick={() => onDelete(row.id, row.title)}
             >
               <AiFillDelete />
             </div>
+
           </div>
         ),
         width: "10%",
