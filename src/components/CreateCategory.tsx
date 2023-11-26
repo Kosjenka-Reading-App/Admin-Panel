@@ -26,7 +26,7 @@ const CreateCategory = () => {
   return (
     <div className="bg-white min-h-screen flex flex-col">
       <div className="w-full py-4 px-6 bg-custom-light-grey border-b border-gray-200">
-        <h1 className="text-custom-dark-blue text-xl font-bold">
+        <h1 className="font-bold text-2xl">
           Create Category
         </h1>
       </div>
