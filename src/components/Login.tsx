@@ -50,7 +50,10 @@ const Login = () => {
               Invalid Username/Password
             </h2>
             <div>
-              <label className="block mb-2 text-sm font-medium text-custom-grey dark:text-custom-grey">
+              <label
+                className="block mb-2 text-sm font-medium text-custom-grey dark:text-custom-grey"
+                htmlFor="email"
+              >
                 Email Address
               </label>
               <input
@@ -64,7 +67,10 @@ const Login = () => {
               />
             </div>
             <div>
-              <label className="block mb-2 text-sm font-medium text-custom-grey dark:text-custom-grey">
+              <label
+                className="block mb-2 text-sm font-medium text-custom-grey dark:text-custom-grey"
+                htmlFor="password"
+              >
                 Password
               </label>
               <input
@@ -81,10 +87,13 @@ const Login = () => {
               type="submit"
               className="w-full py-2 my-4 bg-custom-blue hover:bg-blue-400 rounded-lg"
             >
-             Login
-              </button>
-             <Link to="/password/reset" className="text-left text-sm text-blue-500">
-                Forgot Password?
+              Login
+            </button>
+            <Link
+              to="/password/reset"
+              className="text-left text-sm text-blue-500"
+            >
+              Forgot Password?
             </Link>
           </form>
         </div>
