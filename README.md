@@ -4,8 +4,6 @@ First, ensure you are running the cypress engine:
 
 - npx cypress open
 
-Run the backend with a local test database
-
 ## Adding a new test
 
 - Select integration tests
@@ -21,3 +19,8 @@ Run the backend with a local test database
 - Run the test
 - Update the code
 - Inspect the elements
+
+## Requests with API calls
+
+- Create intercept methods in the intercepts folder
+- For requests with big data payloads, such as lists, first create a fixture object containing the response
