@@ -1,8 +1,8 @@
-import ExerciseForm from "./ExerciseForm";
-import { useState, useEffect } from "react";
-import exerciseService from "../services/exercises";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import categoriesService from "../services/categories"; 
+import ExerciseForm from "./ExerciseForm";
+import exercisesService from "../services/exercises";
+import categoriesService from "../services/categories";
 
 type CategoryOption = {
   value: string;
@@ -10,48 +10,34 @@ type CategoryOption = {
 };
 
 const CreateExercise = () => {
-  const [title, setTitle] = useState<string>("");
-  const [complexity, setComplexity] = useState<string>("");
-  const [textExercise, setTextExercise] = useState<string>("");
-  // Initialize categories with the correct type
+  const [title, setTitle] = useState("");
+  const [complexity, setComplexity] = useState("");
+  const [textExercise, setTextExercise] = useState("");
   const [categories, setCategories] = useState<CategoryOption[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Set default values for the parameters
-    const defaultPage = 1;
-    const defaultPerPage = 10;
-    const defaultSearchQuery = '';
-    const defaultSortField = '';
-    const defaultSortDir = 'asc'; // or 'desc' or '', depending on your API
-  
-    categoriesService.list(defaultPage, defaultPerPage, defaultSearchQuery, defaultSortField, defaultSortDir)
-      .then((response) => {
-        const categoryOptions: CategoryOption[] = response.data.map((item: any) => ({
-          value: item.category,
-          label: item.category,
-        }));
-        setCategories(categoryOptions);
-      })
-      .catch((error) => {
-        console.error("Failed to fetch categories", error);
-      });
+    categoriesService.list(1, 100, '', '', 'asc').then(({ data }) => {
+      const categoryOptions: CategoryOption[] = data.map((category: string) => ({
+        value: category,
+        label: category,
+      }));
+      setCategories(categoryOptions);
+    }).catch((error) => {
+      console.error("Failed to fetch categories", error);
+    });
   }, []);
-  
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    exerciseService
-      .create(title, textExercise, complexity)
-      .then(() => {
-        navigate("/exercises");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      await exercisesService.create(title, textExercise, complexity);
+      navigate("/exercises");
+    } catch (error) {
+      console.error("Failed to create exercise:", error);
+    }
   };
-
 
   return (
     <div className="w-full h-screen">
@@ -60,12 +46,12 @@ const CreateExercise = () => {
       </div>
       <ExerciseForm
         onSubmit={handleSubmit}
-        setTitle={setTitle}
-        setComplexity={setComplexity}
-        setTextExercise={setTextExercise}
         title={title}
+        setTitle={setTitle}
         complexity={complexity}
+        setComplexity={setComplexity}
         textExercise={textExercise}
+        setTextExercise={setTextExercise}
         categories={categories}
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
