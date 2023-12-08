@@ -1,6 +1,6 @@
 import React from 'react';
 import Dropdown from './Dropdown';
-import Select from 'react-select';
+import CategorySelect from './CategorySelect';
 
 type CategoryOption = {
   value: string;
@@ -33,33 +33,6 @@ const ExerciseForm = ({
   setSelectedCategory
 }: ExerciseFormProps) => {
 
-  const handleCategoryChange = (selectedOption: CategoryOption | null) => {
-    setSelectedCategory(selectedOption ? selectedOption.value : '');
-  };
-
-  const customStyles = {
-    control: (base: any) => ({
-      ...base,
-      minHeight: '60px',
-    }),
-    dropdownIndicator: (base: any) => ({
-      ...base,
-      padding: '8px',
-    }),
-    clearIndicator: (base: any) => ({
-      ...base,
-      padding: '8px',
-    }),
-    valueContainer: (base: any) => ({
-      ...base,
-      padding: '14px 16px',
-    }),
-    input: (base: any) => ({
-      ...base,
-      margin: '0px',
-    }),
-  };
-
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4 p-4">
       <div className="flex flex-col gap-2">
@@ -88,15 +61,10 @@ const ExerciseForm = ({
         <label htmlFor="category" className="text-3xl font-bold text-custom-black">
           Category
         </label>
-        <Select
-          id="category"
-          options={categories}
-          value={categories.find(c => c.value === selectedCategory)}
-          onChange={handleCategoryChange}
-          styles={customStyles}
-          className="text-lg"
-          placeholder="Select Category"
-          required
+        <CategorySelect
+          categories={categories}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
         />
       </div>
 

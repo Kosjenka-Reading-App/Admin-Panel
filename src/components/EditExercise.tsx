@@ -20,14 +20,13 @@ const EditExercise = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch categories and exercise details
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const categoriesResponse = await categoriesService.list(1, 100, '', '', 'asc');
-        const categoryOptions: CategoryOption[] = categoriesResponse.data.map((category: string) => ({
-          value: category,
-          label: category,
+        const categoriesResponse = await categoriesService.list(1, 100, '', '', '');
+        const categoryOptions: CategoryOption[] = categoriesResponse.data.map((item: { category: string }) => ({
+          value: item.category,
+          label: item.category,
         }));
         setCategories(categoryOptions);
 
@@ -36,9 +35,9 @@ const EditExercise = () => {
           setTitle(exerciseResponse.data.title);
           setComplexity(exerciseResponse.data.complexity);
           setTextExercise(exerciseResponse.data.text);
-          setSelectedCategory(exerciseResponse.data.category); // Assuming the response has a 'category' field
+          setSelectedCategory(exerciseResponse.data.category);
         }
-      } catch (error) {
+      } catch (error: any) { 
         console.error("Error fetching data:", error);
         navigate("/exercises");
       } finally {
@@ -55,11 +54,12 @@ const EditExercise = () => {
       try {
         await exerciseService.edit(id, title, textExercise, complexity);
         navigate("/exercises");
-      } catch (error) {
+      } catch (error: any) {
         console.error("Failed to edit exercise:", error);
       }
     }
   };
+
 
   if (isLoading) {
     return (
@@ -76,12 +76,12 @@ const EditExercise = () => {
       </div>
       <ExerciseForm
         onSubmit={handleSubmit}
-        setTitle={setTitle}
-        setComplexity={setComplexity}
-        setTextExercise={setTextExercise}
         title={title}
+        setTitle={setTitle}
         complexity={complexity}
+        setComplexity={setComplexity}
         textExercise={textExercise}
+        setTextExercise={setTextExercise}
         categories={categories}
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}

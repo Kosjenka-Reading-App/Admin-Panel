@@ -18,15 +18,15 @@ const CreateExercise = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    categoriesService.list(1, 100, '', '', 'asc').then(({ data }) => {
-      const categoryOptions: CategoryOption[] = data.map((category: string) => ({
-        value: category,
-        label: category,
-      }));
-      setCategories(categoryOptions);
-    }).catch((error) => {
-      console.error("Failed to fetch categories", error);
-    });
+    categoriesService.list(1, 100, '', '', 'asc')
+      .then(response => {
+        const categoryOptions: CategoryOption[] = response.data.map((category: string) => ({
+          value: category,
+          label: category,
+        }));
+        setCategories(categoryOptions);
+      })
+      .catch((error: any) => console.error("Failed to fetch categories", error));
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -34,7 +34,7 @@ const CreateExercise = () => {
     try {
       await exercisesService.create(title, textExercise, complexity);
       navigate("/exercises");
-    } catch (error) {
+    } catch (error: any) { 
       console.error("Failed to create exercise:", error);
     }
   };
