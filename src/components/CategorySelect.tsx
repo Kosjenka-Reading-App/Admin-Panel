@@ -12,26 +12,27 @@ type CategorySelectProps = {
 };
 
 const customStyles = {
-  control: (base: any) => ({
-    ...base,
-    minHeight: '60px',
+  control: (provided: any) => ({
+    ...provided,
+    fontSize: '.9rem',
+    height: '2.65rem',
+    border: '.09rem solid #0099FF',
+    boxShadow: '0 .4rem 1rem rgba(0, 0, 0, 0.37), 0 0 .1rem rgba(0, 0, 0, 0.37)',
+    borderRadius: '7px',
+    borderColor: 'custom-blue',
+    ':hover': {
+      borderColor: '#0099FF',
+    },
   }),
-  dropdownIndicator: (base: any) => ({
-    ...base,
-    padding: '8px',
+  option: (provided: any, state: any) => ({
+    ...provided,
+    color: 'black',
+    background: state.isSelected ? 'transparent' : 'white',
+    ':hover': {
+      backgroundColor: '#DEF2FF',
+    },
   }),
-  clearIndicator: (base: any) => ({
-    ...base,
-    padding: '8px',
-  }),
-  valueContainer: (base: any) => ({
-    ...base,
-    padding: '14px 16px',
-  }),
-  input: (base: any) => ({
-    ...base,
-    margin: '0px',
-  }),
+  // You can add more custom styles if needed
 };
 
 const CategorySelect = ({ categories, selectedCategory, setSelectedCategory }: CategorySelectProps) => {
