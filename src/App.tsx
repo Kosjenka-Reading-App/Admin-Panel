@@ -17,6 +17,7 @@ import ResetPasswordRequest from "./components/ResetPasswordRequest";
 import ResetPasswordConfirm from "./components/ResetPasswordConfirm";
 import CreateCategoryPage from "./pages/CreateCategoryPage";
 
+
 function App() {
   return (
     <main className="w-full h-full">
@@ -63,7 +64,6 @@ function App() {
               />
             }
           />
-
           <Route
             path="/exercises"
             element={
