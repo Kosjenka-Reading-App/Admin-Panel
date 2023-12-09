@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaPlus } from "react-icons/fa";
 import categoriesService from "../../services/categories";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ConfirmModal from "../ConfirmModal";
 
 
@@ -20,6 +20,8 @@ const displayName = (category: CategoryItem) => {
 
 
 export default function CategoriesList() {
+
+  const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const [nameToDelete, setNameToDelete] = useState("");
   const [categories, setCategories] = useState<CategoryItem[]>([]);
@@ -68,7 +70,8 @@ export default function CategoriesList() {
         name: "Actions",
         cell: (row: CategoryItem) => (
           <div className="w-full flex justify-center">
-            <div className="cursor-pointer p-1 text-xl">
+            <div className="cursor-pointer p-1 text-xl"
+            onClick={() => navigate(`/categories/${row}/edit`)}>
               <MdEdit />
             </div>
             <div className="cursor-pointer p-1 text-xl"

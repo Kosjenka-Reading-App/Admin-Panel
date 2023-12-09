@@ -37,7 +37,7 @@ const CreateCategory = () => {
           {showAlert && <Alert message={alertMessage} />}
 
           <CategoryForm
-            handleSubmit={handleSubmit}
+            onSubmit={handleSubmit}
             name={name}
             setName={setName}
 
