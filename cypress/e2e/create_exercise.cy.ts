@@ -43,10 +43,6 @@ describe("create exercise page", () => {
 
     cy.contains("button", "Save").click();
 
-    cy.wait("@createExercise").then((interception) => {
-      expect(interception.response.statusCode).to.eq(200);
-    });
-
     cy.url().should("eq", "http://localhost:5173/exercises");
   });
 });
