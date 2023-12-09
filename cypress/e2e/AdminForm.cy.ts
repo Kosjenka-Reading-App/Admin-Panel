@@ -1,4 +1,5 @@
-import { meSuperadmin } from "../intercepts/CreateAdmin";
+import { meSuperadmin } from "../intercepts/login";
+import { createAdmin, createAdminRepeated } from "../intercepts/admin"; 
 
 describe("create admin page", () => {
   it("shows all elements of the form", () => {
@@ -23,6 +24,7 @@ describe("create admin page", () => {
 
   it("creates a new admin", () => {
     meSuperadmin();
+    createAdmin();
 
     cy.visit("http://localhost:5173/admins/create");
 
@@ -30,7 +32,11 @@ describe("create admin page", () => {
     cy.get("input[type=password]").type("test");
     cy.get("input[type=checkbox]").click();
     cy.contains("button", "Save").click();
+    cy.url().should("include", "/admins");
+
   });
+  });
+
 
   it("navigates back to the admin list on cancel", () => {
     meSuperadmin();
@@ -43,6 +49,7 @@ describe("create admin page", () => {
 
   it("shows email already taken error", () => {
     meSuperadmin();
+    createAdminRepeated();
 
     cy.visit("http://localhost:5173/admins/create");
 
@@ -50,6 +57,9 @@ describe("create admin page", () => {
     cy.get("input[type=password]").type("test");
     cy.get("input[type=checkbox]").click();
     cy.contains("button", "Save").click();
+
+    cy.url().should("include", "/admins/create");
+    cy.contains("An account with this email already exists.");
 
   });
 
@@ -62,6 +72,12 @@ describe("create admin page", () => {
     cy.get("input[type=checkbox]").click();
     cy.contains("button", "Save").click();
     cy.contains("Email address").should("be.visible");
+
+    cy.get("#email").then(($input) => {
+      expect($input[0].validationMessage).to.not.be.empty;
+    });
+
+    cy.url().should("include", "/admins/create");
   });
 
   it("toggle super admin privileges", () => {
@@ -74,5 +90,7 @@ describe("create admin page", () => {
     cy.get("input[type=checkbox]").should("be.checked");
     cy.get("input[type=checkbox]").click();
     cy.get("input[type=checkbox]").should("not.be.checked");
+
+    cy.contains("button", "Save").click();
+    cy.url().should("include", "/admins");
   });
-});
