@@ -30,8 +30,6 @@ describe("create admin page", () => {
     cy.get("input[type=password]").type("test");
     cy.get("input[type=checkbox]").click();
     cy.contains("button", "Save").click();
-    
-    // Add assertions for successful admin creation
   });
 
   it("navigates back to the admin list on cancel", () => {
