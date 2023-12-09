@@ -1,37 +1,52 @@
+import { create } from "domain";
 import { meSuperadmin } from "../intercepts/login";
+import { createExercise } from "../intercepts/createExercise";
 
-describe("create admin page", () => {
+describe("create exercise page", () => {
   it("shows all elements of the form", () => {
     meSuperadmin();
 
-    cy.visit("http://localhost:5173/admins/create");
+    cy.visit("http://localhost:5173/exercises/create");
 
-    cy.contains("Create Admin").should("be.visible");
-    cy.contains("Email address").should("be.visible");
-    cy.contains("Password").should("be.visible");
-    cy.contains("Super admin privileges").should("be.visible");
-    cy.get("input[type=checkbox]")
-      .should("be.visible")
-      .should("not.be.checked");
-    cy.contains("button", "Save")
-      .should("be.visible")
-      .should("have.attr", "type", "submit");
-    cy.contains("a", "Cancel")
-      .should("be.visible")
-      .should("have.attr", "href", "/admins");
+    cy.contains("Create Exercise").should("be.visible");
+    cy.contains("Title").should("be.visible");
+    cy.contains("Complexity").should("be.visible");
+    cy.contains("Text").should("be.visible");
+    cy.contains("button", "Save").should("be.visible");
   });
 
-  // Test invalid form
-
-  it("toggle super admin privileges", () => {
+  it("test invalid form", () => {
     meSuperadmin();
 
-    cy.visit("http://localhost:5173/admins/create");
+    cy.visit("http://localhost:5173/exercises/create");
 
-    cy.get("input[type=checkbox]").should("not.be.checked");
-    cy.get("input[type=checkbox]").click();
-    cy.get("input[type=checkbox]").should("be.checked");
-    cy.get("input[type=checkbox]").click();
-    cy.get("input[type=checkbox]").should("not.be.checked");
+    cy.contains("button", "Save").click();
+    cy.get("input[name=title]").then(($input) => {
+      expect($input[0].validationMessage).to.eq("Please fill in this field.");
+    });
+
+    cy.get("textarea[name=text]").then(($input) => {
+      expect($input[0].validationMessage).to.eq("Please fill in this field.");
+    });
+  });
+
+  it("test correct submission", () => {
+    meSuperadmin();
+    createExercise();
+
+    cy.visit("http://localhost:5173/exercises/create");
+
+    cy.get("input[name=title]").type("test");
+    cy.get("textarea[name=text]").type("test");
+
+    cy.get("#complexity").type("{enter}");
+
+    cy.contains("button", "Save").click();
+
+    cy.wait("@createExercise").then((interception) => {
+      expect(interception.response.statusCode).to.eq(200);
+    });
+
+    cy.url().should("eq", "http://localhost:5173/exercises");
   });
 });
