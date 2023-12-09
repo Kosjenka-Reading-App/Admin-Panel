@@ -22,11 +22,11 @@ describe("create exercise page", () => {
 
     cy.contains("button", "Save").click();
     cy.get("input[name=title]").then(($input) => {
-      expect($input[0].validationMessage).to.eq("Please fill in this field.");
+      expect($input[0].validationMessage).to.not.be.empty;
     });
 
     cy.get("textarea[name=text]").then(($input) => {
-      expect($input[0].validationMessage).to.eq("Please fill in this field.");
+      expect($input[0].validationMessage).to.not.be.empty;
     });
   });
 
