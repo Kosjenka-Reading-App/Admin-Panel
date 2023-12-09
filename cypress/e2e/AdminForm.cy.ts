@@ -58,8 +58,9 @@ describe("create admin page", () => {
     cy.get("input[type=checkbox]").click();
     cy.contains("button", "Save").click();
 
-    cy.url().should("include", "/admins/create");
     cy.contains("An account with this email already exists.");
+    cy.url().should("include", "/admins/create");
+
 
   });
 
