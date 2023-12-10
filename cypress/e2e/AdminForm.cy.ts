@@ -50,19 +50,18 @@ describe("create admin page", () => {
   it("shows email already taken error", () => {
     meSuperadmin();
     createAdminRepeated();
-
+  
     cy.visit("http://localhost:5173/admins/create");
-
+  
     cy.get("input[type=email]").type("test@example.com");
     cy.get("input[type=password]").type("test");
     cy.get("input[type=checkbox]").click();
     cy.contains("button", "Save").click();
-
+  
     cy.contains("An account with this email already exists.");
     cy.url().should("include", "/admins/create");
-
-
   });
+  
 
   it("shows email is required error", () => {
     meSuperadmin();
