@@ -16,6 +16,7 @@ import EditExercisePage from "./pages/EditExercisePage";
 import ResetPasswordRequest from "./components/ResetPasswordRequest";
 import ResetPasswordConfirm from "./components/ResetPasswordConfirm";
 import CreateCategoryPage from "./pages/CreateCategoryPage";
+import EditCategoryPage from "./pages/EditCategoryPage";
 
 
 function App() {
@@ -60,6 +61,15 @@ function App() {
             element={
               <ProtectedRoute
                 element={<CreateCategoryPage />}
+                permissionLevel={ADMIN_PERMISSIONS.ADMIN}
+              />
+            }
+          />
+          <Route
+            path="/categories/:oldCategory/edit"
+            element={
+              <ProtectedRoute
+                element={<EditCategoryPage />}
                 permissionLevel={ADMIN_PERMISSIONS.ADMIN}
               />
             }
