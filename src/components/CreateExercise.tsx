@@ -35,7 +35,7 @@ const CreateExercise = () => {
     e.preventDefault();
     try {
       if (selectedCategory) {
-        await exercisesService.create(title, textExercise, complexity); 
+        await exercisesService.create(title, textExercise, complexity, selectedCategory.value); 
       }
       navigate("/exercises");
     } catch (error: any) {
