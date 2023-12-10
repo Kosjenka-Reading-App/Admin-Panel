@@ -10,86 +10,83 @@ type CategoryOption = {
 type ExerciseFormProps = {
   onSubmit: React.FormEventHandler<HTMLFormElement>;
   title: string;
-  setTitle: React.Dispatch<React.SetStateAction<string>>;
   complexity: string;
-  setComplexity: React.Dispatch<React.SetStateAction<string>>;
   textExercise: string;
-  setTextExercise: React.Dispatch<React.SetStateAction<string>>;
   categories: CategoryOption[];
   selectedCategory: string;
   setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
+  setTitle: React.Dispatch<React.SetStateAction<string>>;
+  setComplexity: React.Dispatch<React.SetStateAction<string>>;
+  setTestExercise: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const ExerciseForm = ({
   onSubmit,
   title,
-  setTitle,
   complexity,
-  setComplexity,
   textExercise,
-  setTextExercise,
   categories,
   selectedCategory,
-  setSelectedCategory
+  setSelectedCategory,
+  setTitle,
+  setComplexity,
+  setTestExercise
 }: ExerciseFormProps) => {
-
   return (
-    <form onSubmit={onSubmit} className="flex flex-col gap-4 p-4">
-      <div className="flex flex-col gap-2">
-        <label htmlFor="title" className="text-3xl font-bold text-custom-black">
-          Title
-        </label>
-        <input
-          id="title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          type="text"
-          className="h-10 px-3 mb-4 shadow-lg border border-custom-blue text-custom-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full"
-          placeholder="Add Title"
-          required
-        />
+    <form onSubmit={onSubmit} className="flex flex-col items-center justify-center m-auto shadow-lg shadow-custom-grey bg-custom-light-grey p-4 sm:max-w-[900px]">
+      { }
+      <div className="w-full max-w-xl m-auto"> { }
+        <div className="mb-4">
+          <label className="block text-3xl font-bold text-custom-black mb-2">
+            Title
+          </label>
+          <input
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            type="text"
+            name="title"
+            id="title"
+            className="w-full px-3 py-2 mb-4 shadow-lg shadow-gray-400 border border-custom-blue text-custom-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600"
+            placeholder="Add Title"
+          />
+        </div>
+        <div className="flex gap-4 mb-4">
+          <div className="w-1/2">
+            <label className="block text-3xl font-bold text-custom-black mb-2">
+              Complexity
+            </label>
+            <Dropdown complexity={complexity} setComplexity={setComplexity} />
+          </div>
+          <div className="w-1/2">
+            <label className="block text-3xl font-bold text-custom-black mb-2">
+              Category
+            </label>
+            <CategorySelect
+              categories={categories}
+              selectedCategory={selectedCategory}
+              setSelectedCategory={setSelectedCategory}
+            />
+          </div>
+        </div>
+        <div className="mb-4">
+          <label className="block text-3xl font-bold text-custom-black mb-2">
+            Text
+          </label>
+          <textarea
+            className="w-full px-6 py-2 shadow-lg shadow-gray-400 border border-custom-blue text-custom-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600"
+            placeholder="Please enter your exercise"
+            value={textExercise}
+            onChange={(e) => setTestExercise(e.target.value)}
+            style={{ minHeight: "300px" }}
+          />
+        </div>
+        <div className="w-full flex justify-center p-4"> { }
+          <button className="w-1/4 py-2 bg-custom-dark-blue hover:bg-blue-400 text-white rounded-lg">
+            Submit
+          </button>
+        </div>
       </div>
-
-      <div className="flex flex-col gap-2">
-        <label htmlFor="complexity" className="text-3xl font-bold text-custom-black">
-          Complexity
-        </label>
-        <Dropdown complexity={complexity} setComplexity={setComplexity}/>
-      </div>
-
-      <div className="flex flex-col gap-2">
-        <label htmlFor="category" className="text-3xl font-bold text-custom-black">
-          Category
-        </label>
-        <CategorySelect
-          categories={categories}
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
-        />
-      </div>
-
-      <div className="flex flex-col gap-2">
-        <label htmlFor="text" className="text-3xl font-bold text-custom-black">
-          Text
-        </label>
-        <textarea
-          id="text"
-          value={textExercise}
-          onChange={(e) => setTextExercise(e.target.value)}
-          className="h-40 px-6 py-3 border border-custom-blue text-custom-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full"
-          placeholder="Enter exercise text"
-          required
-        />
-      </div>
-
-      <button
-        type="submit"
-        className="px-6 py-3 bg-custom-dark-blue text-white text-lg rounded hover:bg-blue-800"
-      >
-        Submit
-      </button>
     </form>
   );
 };
-
 export default ExerciseForm;
