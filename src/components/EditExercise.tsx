@@ -27,7 +27,6 @@ const EditExercise = () => {
           setComplexity(exerciseResponse.data.complexity);
           setTextExercise(exerciseResponse.data.text);
           const category = exerciseResponse.data.category[0]?.category;
-          console.log(category);
           setSelectedCategory({ value: category, label: category });
         }
       } catch (error: any) {
@@ -75,9 +74,8 @@ const EditExercise = () => {
         textExercise={textExercise}
         setTestExercise={setTextExercise}
         selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory} loadOptions={function (): Promise<{ value: string; label: string; }[]> {
-          throw new Error("Function not implemented.");
-        }} />
+        setSelectedCategory={setSelectedCategory}
+        />
     </div>
   );
 };

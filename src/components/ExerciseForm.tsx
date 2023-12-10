@@ -12,7 +12,6 @@ type ExerciseFormProps = {
   title: string;
   complexity: string;
   textExercise: string;
-  loadOptions: (inputValue: string) => Promise<CategoryOption[]>;
   selectedCategory: CategoryOption | null;
   setSelectedCategory: React.Dispatch<React.SetStateAction<CategoryOption | null>>;
   setTitle: React.Dispatch<React.SetStateAction<string>>;

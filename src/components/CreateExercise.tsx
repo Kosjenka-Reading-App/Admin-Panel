@@ -35,9 +35,8 @@ const CreateExercise = () => {
         textExercise={textExercise}
         setTestExercise={setTextExercise}
         selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory} loadOptions={function (): Promise<{ value: string; label: string; }[]> {
-          throw new Error("Function not implemented.");
-        } } />
+        setSelectedCategory={setSelectedCategory}
+        />
     </div>
   );
 };
