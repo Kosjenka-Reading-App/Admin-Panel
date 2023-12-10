@@ -57,10 +57,10 @@ describe("create admin page", () => {
     cy.get("input[type=password]").type("test");
     cy.get("input[type=checkbox]").click();
     cy.contains("button", "Save").click();
-  
-    cy.contains("An account with this email already exists.");
+    cy.contains("An account with this email already exists.", { timeout: 10000 }).should('be.visible');
     cy.url().should("include", "/admins/create");
   });
+  
   
 
   it("shows email is required error", () => {
