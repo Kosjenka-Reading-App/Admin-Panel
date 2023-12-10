@@ -40,12 +40,12 @@ const listExercises = (
     .catch((error) => Promise.reject(error));
 };
 
-const create = async (title: string, text: string, complexity: string, category: string) => {
+const create = async (title: string, text: string, complexity: string, category: string[]) => {
   return jsonPost("exercises", {
     title,
     text,
     complexity: complexity.toLowerCase(),
-    category,
+    category: category.map(cat => ({ category: cat }))
   });
 };
 
@@ -54,14 +54,15 @@ const deleteExercise = async (id: string) => {
 };
 
 
-const edit = async (id:string,title: string, text: string, complexity: string, category?: string) => {
+const edit = async (id: string, title: string, text: string, complexity: string, category: string[]) => {
   return jsonPatch(`exercises/${id}`, {
     title,
     text,
     complexity: complexity.toLowerCase(),
-    category,
-  })
+    category: category.map(cat => ({ category: cat }))
+  });
 };
+
 const getByID = async (id:string) => {
   return get(`exercises/${id}`)
 };

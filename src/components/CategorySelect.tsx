@@ -1,14 +1,15 @@
+import { useState, useEffect } from 'react';
 import AsyncSelect from 'react-select/async';
+import categoriesService from '../services/categories'; // Ensure this is the correct path
 
-type CategoryOption = {
+export type CategoryOption = {
   value: string;
   label: string;
 };
 
 type CategorySelectProps = {
-loadOptions: (inputValue: string, callback: (options: CategoryOption[]) => void) => Promise<CategoryOption[]>;
-  selectedCategory: CategoryOption | null;  
-  setSelectedCategory: (category: CategoryOption | null) => void; 
+  selectedCategory: CategoryOption | null;
+  setSelectedCategory: (category: CategoryOption | null) => void;
 };
 
 const customStyles = {
@@ -34,18 +35,39 @@ const customStyles = {
   }),
 };
 
-const CategorySelect = ({ loadOptions, selectedCategory, setSelectedCategory }: CategorySelectProps) => {
+const CategorySelect = ({ selectedCategory, setSelectedCategory }: CategorySelectProps) => {
+  const [, setInputValue] = useState('');
+
+  useEffect(() => {
+    setSelectedCategory(null);
+  }, []);
+
+  const loadCategoryOptions = async (inputVal: string) => {
+    try {
+      const response = await categoriesService.list(1, 100, inputVal, '', 'asc');
+      return response.data.map((category: { category: string }) => ({
+        value: category.category,
+        label: category.category,
+      }));
+    } catch (error) {
+      console.error("Failed to fetch categories", error);
+      return [];
+    }
+  };
+
   const handleCategoryChange = (selectedOption: CategoryOption | null) => {
-    setSelectedCategory(selectedOption); 
+    setSelectedCategory(selectedOption);
   };
 
   return (
     <AsyncSelect
       cacheOptions
-      loadOptions={loadOptions}
+      required
+      loadOptions={loadCategoryOptions}
       defaultOptions
       value={selectedCategory}
       onChange={handleCategoryChange}
+      onInputChange={setInputValue} // Fix the onInputChange prop
       styles={customStyles}
       className="text-lg"
       placeholder="Select Category"

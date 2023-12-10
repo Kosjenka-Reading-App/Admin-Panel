@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ExerciseForm from "./ExerciseForm";
 import exercisesService from "../services/exercises";
-import categoriesService from "../services/categories";
-
-type CategoryOption = {
-  value: string;
-  label: string;
-};
+import { CategoryOption } from "./CategorySelect";
 
 const CreateExercise = () => {
   const [title, setTitle] = useState("");
@@ -16,29 +11,16 @@ const CreateExercise = () => {
   const [selectedCategory, setSelectedCategory] = useState<CategoryOption | null>(null);
   const navigate = useNavigate();
 
-  // Function to asynchronously load category options
-  const loadCategoryOptions = async (inputValue: string) => {
-    try {
-      const response = await categoriesService.list(1, 100, inputValue, '', 'asc');
-      const categoryOptions: CategoryOption[] = response.data.map((category: string) => ({
-        value: category,
-        label: category,
-      }));
-      return categoryOptions;
-    } catch (error) {
-      console.error("Failed to fetch categories", error);
-      return [];
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       if (selectedCategory) {
-        await exercisesService.create(title, textExercise, complexity, selectedCategory.value); 
+        await exercisesService.create(title, textExercise, complexity, [selectedCategory.value]);
+        navigate("/exercises");
+      } else {
+        console.log("Category is required");
       }
-      navigate("/exercises");
-    } catch (error: any) {
+    } catch (error) {
       console.error("Failed to create exercise:", error);
     }
   };
@@ -56,10 +38,10 @@ const CreateExercise = () => {
         setComplexity={setComplexity}
         textExercise={textExercise}
         setTestExercise={setTextExercise}
-        loadOptions={loadCategoryOptions}
         selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
-      />
+        setSelectedCategory={setSelectedCategory} loadOptions={function (): Promise<{ value: string; label: string; }[]> {
+          throw new Error("Function not implemented.");
+        } }      />
     </div>
   );
 };

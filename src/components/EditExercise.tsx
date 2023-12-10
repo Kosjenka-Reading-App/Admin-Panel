@@ -64,7 +64,7 @@ const EditExercise = () => {
     e.preventDefault();
     if (id && selectedCategory) {
       try {
-        await exerciseService.edit(id, title, textExercise, complexity, selectedCategory.value);
+        await exerciseService.edit(id, title, textExercise, complexity, [selectedCategory.value]);
         navigate("/exercises");
       } catch (error: any) {
         console.error("Failed to edit exercise:", error);

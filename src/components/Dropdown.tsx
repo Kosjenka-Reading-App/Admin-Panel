@@ -25,7 +25,6 @@ const Dropdown = ({ complexity, setComplexity }: ExerciseFormProps) => {
 
         }
 
-
     };
 
 
