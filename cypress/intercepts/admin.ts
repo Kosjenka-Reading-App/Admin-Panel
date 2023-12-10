@@ -13,7 +13,7 @@ const createAdminRepeated = () => {
   cy.intercept("POST", "/accounts", {
     statusCode: 409,
     body: {
-      detail: "An account with this email already exists.",
+      detail: "Email already registered",
     },
   });
 };
