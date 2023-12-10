@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ExerciseForm from "./ExerciseForm";
 import exerciseService from "../services/exercises";
-import categoriesService from "../services/categories";
 
 type CategoryOption = {
   value: string;
@@ -18,36 +17,16 @@ const EditExercise = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const loadCategoryOptions = async (inputValue: string) => {
-    try {
-      const response = await categoriesService.list(1, 100, inputValue, '', 'asc');
-      const categoryOptions: CategoryOption[] = response.data.map((category: string) => ({
-        value: category,
-        label: category,
-      }));
-      return categoryOptions;
-    } catch (error) {
-      console.error("Failed to fetch categories", error);
-      return [];
-    }
-  };
-
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const categoriesResponse = await categoriesService.list(1, 100, '', '', '');
-        categoriesResponse.data.map((item: { category: string }) => ({
-          value: item.category,
-          label: item.category,
-        }));
-
         if (id) {
           const exerciseResponse = await exerciseService.getByID(id);
           setTitle(exerciseResponse.data.title);
           setComplexity(exerciseResponse.data.complexity);
           setTextExercise(exerciseResponse.data.text);
-          const category= exerciseResponse.data.category[0]?.category ;
+          const category = exerciseResponse.data.category[0]?.category;
           console.log(category);
           setSelectedCategory({ value: category, label: category });
         }
@@ -64,9 +43,9 @@ const EditExercise = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (id && selectedCategory) {
+    if (id) {
       try {
-        await exerciseService.edit(id, title, textExercise, complexity, [selectedCategory.value]);
+        await exerciseService.edit(id, title, textExercise, complexity, [selectedCategory!.value]);
         navigate("/exercises");
       } catch (error: any) {
         console.error("Failed to edit exercise:", error);
@@ -95,10 +74,10 @@ const EditExercise = () => {
         setComplexity={setComplexity}
         textExercise={textExercise}
         setTestExercise={setTextExercise}
-        loadOptions={loadCategoryOptions}
         selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
-      />
+        setSelectedCategory={setSelectedCategory} loadOptions={function (): Promise<{ value: string; label: string; }[]> {
+          throw new Error("Function not implemented.");
+        }} />
     </div>
   );
 };

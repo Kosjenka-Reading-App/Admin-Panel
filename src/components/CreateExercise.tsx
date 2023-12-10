@@ -14,17 +14,13 @@ const CreateExercise = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      if (selectedCategory) {
-        await exercisesService.create(title, textExercise, complexity, [selectedCategory.value]);
-        navigate("/exercises");
-      } else {
-        console.log("Category is required");
-      }
+      await exercisesService.create(title, textExercise, complexity, [selectedCategory!.value]);
+      navigate("/exercises");
     } catch (error) {
       console.error("Failed to create exercise:", error);
     }
   };
-
+  
   return (
     <div className="w-full h-screen">
       <div className="bg-custom-light-grey py-3 px-4 mb-5">
@@ -41,7 +37,7 @@ const CreateExercise = () => {
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory} loadOptions={function (): Promise<{ value: string; label: string; }[]> {
           throw new Error("Function not implemented.");
-        } }      />
+        } } />
     </div>
   );
 };

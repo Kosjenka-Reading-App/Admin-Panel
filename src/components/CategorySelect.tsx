@@ -41,8 +41,7 @@ const CategorySelect = ({ selectedCategory, setSelectedCategory }: CategorySelec
   const loadCategoryOptions = async (inputVal: string) => {
     try {
       const response = await categoriesService.list(1, 100, inputVal, '', 'asc');
-      console.log(response);
-      return response.data.map((category: string ) => ({
+      return response.data.map((category: string) => ({
         value: category,
         label: category,
       }));
