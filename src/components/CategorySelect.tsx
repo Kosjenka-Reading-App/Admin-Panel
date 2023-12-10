@@ -1,4 +1,4 @@
-import Select from 'react-select';
+import AsyncSelect from 'react-select/async';
 
 type CategoryOption = {
   value: string;
@@ -6,9 +6,9 @@ type CategoryOption = {
 };
 
 type CategorySelectProps = {
-  categories: CategoryOption[];
-  selectedCategory: string;
-  setSelectedCategory: (category: string) => void;
+loadOptions: (inputValue: string, callback: (options: CategoryOption[]) => void) => Promise<CategoryOption[]>;
+  selectedCategory: CategoryOption | null;  
+  setSelectedCategory: (category: CategoryOption | null) => void; 
 };
 
 const customStyles = {
@@ -32,18 +32,19 @@ const customStyles = {
       backgroundColor: '#DEF2FF',
     },
   }),
-  // You can add more custom styles if needed
 };
 
-const CategorySelect = ({ categories, selectedCategory, setSelectedCategory }: CategorySelectProps) => {
+const CategorySelect = ({ loadOptions, selectedCategory, setSelectedCategory }: CategorySelectProps) => {
   const handleCategoryChange = (selectedOption: CategoryOption | null) => {
-    setSelectedCategory(selectedOption ? selectedOption.value : '');
+    setSelectedCategory(selectedOption); 
   };
 
   return (
-    <Select
-      options={categories}
-      value={categories.find(c => c.value === selectedCategory)}
+    <AsyncSelect
+      cacheOptions
+      loadOptions={loadOptions}
+      defaultOptions
+      value={selectedCategory}
       onChange={handleCategoryChange}
       styles={customStyles}
       className="text-lg"

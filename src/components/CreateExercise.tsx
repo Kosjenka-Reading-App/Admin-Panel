@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ExerciseForm from "./ExerciseForm";
 import exercisesService from "../services/exercises";
@@ -13,28 +13,32 @@ const CreateExercise = () => {
   const [title, setTitle] = useState("");
   const [complexity, setComplexity] = useState("");
   const [textExercise, setTextExercise] = useState("");
-  const [categories, setCategories] = useState<CategoryOption[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<CategoryOption | null>(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    categoriesService.list(1, 100, '', '', 'asc')
-      .then(response => {
-        const categoryOptions: CategoryOption[] = response.data.map((category: string) => ({
-          value: category,
-          label: category,
-        }));
-        setCategories(categoryOptions);
-      })
-      .catch((error: any) => console.error("Failed to fetch categories", error));
-  }, []);
+  // Function to asynchronously load category options
+  const loadCategoryOptions = async (inputValue: string) => {
+    try {
+      const response = await categoriesService.list(1, 100, inputValue, '', 'asc');
+      const categoryOptions: CategoryOption[] = response.data.map((category: string) => ({
+        value: category,
+        label: category,
+      }));
+      return categoryOptions;
+    } catch (error) {
+      console.error("Failed to fetch categories", error);
+      return [];
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await exercisesService.create(title, textExercise, complexity);
+      if (selectedCategory) {
+        await exercisesService.create(title, textExercise, complexity); 
+      }
       navigate("/exercises");
-    } catch (error: any) { 
+    } catch (error: any) {
       console.error("Failed to create exercise:", error);
     }
   };
@@ -51,8 +55,8 @@ const CreateExercise = () => {
         complexity={complexity}
         setComplexity={setComplexity}
         textExercise={textExercise}
-        setTextExercise={setTextExercise}
-        categories={categories}
+        setTestExercise={setTextExercise}
+        loadOptions={loadCategoryOptions}
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
       />

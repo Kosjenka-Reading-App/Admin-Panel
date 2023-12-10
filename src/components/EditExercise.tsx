@@ -14,30 +14,42 @@ const EditExercise = () => {
   const [title, setTitle] = useState("");
   const [complexity, setComplexity] = useState("");
   const [textExercise, setTextExercise] = useState("");
-  const [categories, setCategories] = useState<CategoryOption[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<CategoryOption | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+  const loadCategoryOptions = async (inputValue: string) => {
+    try {
+      const response = await categoriesService.list(1, 100, inputValue, '', 'asc');
+      const categoryOptions: CategoryOption[] = response.data.map((category: string) => ({
+        value: category,
+        label: category,
+      }));
+      return categoryOptions;
+    } catch (error) {
+      console.error("Failed to fetch categories", error);
+      return [];
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
         const categoriesResponse = await categoriesService.list(1, 100, '', '', '');
-        const categoryOptions: CategoryOption[] = categoriesResponse.data.map((item: { category: string }) => ({
+        categoriesResponse.data.map((item: { category: string }) => ({
           value: item.category,
           label: item.category,
         }));
-        setCategories(categoryOptions);
 
         if (id) {
           const exerciseResponse = await exerciseService.getByID(id);
           setTitle(exerciseResponse.data.title);
           setComplexity(exerciseResponse.data.complexity);
           setTextExercise(exerciseResponse.data.text);
-          setSelectedCategory(exerciseResponse.data.category);
+          setSelectedCategory({ value: exerciseResponse.data.category, label: exerciseResponse.data.category });
         }
-      } catch (error: any) { 
+      } catch (error: any) {
         console.error("Error fetching data:", error);
         navigate("/exercises");
       } finally {
@@ -50,16 +62,15 @@ const EditExercise = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (id) {
+    if (id && selectedCategory) {
       try {
-        await exerciseService.edit(id, title, textExercise, complexity);
+        await exerciseService.edit(id, title, textExercise, complexity, selectedCategory.value);
         navigate("/exercises");
       } catch (error: any) {
         console.error("Failed to edit exercise:", error);
       }
     }
   };
-
 
   if (isLoading) {
     return (
@@ -81,8 +92,8 @@ const EditExercise = () => {
         complexity={complexity}
         setComplexity={setComplexity}
         textExercise={textExercise}
-        setTextExercise={setTextExercise}
-        categories={categories}
+        setTestExercise={setTextExercise}
+        loadOptions={loadCategoryOptions}
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
       />

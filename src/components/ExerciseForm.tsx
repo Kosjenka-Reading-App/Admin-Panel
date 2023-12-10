@@ -12,9 +12,9 @@ type ExerciseFormProps = {
   title: string;
   complexity: string;
   textExercise: string;
-  categories: CategoryOption[];
-  selectedCategory: string;
-  setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
+  loadOptions: (inputValue: string) => Promise<CategoryOption[]>; 
+  selectedCategory: CategoryOption | null;
+  setSelectedCategory: React.Dispatch<React.SetStateAction<CategoryOption | null>>; 
   setTitle: React.Dispatch<React.SetStateAction<string>>;
   setComplexity: React.Dispatch<React.SetStateAction<string>>;
   setTestExercise: React.Dispatch<React.SetStateAction<string>>;
@@ -25,7 +25,7 @@ const ExerciseForm = ({
   title,
   complexity,
   textExercise,
-  categories,
+  loadOptions, 
   selectedCategory,
   setSelectedCategory,
   setTitle,
@@ -34,8 +34,7 @@ const ExerciseForm = ({
 }: ExerciseFormProps) => {
   return (
     <form onSubmit={onSubmit} className="flex flex-col items-center justify-center m-auto shadow-lg shadow-custom-grey bg-custom-light-grey p-4 sm:max-w-[900px]">
-      { }
-      <div className="w-full max-w-xl m-auto"> { }
+      <div className="w-full max-w-xl m-auto">
         <div className="mb-4">
           <label className="block text-3xl font-bold text-custom-black mb-2">
             Title
@@ -62,7 +61,7 @@ const ExerciseForm = ({
               Category
             </label>
             <CategorySelect
-              categories={categories}
+              loadOptions={loadOptions}
               selectedCategory={selectedCategory}
               setSelectedCategory={setSelectedCategory}
             />
