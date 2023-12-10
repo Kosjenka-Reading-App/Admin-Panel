@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import AsyncSelect from 'react-select/async';
 import categoriesService from '../services/categories'; // Ensure this is the correct path
 
@@ -38,16 +38,13 @@ const customStyles = {
 const CategorySelect = ({ selectedCategory, setSelectedCategory }: CategorySelectProps) => {
   const [, setInputValue] = useState('');
 
-  useEffect(() => {
-    setSelectedCategory(null);
-  }, []);
-
   const loadCategoryOptions = async (inputVal: string) => {
     try {
       const response = await categoriesService.list(1, 100, inputVal, '', 'asc');
-      return response.data.map((category: { category: string }) => ({
-        value: category.category,
-        label: category.category,
+      console.log(response);
+      return response.data.map((category: string ) => ({
+        value: category,
+        label: category,
       }));
     } catch (error) {
       console.error("Failed to fetch categories", error);
@@ -67,7 +64,7 @@ const CategorySelect = ({ selectedCategory, setSelectedCategory }: CategorySelec
       defaultOptions
       value={selectedCategory}
       onChange={handleCategoryChange}
-      onInputChange={setInputValue} // Fix the onInputChange prop
+      onInputChange={setInputValue}
       styles={customStyles}
       className="text-lg"
       placeholder="Select Category"

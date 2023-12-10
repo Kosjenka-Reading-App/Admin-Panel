@@ -45,7 +45,7 @@ const create = async (title: string, text: string, complexity: string, category:
     title,
     text,
     complexity: complexity.toLowerCase(),
-    category: category.map(cat => ({ category: cat }))
+    category,
   });
 };
 
@@ -59,7 +59,7 @@ const edit = async (id: string, title: string, text: string, complexity: string,
     title,
     text,
     complexity: complexity.toLowerCase(),
-    category: category.map(cat => ({ category: cat }))
+    category,
   });
 };
 

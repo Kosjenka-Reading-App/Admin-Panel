@@ -47,7 +47,9 @@ const EditExercise = () => {
           setTitle(exerciseResponse.data.title);
           setComplexity(exerciseResponse.data.complexity);
           setTextExercise(exerciseResponse.data.text);
-          setSelectedCategory({ value: exerciseResponse.data.category, label: exerciseResponse.data.category });
+          const category= exerciseResponse.data.category[0]?.category ;
+          console.log(category);
+          setSelectedCategory({ value: category, label: category });
         }
       } catch (error: any) {
         console.error("Error fetching data:", error);
