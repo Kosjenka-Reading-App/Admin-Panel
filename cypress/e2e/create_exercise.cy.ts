@@ -1,6 +1,7 @@
 import { create } from "domain";
 import { meSuperadmin } from "../intercepts/login";
 import { createExercise } from "../intercepts/createExercise";
+import { listCategories } from "../intercepts/categories";
 
 describe("create exercise page", () => {
   it("shows all elements of the form", () => {
@@ -33,6 +34,7 @@ describe("create exercise page", () => {
   it("test correct submission", () => {
     meSuperadmin();
     createExercise();
+    listCategories();
 
     cy.visit("http://localhost:5173/exercises/create");
 
@@ -40,6 +42,8 @@ describe("create exercise page", () => {
     cy.get("textarea[name=text]").type("test");
 
     cy.get("#complexity").type("{enter}");
+
+    cy.get("#categories").type("{enter}");
 
     cy.contains("button", "Save").click();
 
