@@ -1,5 +1,13 @@
 import { deleteRequest, get, jsonPost, jsonPatch } from "./axios";
 
+type ExerciseResponse = {
+  id: string;
+  title: string;
+  text: string;
+  complexity: string;
+  category: { category: string }[];
+};
+
 const parseSortBy = (sortField: string): string => {
   switch (sortField) {
     case "title":
@@ -33,14 +41,22 @@ const listExercises = (
   return get("exercises", query)
     .then((response) => {
       return Promise.resolve({
-        data: response.data.items,
+        data: response.data.items.map((item: ExerciseResponse) => ({
+          ...item,
+          category: item.category.map((category) => category.category),
+        })),
         total: response.data.total,
       });
     })
     .catch((error) => Promise.reject(error));
 };
 
-const create = async (title: string, text: string, complexity: string, category: string[]) => {
+const create = async (
+  title: string,
+  text: string,
+  complexity: string,
+  category: string[]
+) => {
   return jsonPost("exercises", {
     title,
     text,
@@ -53,8 +69,13 @@ const deleteExercise = async (id: string) => {
   return deleteRequest(`exercises/${id}`);
 };
 
-
-const edit = async (id: string, title: string, text: string, complexity: string, category: string[]) => {
+const edit = async (
+  id: string,
+  title: string,
+  text: string,
+  complexity: string,
+  category: string[]
+) => {
   return jsonPatch(`exercises/${id}`, {
     title,
     text,
@@ -63,8 +84,8 @@ const edit = async (id: string, title: string, text: string, complexity: string,
   });
 };
 
-const getByID = async (id:string) => {
-  return get(`exercises/${id}`)
+const getByID = async (id: string) => {
+  return get(`exercises/${id}`);
 };
 
 export default {

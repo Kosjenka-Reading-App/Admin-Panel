@@ -13,7 +13,7 @@ type ExerciseItem = {
   title: string;
   complexity: string;
   date: number;
-  category: { category: string }[];
+  category: string[];
 };
 
 const displayComplexity = (exercise: ExerciseItem) => {
@@ -150,9 +150,7 @@ export default function ExerciseList() {
       {
         name: "category",
         selector: (row: ExerciseItem) => row.category[0] || "",
-        cell: (row: ExerciseItem) => (
-          <span>{row.category[0]?.category || ""}</span>
-        ),
+        cell: (row: ExerciseItem) => <span>{row.category[0] || ""}</span>,
         sortable: true,
         width: "20%",
       },
