@@ -150,11 +150,7 @@ export default function ExerciseList() {
       {
         name: "category",
         selector: (row: ExerciseItem) => row.category[0] || "",
-        cell: (row: ExerciseItem) => (
-          <span className="text-custom-dark-blue font-semibold">
-            {row.category[0] || ""}
-          </span>
-        ),
+        cell: (row: ExerciseItem) => <span>{row.category[0] || ""}</span>,
         sortable: true,
         width: "20%",
       },
