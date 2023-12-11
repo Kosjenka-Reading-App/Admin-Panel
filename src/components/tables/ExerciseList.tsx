@@ -13,6 +13,7 @@ type ExerciseItem = {
   title: string;
   complexity: string;
   date: number;
+  category: string[];
 };
 
 const displayComplexity = (exercise: ExerciseItem) => {
@@ -83,7 +84,6 @@ const displayTitle = (exercise: ExerciseItem) => {
 };
 
 export default function ExerciseList() {
-
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
@@ -115,6 +115,9 @@ export default function ExerciseList() {
         setExercises(data.data);
         setIsLoading(false);
         setTotalExercises(data.total);
+      })
+      .catch(() => {
+        setIsLoading(false);
       });
   }, [page, perPage, filter, sort]);
 
@@ -142,7 +145,14 @@ export default function ExerciseList() {
         selector: (row: ExerciseItem) => row.title,
         sortable: true,
         cell: displayTitle,
-        width: "50%",
+        width: "30%",
+      },
+      {
+        name: "category",
+        selector: (row: ExerciseItem) => row.category[0] || "",
+        cell: (row: ExerciseItem) => <span>{row.category[0] || ""}</span>,
+        sortable: true,
+        width: "20%",
       },
       {
         name: "complexity",
@@ -174,14 +184,13 @@ export default function ExerciseList() {
             >
               <AiFillDelete />
             </div>
-
           </div>
         ),
         width: "10%",
         ignoreRowClick: true,
       },
     ],
-    [onDelete]
+    [navigate, onDelete]
   );
 
   useEffect(() => {

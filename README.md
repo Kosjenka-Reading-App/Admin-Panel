@@ -1,27 +1,26 @@
-# React + TypeScript + Vite
+# Testint the App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+First, ensure you are running the cypress engine:
 
-Currently, two official plugins are available:
+- npx cypress open
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Adding a new test
 
-## Expanding the ESLint configuration
+- Select integration tests
+- Create new test
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Running the tests
 
-- Configure the top-level `parserOptions` property like this:
+- Open the test in the cypress UI
+- Click on run
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+## Debugging the tests
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- Run the test
+- Update the code
+- Inspect the elements
+
+## Requests with API calls
+
+- Create intercept methods in the intercepts folder
+- For requests with big data payloads, such as lists, first create a fixture object containing the response

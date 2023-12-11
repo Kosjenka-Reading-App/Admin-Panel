@@ -25,7 +25,7 @@ api.interceptors.response.use(
     const originalRequest = error.config;
 
     // If the error status is 403, it means the token has expired and we need to refresh it
-    if (error.response.status === 403 && originalRequest.url !== "/refresh") {
+    if (error.response?.status === 403 && originalRequest.url !== "/refresh") {
       try {
         const refreshToken = Cookies.get("refreshToken");
 

@@ -31,10 +31,12 @@ const Login = () => {
 
   return (
     <div className="w-full h-screen flex bg-gradient-to-b from-blue-400 via-blue-600 to-blue-800">
-      <div className="grid grid-cols-1 md:grid-cols-2 m-auto  h-[550px] shadow-lg shadow-gray-600 sm:max-w-[900px]">
-        <div className=" bg-custom-light-blue w-full h-[550px] hidden md:block rounded-tl-2xl rounded-bl-2xl">
-          <img className="w-2/3 h-2/3 pl-20 pt-20 m-10" src={logo} alt="/" />
+      <div className="grid grid-cols-1 md:grid-cols-2 m-auto h-[550px] shadow-lg shadow-gray-600 sm:max-w-[900px]">
+        
+        <div className="flex justify-center items-center bg-custom-light-blue w-full h-full md:rounded-tl-2xl md:rounded-bl-2xl">
+          <img className="w-9/10 md:w-auto md:h-auto max-w-[90%] max-h-[90%]" src={logo} alt="Logo" />
         </div>
+  
         <div className="p-10 pr-20 flex flex-col justify-around bg-white rounded-tr-2xl rounded-br-2xl">
           <form onSubmit={handleSubmit}>
             <h2 className="text-2xl text-custom-blue font-bold text-center mb-8">
@@ -50,7 +52,10 @@ const Login = () => {
               Invalid Username/Password
             </h2>
             <div>
-              <label className="block mb-2 text-sm font-medium text-custom-grey dark:text-custom-grey">
+              <label
+                className="block mb-2 text-sm font-medium text-custom-grey dark:text-custom-grey"
+                htmlFor="email"
+              >
                 Email Address
               </label>
               <input
@@ -64,7 +69,10 @@ const Login = () => {
               />
             </div>
             <div>
-              <label className="block mb-2 text-sm font-medium text-custom-grey dark:text-custom-grey">
+              <label
+                className="block mb-2 text-sm font-medium text-custom-grey dark:text-custom-grey"
+                htmlFor="password"
+              >
                 Password
               </label>
               <input
@@ -81,10 +89,13 @@ const Login = () => {
               type="submit"
               className="w-full py-2 my-4 bg-custom-blue hover:bg-blue-400 rounded-lg"
             >
-             Login
-              </button>
-             <Link to="/password/reset" className="text-left text-sm text-blue-500">
-                Forgot Password?
+              Login
+            </button>
+            <Link
+              to="/password/reset"
+              className="text-left text-sm text-blue-500"
+            >
+              Forgot Password?
             </Link>
           </form>
         </div>
