@@ -2,18 +2,18 @@ import React, { FormEventHandler } from 'react'
 import { Link } from "react-router-dom";
 
 type CategoryFormProps = {
-    handleSubmit: FormEventHandler<HTMLFormElement>;
+    onSubmit: FormEventHandler<HTMLFormElement>;
     name: string;
     setName: React.Dispatch<React.SetStateAction<string>>
 
 }
 
 
-const CategoryForm = ({ handleSubmit, name, setName }: CategoryFormProps) => {
+const CategoryForm = ({ onSubmit, name, setName }: CategoryFormProps) => {
 
     return (
 
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <form onSubmit={onSubmit} className="space-y-8">
             <div>
                 <label
                     htmlFor="name"

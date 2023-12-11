@@ -1,4 +1,4 @@
-import { get, jsonPost } from "./axios";
+import { deleteRequest, get, jsonPost, jsonPatch } from "./axios";
 
 const list = (
   page: number,
@@ -36,7 +36,21 @@ const create = (name: string) => {
   return jsonPost(`categories/${name}`);
 };
 
+const deleteCategory = async (name: string) => {
+  return deleteRequest(`categories/${name}`);
+};
+
+const editCategory = async (oldCategory:string, category:string) => {
+  return jsonPatch(`categories/${oldCategory}`, {
+    category,
+  })
+};
+
+
 export default {
   list,
   create,
+  deleteCategory,
+  editCategory,
+
 };
