@@ -1,5 +1,5 @@
 import { meSuperadmin } from "../intercepts/login";
-import { createAdmin, createAdminRepeated } from "../intercepts/admin"; 
+import { createAdmin, createAdminRepeated } from "../intercepts/admin";
 
 describe("create admin page", () => {
   it("shows all elements of the form", () => {
@@ -32,13 +32,10 @@ describe("create admin page", () => {
     cy.get("input[type=password]").type("test");
     cy.get("input[type=checkbox]").click();
     cy.contains("button", "Save").click();
-        cy.wait("@createAdmin");
+    cy.wait("@createAdmin");
 
     cy.url().should("include", "/admins");
-
   });
-  });
-
 
   it("navigates back to the admin list on cancel", () => {
     meSuperadmin();
@@ -52,18 +49,18 @@ describe("create admin page", () => {
   it("shows email already taken error", () => {
     meSuperadmin();
     createAdminRepeated();
-  
+
     cy.visit("http://localhost:5173/admins/create");
-  
+
     cy.get("input[type=email]").type("test@example.com");
     cy.get("input[type=password]").type("test");
     cy.get("input[type=checkbox]").click();
     cy.contains("button", "Save").click();
-    cy.contains("An account with this email already exists.", { timeout: 10000 }).should('be.visible');
+    cy.contains("An account with this email already exists.", {
+      timeout: 10000,
+    }).should("be.visible");
     cy.url().should("include", "/admins/create");
   });
-  
-  
 
   it("shows email is required error", () => {
     meSuperadmin();
@@ -92,5 +89,5 @@ describe("create admin page", () => {
     cy.get("input[type=checkbox]").should("be.checked");
     cy.get("input[type=checkbox]").click();
     cy.get("input[type=checkbox]").should("not.be.checked");
-
   });
+});
