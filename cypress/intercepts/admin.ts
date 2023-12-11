@@ -6,7 +6,7 @@ const createAdmin = () => {
       email: "",
       account_category: "admin",
     },
-  });
+  }).as("createAdmin");
 };
 
 const createAdminRepeated = () => {

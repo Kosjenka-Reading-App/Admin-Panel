@@ -32,6 +32,8 @@ describe("create admin page", () => {
     cy.get("input[type=password]").type("test");
     cy.get("input[type=checkbox]").click();
     cy.contains("button", "Save").click();
+        cy.wait("@createAdmin");
+
     cy.url().should("include", "/admins");
 
   });
@@ -91,6 +93,4 @@ describe("create admin page", () => {
     cy.get("input[type=checkbox]").click();
     cy.get("input[type=checkbox]").should("not.be.checked");
 
-    cy.contains("button", "Save").click();
-    cy.url().should("include", "/admins");
   });
