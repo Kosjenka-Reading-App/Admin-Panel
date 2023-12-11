@@ -115,6 +115,9 @@ export default function ExerciseList() {
         setExercises(data.data);
         setIsLoading(false);
         setTotalExercises(data.total);
+      })
+      .catch(() => {
+        setIsLoading(false);
       });
   }, [page, perPage, filter, sort]);
 

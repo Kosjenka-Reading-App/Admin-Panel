@@ -1,6 +1,6 @@
-import React from 'react';
-import Dropdown from './Dropdown';
-import CategorySelect from './CategorySelect';
+import React from "react";
+import Dropdown from "./Dropdown";
+import CategorySelect from "./CategorySelect";
 
 type CategoryOption = {
   value: string;
@@ -13,7 +13,9 @@ type ExerciseFormProps = {
   complexity: string;
   textExercise: string;
   selectedCategory: CategoryOption | null;
-  setSelectedCategory: React.Dispatch<React.SetStateAction<CategoryOption | null>>;
+  setSelectedCategory: React.Dispatch<
+    React.SetStateAction<CategoryOption | null>
+  >;
   setTitle: React.Dispatch<React.SetStateAction<string>>;
   setComplexity: React.Dispatch<React.SetStateAction<string>>;
   setTestExercise: React.Dispatch<React.SetStateAction<string>>;
@@ -28,10 +30,13 @@ const ExerciseForm = ({
   setSelectedCategory,
   setTitle,
   setComplexity,
-  setTestExercise
+  setTestExercise,
 }: ExerciseFormProps) => {
   return (
-    <form onSubmit={onSubmit} className="flex flex-col items-center justify-center m-auto shadow-lg shadow-custom-grey bg-custom-light-grey p-4 sm:max-w-[900px]">
+    <form
+      onSubmit={onSubmit}
+      className="flex flex-col items-center justify-center m-auto shadow-lg shadow-custom-grey bg-custom-light-grey p-4 sm:max-w-[900px]"
+    >
       <div className="w-full max-w-xl m-auto">
         <div className="mb-4">
           <label className="block text-3xl font-bold text-custom-black mb-2">
@@ -39,6 +44,7 @@ const ExerciseForm = ({
           </label>
           <input
             value={title}
+            required
             onChange={(e) => setTitle(e.target.value)}
             type="text"
             name="title"
@@ -69,6 +75,8 @@ const ExerciseForm = ({
             Text
           </label>
           <textarea
+            name="text"
+            required
             className="w-full px-6 py-2 shadow-lg shadow-gray-400 border border-custom-blue text-custom-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600"
             placeholder="Please enter your exercise"
             value={textExercise}
@@ -76,9 +84,9 @@ const ExerciseForm = ({
             style={{ minHeight: "300px" }}
           />
         </div>
-        <div className="w-full flex justify-center p-4"> { }
+        <div className="w-full flex justify-center p-4">
           <button className="w-1/4 py-2 bg-custom-dark-blue hover:bg-blue-400 text-white rounded-lg">
-            Submit
+            Save
           </button>
         </div>
       </div>
