@@ -83,7 +83,6 @@ const displayTitle = (exercise: ExerciseItem) => {
 };
 
 export default function ExerciseList() {
-
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
@@ -115,6 +114,9 @@ export default function ExerciseList() {
         setExercises(data.data);
         setIsLoading(false);
         setTotalExercises(data.total);
+      })
+      .catch(() => {
+        setIsLoading(false);
       });
   }, [page, perPage, filter, sort]);
 
@@ -174,7 +176,6 @@ export default function ExerciseList() {
             >
               <AiFillDelete />
             </div>
-
           </div>
         ),
         width: "10%",

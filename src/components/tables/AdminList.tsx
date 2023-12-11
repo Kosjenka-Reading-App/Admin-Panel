@@ -65,6 +65,9 @@ export default function AdminList() {
         setAdmins(data.data);
         setIsLoading(false);
         setTotalAdmins(data.total);
+      })
+      .catch(() => {
+        setIsLoading(false);
       });
   }, [page, perPage, filter, sort]);
 
