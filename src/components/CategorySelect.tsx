@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import AsyncSelect from "react-select/async";
 import categoriesService from "../services/categories"; // Ensure this is the correct path
 
