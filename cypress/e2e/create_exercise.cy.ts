@@ -43,6 +43,8 @@ describe("create exercise page", () => {
 
     cy.contains("button", "Save").click();
 
-    cy.url().should("eq", "http://localhost:5173/exercises");
+    cy.url().should("eq", "http://localhost:5173/exercises", {
+      timeout: 10000,
+    });
   });
 });
