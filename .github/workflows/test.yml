@@ -23,6 +23,8 @@ jobs:
           CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
           # Creating a token https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VITE_BACKEND_URL: https://localhost:8080
+
       - name: Upload screenshots
         uses: actions/upload-artifact@v3
         if: failure()
