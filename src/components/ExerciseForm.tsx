@@ -49,17 +49,11 @@ const ExerciseForm = ({
           required
         />
 
-        <div className="flex gap-4 mb-4">
+        <div className="flex gap-4 my-4">
           <div className="w-1/2">
-            <label className="block text-3xl font-bold text-custom-black mb-2">
-              Complexity
-            </label>
             <Dropdown complexity={complexity} setComplexity={setComplexity} />
           </div>
           <div className="w-1/2">
-            <label className="block text-3xl font-bold text-custom-black mb-2">
-              Category
-            </label>
             <CategorySelect
               selectedCategory={selectedCategory}
               setSelectedCategory={setSelectedCategory}

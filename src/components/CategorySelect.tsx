@@ -1,6 +1,7 @@
 import { useState } from "react";
 import AsyncSelect from "react-select/async";
 import categoriesService from "../services/categories"; // Ensure this is the correct path
+import { StylesConfig } from "react-select";
 
 export type CategoryOption = {
   value: string;
@@ -12,21 +13,20 @@ type CategorySelectProps = {
   setSelectedCategory: (category: CategoryOption | null) => void;
 };
 
-const customStyles = {
-  control: (provided: any) => ({
+const customStyles: StylesConfig = {
+  control: (provided) => ({
     ...provided,
     fontSize: ".9rem",
     height: "2.65rem",
-    border: ".09rem solid #0099FF",
-    boxShadow:
-      "0 .4rem 1rem rgba(0, 0, 0, 0.37), 0 0 .1rem rgba(0, 0, 0, 0.37)",
+    border: "1px solid rgb(203 213 225)",
     borderRadius: "7px",
-    borderColor: "custom-blue",
+    boxShadow: "none",
     ":hover": {
-      borderColor: "#0099FF",
+      border: "1px solid rgb(203 213 225)",
+      borderColor: "rgb(203 213 225)",
     },
   }),
-  option: (provided: any, state: any) => ({
+  option: (provided, state) => ({
     ...provided,
     color: "black",
     background: state.isSelected ? "transparent" : "white",
@@ -66,19 +66,27 @@ const CategorySelect = ({
   };
 
   return (
-    <AsyncSelect
-      id="categories"
-      cacheOptions
-      required
-      loadOptions={loadCategoryOptions}
-      defaultOptions
-      value={selectedCategory}
-      onChange={handleCategoryChange}
-      onInputChange={setInputValue}
-      styles={customStyles}
-      className="text-lg"
-      placeholder="Select Category"
-    />
+    <div>
+      <label
+        htmlFor="complexity"
+        className="text-lg font-semibold text-gray-700 block"
+      >
+        Category
+      </label>
+      <AsyncSelect
+        id="categories"
+        cacheOptions
+        required
+        loadOptions={loadCategoryOptions}
+        defaultOptions
+        value={selectedCategory}
+        onChange={handleCategoryChange}
+        onInputChange={setInputValue}
+        styles={customStyles}
+        className="text-lg"
+        placeholder="Select Category"
+      />
+    </div>
   );
 };
 
