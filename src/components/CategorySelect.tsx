@@ -1,7 +1,6 @@
 import { useState } from "react";
 import AsyncSelect from "react-select/async";
 import categoriesService from "../services/categories"; // Ensure this is the correct path
-import { StylesConfig } from "react-select";
 
 export type CategoryOption = {
   value: string;
@@ -11,29 +10,6 @@ export type CategoryOption = {
 type CategorySelectProps = {
   selectedCategory: CategoryOption | null;
   setSelectedCategory: (category: CategoryOption | null) => void;
-};
-
-const customStyles: StylesConfig = {
-  control: (provided) => ({
-    ...provided,
-    fontSize: ".9rem",
-    height: "2.65rem",
-    border: "1px solid rgb(203 213 225)",
-    borderRadius: "7px",
-    boxShadow: "none",
-    ":hover": {
-      border: "1px solid rgb(203 213 225)",
-      borderColor: "rgb(203 213 225)",
-    },
-  }),
-  option: (provided, state) => ({
-    ...provided,
-    color: "black",
-    background: state.isSelected ? "transparent" : "white",
-    ":hover": {
-      backgroundColor: "#DEF2FF",
-    },
-  }),
 };
 
 const CategorySelect = ({
@@ -82,9 +58,30 @@ const CategorySelect = ({
         value={selectedCategory}
         onChange={handleCategoryChange}
         onInputChange={setInputValue}
-        styles={customStyles}
         className="text-lg"
         placeholder="Select Category"
+        styles={{
+          control: (provided) => ({
+            ...provided,
+            fontSize: ".9rem",
+            height: "2.65rem",
+            border: "1px solid rgb(203 213 225)",
+            borderRadius: "7px",
+            boxShadow: "none",
+            ":hover": {
+              border: "1px solid rgb(203 213 225)",
+              borderColor: "rgb(203 213 225)",
+            },
+          }),
+          option: (provided, state) => ({
+            ...provided,
+            color: "black",
+            background: state.isSelected ? "transparent" : "white",
+            ":hover": {
+              backgroundColor: "#DEF2FF",
+            },
+          }),
+        }}
       />
     </div>
   );
