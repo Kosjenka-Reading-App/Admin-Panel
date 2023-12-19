@@ -1,36 +1,26 @@
 import React, { FormEventHandler } from 'react'
 import { Link } from "react-router-dom";
+import TextInput from './TextInput';
 
 type CategoryFormProps = {
     onSubmit: FormEventHandler<HTMLFormElement>;
     name: string;
     setName: React.Dispatch<React.SetStateAction<string>>
-
 }
 
-
 const CategoryForm = ({ onSubmit, name, setName }: CategoryFormProps) => {
-
     return (
-
         <form onSubmit={onSubmit} className="space-y-8">
-            <div>
-                <label
-                    htmlFor="name"
-                    className="text-lg font-semibold text-gray-700 block"
-                >
-                    Category Name
-                </label>
-                <input
-                    type="text"
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="text-custom-black mt-1 px-4 py-3 bg-white border border-slate-300 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 block w-full rounded-md text-lg"
-                    placeholder="Enter category name"
-                    required
-                />
-            </div>
+            <TextInput
+                label="Category Name"
+                id="name"
+                name="name"
+                value={name}
+                setValue={setName}
+                placeholder="Enter category name"
+                required
+            />
+
             <div className="flex items-center justify-between mt-8">
                 <button
                     type="submit"
