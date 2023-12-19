@@ -41,7 +41,7 @@ const AdminForm = () => {
           {errorMessage && <Alert message={errorMessage} />}
           <form onSubmit={handleSubmit} className="space-y-8">
             <TextInput
-              label="Email"
+              label="Email address"
               type="email"
               id="email"
               name="email"
