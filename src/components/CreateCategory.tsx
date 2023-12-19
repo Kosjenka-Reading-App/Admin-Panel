@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import categoriesService from "../services/categories";
 import Alert from "./Alert";
-import CategoryForm from "./CategoryForm"
-
+import CategoryForm from "./CategoryForm";
 
 const CreateCategory = () => {
   const [name, setName] = useState("");
@@ -19,7 +18,9 @@ const CreateCategory = () => {
         navigate("/categories");
       })
       .catch((err) => {
-        const message = err.response?.data?.message || "An error occurred while creating the category.";
+        const message =
+          err.response?.data?.message ||
+          "An error occurred while creating the category.";
         setAlertMessage(message);
         setShowAlert(true);
       });
@@ -28,20 +29,12 @@ const CreateCategory = () => {
   return (
     <div className="bg-white min-h-screen flex flex-col">
       <div className="w-full py-4 px-6 bg-custom-light-grey border-b border-gray-200">
-        <h1 className="font-bold text-2xl">
-          Create Category
-        </h1>
+        <h1 className="font-bold text-2xl">Create Category</h1>
       </div>
       <div className="flex-grow flex items-center justify-center p-8">
         <div className="bg-custom-light-grey p-12 rounded-lg shadow-xl w-full max-w-2xl">
           {showAlert && <Alert message={alertMessage} />}
-
-          <CategoryForm
-            onSubmit={handleSubmit}
-            name={name}
-            setName={setName}
-
-          />
+          <CategoryForm onSubmit={handleSubmit} name={name} setName={setName} />
         </div>
       </div>
     </div>

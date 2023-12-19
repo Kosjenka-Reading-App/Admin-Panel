@@ -8,19 +8,22 @@ const CreateExercise = () => {
   const [title, setTitle] = useState("");
   const [complexity, setComplexity] = useState("");
   const [textExercise, setTextExercise] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<CategoryOption | null>(null);
+  const [selectedCategory, setSelectedCategory] =
+    useState<CategoryOption | null>(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await exercisesService.create(title, textExercise, complexity, [selectedCategory!.value]);
+      await exercisesService.create(title, textExercise, complexity, [
+        selectedCategory!.value,
+      ]);
       navigate("/exercises");
     } catch (error) {
       console.error("Failed to create exercise:", error);
     }
   };
-  
+
   return (
     <div className="w-full h-screen">
       <div className="bg-custom-light-grey py-3 px-4 mb-5">
@@ -36,7 +39,7 @@ const CreateExercise = () => {
         setTestExercise={setTextExercise}
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
-        />
+      />
     </div>
   );
 };
