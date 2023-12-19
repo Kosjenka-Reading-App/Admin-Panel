@@ -2,6 +2,7 @@ import React from "react";
 import Dropdown from "./Dropdown";
 import CategorySelect from "./CategorySelect";
 import TextInput from "./TextInput";
+import ConfirmCreation from "./ConfirmCreation";
 
 type CategoryOption = {
   value: string;
@@ -72,11 +73,7 @@ const ExerciseForm = ({
           placeholder="Please enter your exercise"
         />
 
-        <div className="w-full flex justify-center p-4">
-          <button className="w-1/4 py-2 bg-custom-dark-blue hover:bg-blue-400 text-white rounded-lg">
-            Save
-          </button>
-        </div>
+        <ConfirmCreation to="/exercises" />
       </div>
     </form>
   );

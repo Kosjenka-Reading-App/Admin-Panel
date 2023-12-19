@@ -4,8 +4,9 @@ import Alert from "./Alert";
 
 import adminService from "../services/admins";
 import TextInput from "./TextInput";
+import ConfirmCreation from "./ConfirmCreation";
 
-const AdminForm: React.FC = () => {
+const AdminForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSuperAdmin, setIsSuperAdmin] = useState(false);
@@ -76,20 +77,8 @@ const AdminForm: React.FC = () => {
                 Super admin privileges
               </label>
             </div>
-            <div className="flex items-center justify-between mt-8">
-              <button
-                type="submit"
-                className="px-6 py-3 bg-custom-dark-blue text-white text-lg rounded hover:bg-blue-800"
-              >
-                Save
-              </button>
-              <Link
-                to="/admins"
-                className="px-6 py-3 bg-custom-grey text-gray-800 text-lg rounded hover:bg-gray-400"
-              >
-                Cancel
-              </Link>
-            </div>
+
+            <ConfirmCreation to="/admins" />
           </form>
         </div>
       </div>
