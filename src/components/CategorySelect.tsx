@@ -12,30 +12,6 @@ type CategorySelectProps = {
   setSelectedCategory: (category: CategoryOption | null) => void;
 };
 
-const customStyles = {
-  control: (provided: any) => ({
-    ...provided,
-    fontSize: ".9rem",
-    height: "2.65rem",
-    border: ".09rem solid #0099FF",
-    boxShadow:
-      "0 .4rem 1rem rgba(0, 0, 0, 0.37), 0 0 .1rem rgba(0, 0, 0, 0.37)",
-    borderRadius: "7px",
-    borderColor: "custom-blue",
-    ":hover": {
-      borderColor: "#0099FF",
-    },
-  }),
-  option: (provided: any, state: any) => ({
-    ...provided,
-    color: "black",
-    background: state.isSelected ? "transparent" : "white",
-    ":hover": {
-      backgroundColor: "#DEF2FF",
-    },
-  }),
-};
-
 const CategorySelect = ({
   selectedCategory,
   setSelectedCategory,
@@ -66,19 +42,48 @@ const CategorySelect = ({
   };
 
   return (
-    <AsyncSelect
-      id="categories"
-      cacheOptions
-      required
-      loadOptions={loadCategoryOptions}
-      defaultOptions
-      value={selectedCategory}
-      onChange={handleCategoryChange}
-      onInputChange={setInputValue}
-      styles={customStyles}
-      className="text-lg"
-      placeholder="Select Category"
-    />
+    <div>
+      <label
+        htmlFor="complexity"
+        className="text-lg font-semibold text-gray-700 block"
+      >
+        Category
+      </label>
+      <AsyncSelect
+        id="categories"
+        cacheOptions
+        required
+        loadOptions={loadCategoryOptions}
+        defaultOptions
+        value={selectedCategory}
+        onChange={handleCategoryChange}
+        onInputChange={setInputValue}
+        className="text-lg"
+        placeholder="Select Category"
+        styles={{
+          control: (provided) => ({
+            ...provided,
+            fontSize: ".9rem",
+            height: "2.65rem",
+            border: "1px solid rgb(203 213 225)",
+            borderRadius: "7px",
+            boxShadow: "none",
+            ":hover": {
+              border: "1px solid rgb(203 213 225)",
+              borderColor: "rgb(203 213 225)",
+            },
+          }),
+          option: (provided, state) => ({
+            ...provided,
+            color: "black",
+            background: state.isSelected ? "transparent" : "white",
+            ":hover": {
+              backgroundColor: "#DEF2FF",
+            },
+          }),
+        }}
+      />
+    </div>
   );
 };
 
