@@ -54,6 +54,7 @@ const CategorySelect = ({
       </label>
       <AsyncSelect
         id="categories"
+        name="categories"
         cacheOptions
         required
         isMulti
