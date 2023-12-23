@@ -14,10 +14,8 @@ type ExerciseFormProps = {
   title: string;
   complexity: string;
   textExercise: string;
-  selectedCategory: CategoryOption | null;
-  setSelectedCategory: React.Dispatch<
-    React.SetStateAction<CategoryOption | null>
-  >;
+  selectedCategories: CategoryOption[];
+  setSelectedCategories: React.Dispatch<React.SetStateAction<CategoryOption[]>>;
   setTitle: React.Dispatch<React.SetStateAction<string>>;
   setComplexity: React.Dispatch<React.SetStateAction<string>>;
   setTestExercise: React.Dispatch<React.SetStateAction<string>>;
@@ -28,8 +26,8 @@ const ExerciseForm = ({
   title,
   complexity,
   textExercise,
-  selectedCategory,
-  setSelectedCategory,
+  selectedCategories,
+  setSelectedCategories,
   setTitle,
   setComplexity,
   setTestExercise,
@@ -52,13 +50,13 @@ const ExerciseForm = ({
 
         <div className="flex gap-4 my-4">
           <div className="w-1/2">
-            <Dropdown complexity={complexity} setComplexity={setComplexity} />
+            <CategorySelect
+              selectedCategories={selectedCategories}
+              setSelectedCategories={setSelectedCategories}
+            />
           </div>
           <div className="w-1/2">
-            <CategorySelect
-              selectedCategory={selectedCategory}
-              setSelectedCategory={setSelectedCategory}
-            />
+            <Dropdown complexity={complexity} setComplexity={setComplexity} />
           </div>
         </div>
 
