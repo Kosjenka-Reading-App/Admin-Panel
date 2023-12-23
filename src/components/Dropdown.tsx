@@ -35,6 +35,7 @@ const Dropdown = ({ complexity, setComplexity }: ExerciseFormProps) => {
         options={options}
         name="complexity"
         id="complexity"
+        required
         value={options.find((option) => option.value === complexity)}
         onChange={(selectedOption) =>
           setComplexity(selectedOption?.value || "")

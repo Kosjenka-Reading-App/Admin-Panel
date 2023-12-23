@@ -1,6 +1,7 @@
 import { useState } from "react";
 import AsyncSelect from "react-select/async";
 import categoriesService from "../services/categories"; // Ensure this is the correct path
+import { MultiValue } from "react-select";
 
 export type CategoryOption = {
   value: string;
@@ -8,13 +9,13 @@ export type CategoryOption = {
 };
 
 type CategorySelectProps = {
-  selectedCategory: CategoryOption | null;
-  setSelectedCategory: (category: CategoryOption | null) => void;
+  selectedCategories: CategoryOption[];
+  setSelectedCategories: React.Dispatch<React.SetStateAction<CategoryOption[]>>;
 };
 
 const CategorySelect = ({
-  selectedCategory,
-  setSelectedCategory,
+  selectedCategories,
+  setSelectedCategories,
 }: CategorySelectProps) => {
   const [, setInputValue] = useState("");
 
@@ -37,8 +38,10 @@ const CategorySelect = ({
     }
   };
 
-  const handleCategoryChange = (selectedOption: CategoryOption | null) => {
-    setSelectedCategory(selectedOption);
+  const handleCategoryChange = (
+    selectedOptions: MultiValue<CategoryOption>
+  ) => {
+    setSelectedCategories(selectedOptions as Array<CategoryOption>);
   };
 
   return (
@@ -47,15 +50,17 @@ const CategorySelect = ({
         htmlFor="complexity"
         className="text-lg font-semibold text-gray-700 block"
       >
-        Category
+        Categories
       </label>
       <AsyncSelect
         id="categories"
+        name="categories"
         cacheOptions
         required
+        isMulti
         loadOptions={loadCategoryOptions}
         defaultOptions
-        value={selectedCategory}
+        value={selectedCategories}
         onChange={handleCategoryChange}
         onInputChange={setInputValue}
         className="text-lg"
@@ -64,7 +69,7 @@ const CategorySelect = ({
           control: (provided) => ({
             ...provided,
             fontSize: ".9rem",
-            height: "2.65rem",
+            // height: "2.65rem",
             border: "1px solid rgb(203 213 225)",
             borderRadius: "7px",
             boxShadow: "none",
@@ -80,6 +85,14 @@ const CategorySelect = ({
             ":hover": {
               backgroundColor: "#DEF2FF",
             },
+          }),
+          multiValue: (provided) => ({
+            ...provided,
+            padding: "0",
+          }),
+          multiValueLabel: (provided) => ({
+            ...provided,
+            padding: "0",
           }),
         }}
       />
