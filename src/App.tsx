@@ -18,7 +18,6 @@ import ResetPasswordConfirm from "./components/ResetPasswordConfirm";
 import CreateCategoryPage from "./pages/CreateCategoryPage";
 import EditCategoryPage from "./pages/EditCategoryPage";
 
-
 function App() {
   return (
     <main className="w-full h-full">
@@ -42,6 +41,17 @@ function App() {
               <ProtectedRoute
                 element={<CreateAdminPage />}
                 permissionLevel={ADMIN_PERMISSIONS.SUPERADMIN}
+              />
+            }
+          />
+
+          <Route
+            path="/admins/confirm"
+            element={
+              <ResetPasswordConfirm
+                title="Confirm account"
+                label="Set password"
+                buttonText="Create account"
               />
             }
           />
@@ -104,7 +114,16 @@ function App() {
 
           <Route path="/password/reset" element={<ResetPasswordRequest />} />
 
-          <Route path="/password/confirm" element={<ResetPasswordConfirm />} />
+          <Route
+            path="/password/confirm"
+            element={
+              <ResetPasswordConfirm
+                title="Reset password"
+                label="New password"
+                buttonText="Set new password"
+              />
+            }
+          />
 
           <Route path="/404" element={<h1>404 Not Found</h1>} />
           <Route path="*" element={<Navigate to="/404" />} />
