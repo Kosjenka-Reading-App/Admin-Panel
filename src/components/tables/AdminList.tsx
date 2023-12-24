@@ -141,7 +141,10 @@ export default function AdminList() {
         <div className="bg-custom-light-grey py-3 px-4">
           <h1 className="font-bold text-2xl">
             Admins{" "}
-            <span className="bg-gray-200 px-2 py-1 text-xs rounded-xl text-blue-600 font-normal">
+            <span
+              id="total-admins"
+              className="bg-gray-200 px-2 py-1 text-xs rounded-xl text-blue-600 font-normal"
+            >
               {totalAdmins}
             </span>
           </h1>
