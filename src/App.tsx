@@ -17,7 +17,8 @@ import ResetPasswordRequest from "./components/ResetPasswordRequest";
 import ResetPasswordConfirm from "./components/ResetPasswordConfirm";
 import CreateCategoryPage from "./pages/CreateCategoryPage";
 import EditCategoryPage from "./pages/EditCategoryPage";
-
+import { resetPassword } from "./services/auth";
+import adminsService from "./services/admins";
 
 function App() {
   return (
@@ -42,6 +43,19 @@ function App() {
               <ProtectedRoute
                 element={<CreateAdminPage />}
                 permissionLevel={ADMIN_PERMISSIONS.SUPERADMIN}
+              />
+            }
+          />
+
+          <Route
+            path="/admins/confirm"
+            element={
+              <ResetPasswordConfirm
+                title="Confirm account"
+                label="Set password"
+                buttonText="Create account"
+                onSubmit={adminsService.confirm}
+                defaultErrorMessage="Failed to activate the account. Please try again or contact support."
               />
             }
           />
@@ -104,7 +118,17 @@ function App() {
 
           <Route path="/password/reset" element={<ResetPasswordRequest />} />
 
-          <Route path="/password/confirm" element={<ResetPasswordConfirm />} />
+          <Route
+            path="/password/confirm"
+            element={
+              <ResetPasswordConfirm
+                title="Reset password"
+                label="New password"
+                buttonText="Set new password"
+                onSubmit={resetPassword}
+              />
+            }
+          />
 
           <Route path="/404" element={<h1>404 Not Found</h1>} />
           <Route path="*" element={<Navigate to="/404" />} />

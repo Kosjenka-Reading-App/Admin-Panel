@@ -38,11 +38,17 @@ const list = (
     .catch((error) => Promise.reject(error));
 };
 
-const create = (email: string, password: string, isSuperAdmin: boolean) => {
+const create = (email: string, isSuperAdmin: boolean) => {
   return jsonPost("accounts", {
     email,
-    password,
     is_superadmin: isSuperAdmin,
+  });
+};
+
+const confirm = (password: string, token: string) => {
+  return jsonPost("accounts/activate", {
+    password,
+    token,
   });
 };
 
@@ -54,4 +60,5 @@ export default {
   list,
   create,
   deleteAdmin,
+  confirm,
 };
