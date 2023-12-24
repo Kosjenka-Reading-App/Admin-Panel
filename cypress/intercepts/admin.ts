@@ -25,13 +25,6 @@ const adminList = (
   sortOrder?: "asc" | "desc",
   sortField?: "email" | "account_category"
 ) => {
-  console.log(
-    `PASCACIO /accounts?page=${page || 1}&size=10&email_like=${
-      emailQuery || ""
-    }${sortOrder ? `&order=${sortOrder}` : ""}${
-      sortField ? `&order_by=${sortField}` : ""
-    }`
-  );
   cy.intercept(
     "GET",
     `/accounts?page=${page || 1}&size=10&email_like=${emailQuery || ""}${
