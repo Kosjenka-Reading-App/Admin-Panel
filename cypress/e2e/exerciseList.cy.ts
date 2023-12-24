@@ -6,6 +6,7 @@ import { listCategories } from "../intercepts/categories";
 describe("Exercise List Page", () => {
     beforeEach(() => {
         meSuperadmin();
+        exerciseList(); // Add exerciseList intercept
         cy.visit('http://localhost:5173/exercises');
     });
 
@@ -33,4 +34,4 @@ describe("Exercise List Page", () => {
         cy.get('h1').contains('Exercises').should('be.visible');
         cy.get('h1').contains('Exercises').should('have.length', 1);
     })
-    });
+});
