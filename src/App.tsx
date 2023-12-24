@@ -17,6 +17,8 @@ import ResetPasswordRequest from "./components/ResetPasswordRequest";
 import ResetPasswordConfirm from "./components/ResetPasswordConfirm";
 import CreateCategoryPage from "./pages/CreateCategoryPage";
 import EditCategoryPage from "./pages/EditCategoryPage";
+import { resetPassword } from "./services/auth";
+import adminsService from "./services/admins";
 
 function App() {
   return (
@@ -52,6 +54,8 @@ function App() {
                 title="Confirm account"
                 label="Set password"
                 buttonText="Create account"
+                onSubmit={adminsService.confirm}
+                defaultErrorMessage="Failed to activate the account. Please try again or contact support."
               />
             }
           />
@@ -121,6 +125,7 @@ function App() {
                 title="Reset password"
                 label="New password"
                 buttonText="Set new password"
+                onSubmit={resetPassword}
               />
             }
           />

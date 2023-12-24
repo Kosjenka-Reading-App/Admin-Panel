@@ -45,6 +45,13 @@ const create = (email: string, isSuperAdmin: boolean) => {
   });
 };
 
+const confirm = (password: string, token: string) => {
+  return jsonPost("accounts/activate", {
+    password,
+    token,
+  });
+};
+
 const deleteAdmin = (id: number) => {
   return deleteRequest(`accounts/${id}`);
 };
@@ -53,4 +60,5 @@ export default {
   list,
   create,
   deleteAdmin,
+  confirm,
 };

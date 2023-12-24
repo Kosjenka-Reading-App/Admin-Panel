@@ -2,18 +2,22 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Alert from "./Alert";
 import logo from "../assets/logo.png";
-import { resetPassword } from "../services/auth";
+import { AxiosResponse } from "axios";
 
 type ConfirmResetPasswordProps = {
   title: string;
   label: string;
   buttonText: string;
+  onSubmit: (password: string, token: string) => Promise<AxiosResponse>;
+  defaultErrorMessage?: string;
 };
 
 const ConfirmResetPassword = ({
   title,
   label,
   buttonText,
+  onSubmit,
+  defaultErrorMessage,
 }: ConfirmResetPasswordProps) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -37,11 +41,12 @@ const ConfirmResetPassword = ({
 
     const token = searchParams.get("token");
     if (token) {
-      resetPassword(password, token)
+      onSubmit(password, token)
         .then(() => navigate("/login"))
         .catch(() =>
           setErrorMessage(
-            "Failed to reset the password. Please try again or contact support."
+            defaultErrorMessage ||
+              "Failed to reset the password. Please try again or contact support."
           )
         );
     }
