@@ -7,6 +7,7 @@ import { FaPlus } from "react-icons/fa";
 import exercisesService from "../../services/exercises";
 import { Link, useNavigate } from "react-router-dom";
 import ConfirmModal from "../ConfirmModal";
+import { Tooltip } from "react-tooltip";
 
 type ExerciseItem = {
   id: string;
@@ -149,8 +150,29 @@ export default function ExerciseList() {
       },
       {
         name: "category",
-        selector: (row: ExerciseItem) => row.category[0] || "",
-        cell: (row: ExerciseItem) => <span>{row.category[0] || ""}</span>,
+        selector: (row: ExerciseItem) => row.category.join(", ") || "",
+        cell: (row: ExerciseItem) => {
+          const categoriesString = row.category.join(", ");
+          return (
+            <>
+              <a
+                data-tooltip-id={`categories-${row.id}-tootip`}
+                className="truncate"
+              >
+                {categoriesString}
+              </a>
+              <Tooltip id={`categories-${row.id}-tootip`} place="top">
+                <div className="flex flex-col z-50">
+                  {row.category.map((category) => (
+                    <span key={category} className="text-center">
+                      {category}
+                    </span>
+                  ))}
+                </div>
+              </Tooltip>
+            </>
+          );
+        },
         sortable: true,
         width: "20%",
       },
@@ -211,7 +233,10 @@ export default function ExerciseList() {
         <div className="bg-custom-light-grey py-3 px-4">
           <h1 className="font-bold text-2xl">
             Exercises{" "}
-            <span className="bg-gray-200 px-2 py-1 text-xs rounded-xl text-blue-600 font-normal">
+            <span
+              id="total-exercises"
+              className="bg-gray-200 px-2 py-1 text-xs rounded-xl text-blue-600 font-normal"
+            >
               {totalExercises}
             </span>
           </h1>

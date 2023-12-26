@@ -85,7 +85,16 @@ const edit = async (
 };
 
 const getByID = async (id: string) => {
-  return get(`exercises/${id}`);
+  return get(`exercises/${id}`)
+    .then((response) => {
+      return Promise.resolve({
+        ...response.data,
+        categories: response.data.category.map(
+          (category: { category: string }) => category.category
+        ),
+      });
+    })
+    .catch((error) => Promise.reject(error));
 };
 
 export default {

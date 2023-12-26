@@ -13,7 +13,9 @@ const EditExercise = () => {
   const [title, setTitle] = useState("");
   const [complexity, setComplexity] = useState("");
   const [textExercise, setTextExercise] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<CategoryOption | null>(null);
+  const [selectedCategories, setSelectedCategories] = useState<
+    CategoryOption[]
+  >([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -23,13 +25,18 @@ const EditExercise = () => {
       try {
         if (id) {
           const exerciseResponse = await exerciseService.getByID(id);
-          setTitle(exerciseResponse.data.title);
-          setComplexity(exerciseResponse.data.complexity);
-          setTextExercise(exerciseResponse.data.text);
-          const category = exerciseResponse.data.category[0]?.category;
-          setSelectedCategory({ value: category, label: category });
+          setTitle(exerciseResponse.title);
+          setComplexity(exerciseResponse.complexity);
+          setTextExercise(exerciseResponse.text);
+          const categories = exerciseResponse.categories.map(
+            (category: string) => ({
+              value: category,
+              label: category,
+            })
+          );
+          setSelectedCategories(categories);
         }
-      } catch (error: any) {
+      } catch (error) {
         console.error("Error fetching data:", error);
         navigate("/exercises");
       } finally {
@@ -44,9 +51,15 @@ const EditExercise = () => {
     e.preventDefault();
     if (id) {
       try {
-        await exerciseService.edit(id, title, textExercise, complexity, [selectedCategory!.value]);
+        await exerciseService.edit(
+          id,
+          title,
+          textExercise,
+          complexity,
+          selectedCategories.map((category) => category.value)
+        );
         navigate("/exercises");
-      } catch (error: any) {
+      } catch (error) {
         console.error("Failed to edit exercise:", error);
       }
     }
@@ -73,9 +86,9 @@ const EditExercise = () => {
         setComplexity={setComplexity}
         textExercise={textExercise}
         setTestExercise={setTextExercise}
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
-        />
+        selectedCategories={selectedCategories}
+        setSelectedCategories={setSelectedCategories}
+      />
     </div>
   );
 };

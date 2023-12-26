@@ -1,4 +1,3 @@
-import { create } from "domain";
 import { meSuperadmin } from "../intercepts/login";
 import { createExercise } from "../intercepts/createExercise";
 import { listCategories } from "../intercepts/categories";
@@ -12,6 +11,7 @@ describe("create exercise page", () => {
     cy.contains("Create Exercise").should("be.visible");
     cy.contains("Title").should("be.visible");
     cy.contains("Complexity").should("be.visible");
+    cy.contains("Categories").should("be.visible");
     cy.contains("Text").should("be.visible");
     cy.contains("button", "Save").should("be.visible");
   });
@@ -23,6 +23,14 @@ describe("create exercise page", () => {
 
     cy.contains("button", "Save").click();
     cy.get("input[name=title]").then(($input) => {
+      expect($input[0].validationMessage).to.not.be.empty;
+    });
+
+    cy.get("input[name=complexity]").then(($input) => {
+      expect($input[0].validationMessage).to.not.be.empty;
+    });
+
+    cy.get("input[name=categories]").then(($input) => {
       expect($input[0].validationMessage).to.not.be.empty;
     });
 
