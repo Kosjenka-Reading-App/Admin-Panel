@@ -20,7 +20,7 @@ describe("Create Category Page", () => {
 
     cy.contains("button", "Save").click();
 
-    cy.get("input[id=name]").then(($input) => {
+    cy.get("input[id=name]").should(($input) => {
       expect($input[0].validationMessage).to.not.be.empty;
     });
   });
@@ -32,21 +32,15 @@ describe("Create Category Page", () => {
     listCategories();
 
     cy.visit("http://localhost:5173/categories/create");
-
-
-
     cy.get("input[id=name]").type(categoryName);
 
     cy.contains("button", "Save").click();
 
     cy.wait("@createCategory");
 
-    // cy.url().should("eq", "http://localhost:5173/categories", {
-    //   timeout: 10000,
-    // });
-
-
-
+    cy.url().should("eq", "http://localhost:5173/categories", {
+      timeout: 10000,
+    });
   });
 
   it("test cancel button", () => {
@@ -57,11 +51,13 @@ describe("Create Category Page", () => {
 
     cy.visit("http://localhost:5173/categories/create");
 
-
-
     cy.get("input[id=name]").type(categoryName);
 
-    cy.contains("button", "Cancel").click();
+    cy.contains("a", "Cancel").click();
+
+    cy.url().should("eq", "http://localhost:5173/categories", {
+      timeout: 10000,
+    });
 
   });
 });
