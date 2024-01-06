@@ -16,13 +16,12 @@ const categoryList = (
   page?: number,
   nameQuery?: string,
   sortOrder?: "asc" | "desc",
-  sortField?: "name" 
+  sortField?: "name"
 ) => {
- 
+
   cy.intercept(
     "GET",
-    `/categories?page=${page || 1}&size=10&name_like=${nameQuery || ""}${
-      sortOrder ? `&order=${sortOrder}` : ""
+    `/categories?page=${page || 1}&size=10&name_like=${nameQuery || ""}${sortOrder ? `&order=${sortOrder}` : ""
     }${sortField ? `&order_by=${sortField}` : ""}`,
     {
       statusCode: 200,
@@ -37,10 +36,17 @@ const categoryList = (
       },
     }
   ).as(
-    `categoryList?page=${page || 1}?name_like=${nameQuery || ""}${ 
-      sortOrder ? `?sortOrder=${sortOrder}` : ""
+    `categoryList?page=${page || 1}?name_like=${nameQuery || ""}${sortOrder ? `?sortOrder=${sortOrder}` : ""
     }${sortField ? `?sortField=${sortField}` : ""}`
   );
 };
 
-export { categoryList };
+const deleteCategory = (name: string) => {
+  const category = encodeURIComponent(name)
+  cy.intercept("DELETE", `/categories/${category}`, {
+    statusCode: 200,
+    body: {},
+  }).as(`deleteCategory`);
+};
+
+export { categoryList, deleteCategory };
