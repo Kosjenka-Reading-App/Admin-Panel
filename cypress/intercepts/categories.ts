@@ -1,14 +1,29 @@
+export const listCategories = () => {
+  cy.intercept("GET", "/categories?page=1&size=100&name_like=", {
+    statusCode: 200,
+    body: {
+      items: [
+        {
+          category: "category",
+        },
+      ],
+    },
+  });
+};
+
 const categoryList = (
+  num: number,
   page?: number,
   nameQuery?: string,
   sortOrder?: "asc" | "desc",
+  sortField?: "name" 
 ) => {
-  const num = 10; 
+ 
   cy.intercept(
     "GET",
     `/categories?page=${page || 1}&size=10&name_like=${nameQuery || ""}${
       sortOrder ? `&order=${sortOrder}` : ""
-    }`,
+    }${sortField ? `&order_by=${sortField}` : ""}`,
     {
       statusCode: 200,
       body: {
@@ -24,7 +39,7 @@ const categoryList = (
   ).as(
     `categoryList?page=${page || 1}?name_like=${nameQuery || ""}${ 
       sortOrder ? `?sortOrder=${sortOrder}` : ""
-    }`
+    }${sortField ? `?sortField=${sortField}` : ""}`
   );
 };
 
