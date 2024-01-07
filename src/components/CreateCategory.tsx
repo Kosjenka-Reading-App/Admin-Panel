@@ -18,9 +18,10 @@ const CreateCategory = () => {
         navigate("/categories");
       })
       .catch((err) => {
-        const message =
-          err.response?.data?.message ||
+        let message =
+          err.response?.data?.detail ||
           "An error occurred while creating the category.";
+        message = message[0].toUpperCase() + message.slice(1);
         setAlertMessage(message);
         setShowAlert(true);
       });
