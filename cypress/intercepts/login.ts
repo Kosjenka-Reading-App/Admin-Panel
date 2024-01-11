@@ -1,6 +1,6 @@
 export const meUnauthorized = () =>
   cy.intercept("GET", "/me", {
-    statusCode: 403,
+    statusCode: 401,
     body: {
       message: "Unauthorized",
     },
